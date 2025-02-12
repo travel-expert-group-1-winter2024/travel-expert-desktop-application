@@ -66,7 +66,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.example.travelexpertdesktopapplication/org.example.travelexpertdesktopapplication.HelloApplication
+                                org.example.travelexpertdesktopapplication/org.example.travelexpertdesktopapplication.TEDesktopApp
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
