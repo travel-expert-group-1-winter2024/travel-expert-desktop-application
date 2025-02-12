@@ -1,13 +1,14 @@
-package org.example.travelexpertdesktopapplication;
+package org.example.travelexpertdesktopapplication.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import org.example.travelexpertdesktopapplication.services.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class HelloController {
+public class MainViewController {
     @FXML
     private Label welcomeText;
     @FXML
