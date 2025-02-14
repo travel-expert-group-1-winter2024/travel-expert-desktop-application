@@ -16,6 +16,12 @@
 
     <dependencies>
         <dependency>
+        <!-- JavaFX Modern UI Library  -->
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>9.0.10</version> <!-- Use the latest version -->
+        </dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.6.0</version>  <!-- Use the latest version -->
