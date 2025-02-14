@@ -1,7 +1,8 @@
 module org.example.travelexpertdesktopapplication {
-    requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires com.jfoenix;
+    requires javafx.controls;
 
 
     opens org.example.travelexpertdesktopapplication to javafx.fxml;
