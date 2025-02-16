@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.LoginController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="292.0" pickOnBounds="true">
@@ -36,7 +35,8 @@
                   <TextField fx:id="tfPassword" />
                </children>
             </HBox>
-            <Button fx:id="btnLogin" mnemonicParsing="false" text="Login" />
+            <Label fx:id="lblLoginErrorMessage" text="Label" />
+            <Button fx:id="btnLogin" mnemonicParsing="false" onMouseClicked="#onLoginButtonClicked" text="Login" />
          </children>
          <HBox.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
