@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
-abstract class User {
+public abstract class User {
     protected UUID id;
     protected String firstName;
     protected String middleInitial;
@@ -27,6 +27,10 @@ abstract class User {
         this.role = role;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     private String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -41,24 +45,12 @@ abstract class User {
         }
     }
 
-    protected boolean checkPassword(String password) {
+    public boolean authenticate(String password) {
         return hashPassword(password).equals(passwordHash);
     }
 
-    protected void changePassword(String newPassword) {
-        passwordHash = hashPassword(newPassword);
-    }
-
-    protected void changeEmail(String newEmail) {
-        email = newEmail;
-    }
-
-    protected void changePhone(String newPhone) {
-        phone = newPhone;
-    }
-
-    public boolean login(String username, String password) {
-        return this.username.equals(username) && checkPassword(password);
+    public UserRole getRole(){
+        return role;
     }
 
     public void logout() {
@@ -66,7 +58,4 @@ abstract class User {
         //TODO: might need to implement more logic here
     }
 
-   public UserRole getRole(){
-        return role;
-   }
 }
