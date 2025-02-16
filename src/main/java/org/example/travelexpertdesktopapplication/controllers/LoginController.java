@@ -4,14 +4,20 @@
 
 package org.example.travelexpertdesktopapplication.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.example.travelexpertdesktopapplication.TEDesktopApp;
 import org.example.travelexpertdesktopapplication.auth.User;
 import org.example.travelexpertdesktopapplication.services.AuthService;
 
@@ -56,10 +62,42 @@ public class LoginController {
         if (user.isPresent()) {
             lblLoginErrorMessage.setStyle("-fx-text-fill: green;");
             lblLoginErrorMessage.setText("Login successful! Welcome, " + user.get().getFirstName());
+            openDashboard();
         } else {
             lblLoginErrorMessage.setStyle("-fx-text-fill: red;");
             lblLoginErrorMessage.setText("Invalid username or password.");
         }
+    }
+
+    private void openDashboard() {
+        Stage dashboardStage = createStage("/views/dashboard-view.fxml", "Dashboard");
+        if (dashboardStage != null) {
+            dashboardStage.show();
+            closeCurrentStage();
+        } else {
+            lblLoginErrorMessage.setStyle("-fx-text-fill: red;");
+            lblLoginErrorMessage.setText("Failed to open dashboard.");
+        }
+    }
+
+    private Stage createStage(String fxmlPath, String title) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource(fxmlPath));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.initModality(Modality.NONE);
+            stage.setScene(scene);
+            return stage;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void closeCurrentStage() {
+        Stage loginStage = (Stage) tfUsername.getScene().getWindow();
+        loginStage.close();
     }
 
 }
