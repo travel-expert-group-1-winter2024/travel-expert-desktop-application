@@ -31,6 +31,10 @@ public abstract class User {
         return username;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
     private String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
