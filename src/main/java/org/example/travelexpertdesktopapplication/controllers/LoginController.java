@@ -50,6 +50,7 @@ public class LoginController {
         assert tfUsername != null : "fx:id=\"tfUsername\" was not injected: check your FXML file 'logic-view.fxml'.";
 
         lblLoginErrorMessage.setText("");
+        lblLoginErrorMessage.setStyle("-fx-text-fill: red;");
         lblLoginErrorMessage.setVisible(false);
     }
 
@@ -60,11 +61,8 @@ public class LoginController {
         Optional<User> user = authService.login(username, password);
         lblLoginErrorMessage.setVisible(true);
         if (user.isPresent()) {
-            lblLoginErrorMessage.setStyle("-fx-text-fill: green;");
-            lblLoginErrorMessage.setText("Login successful! Welcome, " + user.get().getFirstName());
             openDashboard();
         } else {
-            lblLoginErrorMessage.setStyle("-fx-text-fill: red;");
             lblLoginErrorMessage.setText("Invalid username or password.");
         }
     }
@@ -75,7 +73,6 @@ public class LoginController {
             dashboardStage.show();
             closeCurrentStage();
         } else {
-            lblLoginErrorMessage.setStyle("-fx-text-fill: red;");
             lblLoginErrorMessage.setText("Failed to open dashboard.");
         }
     }
