@@ -1,5 +1,6 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 
@@ -16,6 +17,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class DashboardController {
+
+    private CentralController centralController;
+
+    public void setCentralController(CentralController centralController) {
+        this.centralController = centralController;
+    }
 
     @FXML
     private ResourceBundle resources;
@@ -34,6 +41,12 @@ public class DashboardController {
 
     @FXML
     private StackPane stackPaneContentArea;
+
+    @FXML
+    private JFXButton tabBtn1;
+
+    @FXML
+    private JFXButton tabBtn2;
 
     boolean isManager = true;
 
@@ -80,4 +93,6 @@ public class DashboardController {
 
     }
 
-}
+    //Todo: Finish logic that implements views.
+
+}//class
