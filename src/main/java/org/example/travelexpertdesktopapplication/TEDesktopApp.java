@@ -47,6 +47,7 @@ public class TEDesktopApp extends Application {
 
         //Build scene and show
         //FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/dashboard-view.fxml"));
+        //("/views/logic-view.fxml")
         Scene scene = new Scene(dashboardRoot, 1000, 600);
         //stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("Travel Experts Desktop Application");

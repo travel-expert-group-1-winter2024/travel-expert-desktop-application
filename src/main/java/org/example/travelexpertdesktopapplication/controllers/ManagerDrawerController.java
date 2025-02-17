@@ -1,18 +1,17 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
-public class ManagerDrawerController {
-    private CentralController centralController;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 
-    public void setCentralController(CentralController centralController) {
-        this.centralController = centralController;
+public class ManagerDrawerController extends AgentDrawerController {
+
+    @FXML
+    public void handleManagerButtonClick() {
+        FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/manager-view.fxml"));
+        //* The below lines will be updated to reflect the appropriate controllers/views
+        //Parent packagesRoot = packagesLoader.load();
+        //PackagesController packagesController = packagesLoader.getController();
     }
 
-    //Todo: Logic to call on methods in the central controller
 
-    /**
-     * Example:
-     *  handleButtonClick(){
-     *      centralController.handleCustomerButtonClicked("customer");
-     *  }
-     */
 }
