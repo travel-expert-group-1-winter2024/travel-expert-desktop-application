@@ -17,11 +17,27 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class DashboardController {
+    //References to other controllers.
+    private AgentDrawerController agentDrawerController;
+    private ManagerDrawerController managerDrawerController;
+    private DashboardButtonController dashboardButtonController;
+    private BaseDrawerController baseDrawerController;
 
-    private CentralController centralController;
+    public void setBaseDrawerController(BaseDrawerController baseDrawerController) {
+        this.baseDrawerController = baseDrawerController;
+    }
 
-    public void setCentralController(CentralController centralController) {
-        this.centralController = centralController;
+    //Setters
+    public void setAgentDrawerController(AgentDrawerController agentDrawerController) {
+        this.agentDrawerController = agentDrawerController;
+    }
+
+    public void setManagerDrawerController(ManagerDrawerController managerDrawerController) {
+        this.managerDrawerController = managerDrawerController;
+    }
+
+    public void setDashboardButtonController(DashboardButtonController dashboardButtonController) {
+        this.dashboardButtonController = dashboardButtonController;
     }
 
     @FXML
@@ -63,15 +79,23 @@ public class DashboardController {
 
         if (isManager){
             try {
-                VBox box = FXMLLoader.load(getClass().getResource("/views/manager-drawer-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/manager-drawer-view.fxml"));
+                VBox box = loader.load();
+                ManagerDrawerController managerDrawerController = loader.getController();
+                managerDrawerController.setDashboardController(this); // Inject the DashboardController
                 drawer.setSidePane(box);
+                this.managerDrawerController = managerDrawerController; // Save the instance for reuse
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         } else {
             try {
-                VBox box = FXMLLoader.load(getClass().getResource("/views/agent-drawer-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agent-drawer-view.fxml"));
+                VBox box = loader.load();
+                AgentDrawerController agentDrawerController = loader.getController();
+                agentDrawerController.setDashboardController(this); // Inject the DashboardController
                 drawer.setSidePane(box);
+                this.agentDrawerController = agentDrawerController; // Save the instance for reuse
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -94,5 +118,15 @@ public class DashboardController {
     }
 
     //Todo: Finish logic that implements views.
+
+    public void populateDashboardButtons(int code){
+        if (dashboardButtonController != null){
+            dashboardButtonController.updateDashBoardButtons(code);
+        } else{
+            System.out.println("The null pointer is here.");
+        }
+    }
+
+
 
 }//class

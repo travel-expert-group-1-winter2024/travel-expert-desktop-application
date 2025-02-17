@@ -6,11 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import org.example.travelexpertdesktopapplication.controllers.AgentDrawerController;
-import org.example.travelexpertdesktopapplication.controllers.CentralController;
-import org.example.travelexpertdesktopapplication.controllers.DashboardController;
-import org.example.travelexpertdesktopapplication.controllers.ManagerDrawerController;
+import org.example.travelexpertdesktopapplication.controllers.*;
 
 import java.io.IOException;
 
@@ -28,22 +24,28 @@ public class TEDesktopApp extends Application {
         Parent agentDrawerRoot = agentDrawerLoader.load();
         AgentDrawerController agentDrawerController = agentDrawerLoader.getController();
 
+
         //Repeating to grab the Manager view and drawer
         FXMLLoader managerDrawerLoader = new FXMLLoader(getClass().getResource("/views/manager-drawer-view.fxml"));
         Parent managerDrawerRoot = managerDrawerLoader.load();
         ManagerDrawerController managerDrawerController = managerDrawerLoader.getController();
 
-        //Instantiating the CentralController and setting the references to the other controllers
-        CentralController centralController;
-        centralController = new CentralController();
-        centralController.setDashboardController(dashboardController);
-        centralController.setAgentDrawerController(agentDrawerController);
-        centralController.setManagerDrawerController(managerDrawerController);
+        FXMLLoader dashboardButtonLoader = new FXMLLoader(getClass().getResource("/views/dashboard-button-view.fxml"));
+        Parent dashboardButtonRoot = dashboardButtonLoader.load();
+        DashboardButtonController dashboardButtonController = dashboardButtonLoader.getController();
 
-        //Creating a reference to the CentralController in the other Controllers
-        dashboardController.setCentralController(centralController);
-        agentDrawerController.setCentralController(centralController);
-        managerDrawerController.setCentralController(centralController);
+        //Instantiating the CentralController and setting the references to the other controllers
+        dashboardController.setAgentDrawerController(agentDrawerController);
+        dashboardController.setManagerDrawerController(managerDrawerController);
+        dashboardController.setDashboardButtonController(dashboardButtonController);
+
+        // Inject the DashboardController into the AgentDrawerController
+        agentDrawerController.setDashboardController(dashboardController);
+        managerDrawerController.setDashboardController(dashboardController);
+        dashboardButtonController.setDashboardController(dashboardController);
+
+
+
 
         //Build scene and show
         //FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/dashboard-view.fxml"));

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.DashboardButtonController">
+   <children>
+      <HBox prefHeight="43.0" prefWidth="811.0">
+         <children>
+            <JFXButton fx:id="dashboardBtn1" prefHeight="46.0" prefWidth="98.0" />
+            <JFXButton fx:id="dashboardBtn2" prefHeight="46.0" prefWidth="98.0" />
+            <JFXButton fx:id="dashboardBtn3" prefHeight="46.0" prefWidth="98.0" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
