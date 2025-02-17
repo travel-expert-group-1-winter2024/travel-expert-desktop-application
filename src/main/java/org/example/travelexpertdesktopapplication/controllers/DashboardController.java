@@ -48,7 +48,7 @@ public class DashboardController {
     @FXML
     private JFXButton tabBtn2;
 
-    boolean isManager = true;
+    boolean isManager = false;
 
     @FXML
     void initialize() {

@@ -19,7 +19,5 @@ public class CentralController {
         this.managerDrawerController = managerDrawerController;
     }
 
-    //Logic for button clicks here
-    //Todo: Finish logic for button clicks.
 
 }

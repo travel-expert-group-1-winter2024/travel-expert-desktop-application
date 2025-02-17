@@ -8,10 +8,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #fffffe;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.DashboardController">
    <children>
+      <StackPane fx:id="stackPaneContentArea" prefHeight="519.0" prefWidth="970.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+         <children>
+            <AnchorPane prefHeight="519.0" prefWidth="810.0">
+               <children>
+                  <Label layoutX="466.0" layoutY="208.0" text="Main Content Area" />
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
       <AnchorPane prefHeight="70.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #ffd803;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
@@ -28,19 +36,6 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <StackPane fx:id="stackPaneContentArea" prefHeight="519.0" prefWidth="970.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
-         <children>
-            <AnchorPane prefHeight="519.0" prefWidth="810.0">
-               <children>
-                  <Label prefHeight="530.0" prefWidth="1000.0" text="test">
-                     <font>
-                        <Font size="96.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-         </children>
-      </StackPane>
       <AnchorPane layoutY="70.0" prefHeight="460.0" prefWidth="200.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="800.0" AnchorPane.topAnchor="70.0">
          <children>
             <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" prefHeight="460.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />

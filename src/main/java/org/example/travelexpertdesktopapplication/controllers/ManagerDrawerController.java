@@ -7,8 +7,9 @@ public class ManagerDrawerController extends AgentDrawerController {
 
     @FXML
     public void handleManagerButtonClick() {
-        FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/manager-view.fxml"));
+        System.out.println("Manager Button Clicked!");
         //* The below lines will be updated to reflect the appropriate controllers/views
+        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
         //Parent packagesRoot = packagesLoader.load();
         //PackagesController packagesController = packagesLoader.getController();
     }

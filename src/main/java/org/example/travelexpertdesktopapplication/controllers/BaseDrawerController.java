@@ -16,47 +16,62 @@ public class BaseDrawerController {
 
     @FXML
     public void handlePackagesButtonClick() {
-        FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
+        System.out.println("Packages Button Clicked!");
+        //* The below lines will be updated to reflect the appropriate controllers/views
+        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
         //Parent packagesRoot = packagesLoader.load();
         //PackagesController packagesController = packagesLoader.getController();
     }
 
     @FXML
     public void handleCustomersButtonClick() {
-        FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/customers-view.fxml"));
+        System.out.println("Customers Button Clicked!");
         //* The below lines will be updated to reflect the appropriate controllers/views
+        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
         //Parent packagesRoot = packagesLoader.load();
         //PackagesController packagesController = packagesLoader.getController();
     }
 
     @FXML
     public void handleSuppliersButtonClick() {
-        FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/suppliers-view.fxml"));
+        System.out.println("Suppliers Button Clicked!");
         //* The below lines will be updated to reflect the appropriate controllers/views
+        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
         //Parent packagesRoot = packagesLoader.load();
         //PackagesController packagesController = packagesLoader.getController();
     }
 
     @FXML
     public void handleProductsButtonClick() {
-        FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/products-view.fxml"));
+        System.out.println("Products Button Clicked!");
         //* The below lines will be updated to reflect the appropriate controllers/views
+        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
         //Parent packagesRoot = packagesLoader.load();
         //PackagesController packagesController = packagesLoader.getController();
     }
 
     @FXML
     public void handleReportsButtonClick() {
-        FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/reports-view.fxml"));
+        System.out.println("Reports Button Clicked!");
         //* The below lines will be updated to reflect the appropriate controllers/views
+        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
         //Parent packagesRoot = packagesLoader.load();
         //PackagesController packagesController = packagesLoader.getController();
     }
 
     @FXML
     public void handleProfileButtonClick() {
-        FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/profile-view.fxml"));
+        System.out.println("Profile Button Clicked!");
         //* The below lines will be updated to reflect the appropriate controllers/views
+        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
+        //Parent packagesRoot = packagesLoader.load();
+        //PackagesController packagesController = packagesLoader.getController();
+    }
+
+    public void handleLogoutButtonClick() {
+        System.out.println("Logout Button Clicked!");
+        //* The below lines will be updated to reflect the appropriate controllers/views
+        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
         //Parent packagesRoot = packagesLoader.load();
         //PackagesController packagesController = packagesLoader.getController();
     }
