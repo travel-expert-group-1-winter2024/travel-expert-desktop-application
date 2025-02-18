@@ -69,17 +69,4 @@ public class UserDAO {
         };
     }
 
-    /**
-     * Authenticate a user based on their username and password.
-     * @param username The user's username.
-     * @param password The user's password.
-     * @return An Optional containing the User if authenticated, or an empty Optional otherwise.
-     */
-    public Optional<User> authenticate(String username, String password) {
-        Optional<User> userOpt = findByUsername(username);
-        if (userOpt.isPresent() && userOpt.get().authenticate(password)) {
-            return userOpt;
-        }
-        return Optional.empty();
-    }
 }
