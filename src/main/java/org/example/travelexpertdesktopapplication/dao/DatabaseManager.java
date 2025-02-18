@@ -5,46 +5,32 @@ import org.example.travelexpertdesktopapplication.utils.DbConfig;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class DatabaseManager {
-    private static final int POOL_SIZE = 5;  // max pool
-    private static final Queue<Connection> connectionPool = new LinkedList<>();
+    private static final String URL = DbConfig.getProperty("url");
+    private static final String USER = DbConfig.getProperty("user");
+    private static final String PASSWORD = DbConfig.getProperty("password");
 
-    static {
+    public static Connection getConnection() {
+        Connection connection = null;
         try {
-            for (int i = 0; i < POOL_SIZE; i++) {
-                connectionPool.add(createNewConnection());
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            if (connection != null && !connection.isClosed()) {
+                System.out.println("Database connection successful!");
+                return connection;
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error initializing database connection pool", e);
+            System.err.println("Database connection failed!");
+            e.printStackTrace();
         }
+        return null;
     }
 
-    private static Connection createNewConnection() throws SQLException {
-        String url = DbConfig.getProperty("url");
-        String user = DbConfig.getProperty("user");
-        String password = DbConfig.getProperty("password");
-        return DriverManager.getConnection(url, user, password);
-    }
-
-    /**
-     * Get a database connection from the pool
-     */
-    public static synchronized Connection getConnection() throws SQLException {
-        if (connectionPool.isEmpty()) {
-            return createNewConnection();
-        }
-        return connectionPool.poll();
-    }
-
-    /**
-     * Return a connection back to the pool
-     */
-    public static synchronized void releaseConnection(Connection connection) {
-        if (connection != null) {
-            connectionPool.offer(connection);
+    public static boolean testConnection() {
+        try (Connection conn = getConnection()) {
+            return conn != null && !conn.isClosed();
+        } catch (SQLException e) {
+            return false;
         }
     }
 }
