@@ -8,7 +8,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.ManagerDrawerController">
    <children>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleReportsButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Dashboard" textFill="#272343">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleDashboardButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Dashboard" textFill="#272343">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -16,18 +16,6 @@
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/monitor.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleProfileButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Profile" textFill="#272343">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/profile.png" />
                </image>
             </ImageView>
          </graphic>

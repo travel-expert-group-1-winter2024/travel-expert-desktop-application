@@ -7,11 +7,10 @@ public abstract class BaseDrawerController {
 
     public void setDashboardController(DashboardController dashboardController) {
         this.dashboardController = dashboardController;
-        //System.out.println("DashboardController set in BaseDrawerController: " + this + " with DashboardController: " + dashboardController);
+
     }
 
     //Methods handling button clicks
-    //Temporary methods, as we are still waiting on the controllers and views to be completed.
 
     @FXML
     public void handlePackagesButtonClick() {
@@ -20,8 +19,8 @@ public abstract class BaseDrawerController {
             dashboardController.loadDashboardButtons(
                     new String[]{"Packages", "Details"},
                     new Runnable[]{
-                            dashboardController::loadAgentsView,
-                            dashboardController::loadAgenciesView,
+                            dashboardController::loadPackagesView,
+                            dashboardController::loadPackageDetailsView,
                     }
             );
         } else {
@@ -35,10 +34,10 @@ public abstract class BaseDrawerController {
         if (dashboardController != null){
             System.out.println("Delegating button population to DashboardController...");
             dashboardController.loadDashboardButtons(
-                    new String[]{"Info", "Purchases"},
+                    new String[]{"Details", "Purchases"},
                     new Runnable[]{
-                            dashboardController::loadAgentsView,
-                            dashboardController::loadAgenciesView,
+                            dashboardController::loadCustomerDetailsView,
+                            dashboardController::loadCustomerPurchasesView,
                     }
             );
         } else {
@@ -81,14 +80,14 @@ public abstract class BaseDrawerController {
     }
 
     @FXML
-    public void handleReportsButtonClick() {
+    public void handleDashboardButtonClick() {
         if (dashboardController != null){
             System.out.println("Delegating button population to DashboardController...");
             dashboardController.loadDashboardButtons(
-                    new String[]{"Reports", "Charts"},
+                    new String[]{"Overview"},
                     new Runnable[]{
-                            dashboardController::loadAgentsView,
-                            dashboardController::loadAgenciesView,
+                            dashboardController::loadOverViewView,
+                            //dashboardController::loadAgenciesView,
 
                     }
             );
@@ -97,22 +96,22 @@ public abstract class BaseDrawerController {
         }
     }
 
-    @FXML
-    public void handleProfileButtonClick() {
-        if (dashboardController != null){
-            System.out.println("Delegating button population to DashboardController...");
-            dashboardController.loadDashboardButtons(
-                    new String[]{"Profile"},
-                    new Runnable[]{
-                            dashboardController::loadAgentsView,
-
-
-                    }
-            );
-        } else {
-            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
-        }
-    }
+//    @FXML
+//    public void handleProfileButtonClick() {
+//        if (dashboardController != null){
+//            System.out.println("Delegating button population to DashboardController...");
+//            dashboardController.loadDashboardButtons(
+//                    new String[]{"Profile"},
+//                    new Runnable[]{
+//                            dashboardController::loadAgentsView,
+//
+//
+//                    }
+//            );
+//        } else {
+//            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
+//        }
+//    }
 
     public void handleLogoutButtonClick() {
         System.out.println("Logout Clicked");

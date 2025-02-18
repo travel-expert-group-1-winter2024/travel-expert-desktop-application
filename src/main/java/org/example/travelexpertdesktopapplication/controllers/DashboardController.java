@@ -136,17 +136,52 @@ public class DashboardController {
         }
     }
 
+
+    /**
+     * LOADING DYNAMIC BUTTON VIEWS
+     */
+
+    //Dashboard Hamburger Button --> Dynamic button methods
+    public void loadOverViewView(){
+        System.out.println("Loading Overview View");
+    }
+
+    //Customer Hamburger Menu Button --> Dashboard Button methods
+    public void loadCustomerDetailsView(){
+        System.out.println("Loading Customers View");
+    }
+
+    public void loadCustomerPurchasesView(){
+        System.out.println("Loading Customer Purchases");
+    }
+
+    //Packages Hamburger Menu Button --> Dashboard Button methods
+    public void loadPackagesView(){
+        System.out.println("Loading Packages View");
+    }
+
+    public void loadPackageDetailsView(){
+        System.out.println("Loading Packages details view");
+    }
+
+    //Suppliers Hamburger Menu Button --> Dashboard Button methods
+    public void loadSuppliersView(){
+        System.out.println("Loading Suppliers View");
+    }
+
+    public void loadSupplierOrdersView(){
+        System.out.println("Loading Products View");
+    }
+
+
     public void loadAgentsView() {
         System.out.println("loadAgentsView is also working");
 //        // Load the FXML file for the Agents view
 //        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agents-view.fxml"));
 //        try {
 //            AnchorPane agentsView = loader.load();
-//
 //            mainContentWindow.getChildren().clear();
 //            mainContentWindow.getChildren().add(agentsView);
-//
-//
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
