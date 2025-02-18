@@ -1,18 +1,23 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 
 public class ManagerDrawerController extends BaseDrawerController {
 
     @FXML
     public void handleManagerButtonClick() {
-        System.out.println("Manager Button Clicked!");
-        //* The below lines will be updated to reflect the appropriate controllers/views
-        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
-        //Parent packagesRoot = packagesLoader.load();
-        //PackagesController packagesController = packagesLoader.getController();
-        dashboardController.populateDashboardButtons(7);
+        if (dashboardController != null){
+            System.out.println("Delegating button population to DashboardController...");
+            dashboardController.loadDashboardButtons(
+                    new String[]{"Agents", "Agencies"},
+                    new Runnable[]{
+                            dashboardController::loadAgentsView,
+                            dashboardController::loadAgenciesView,
+                    }
+            );
+        } else {
+            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
+        }
     }
 
     public ManagerDrawerController() {

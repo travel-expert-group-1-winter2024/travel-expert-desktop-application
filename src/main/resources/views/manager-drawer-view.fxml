@@ -6,58 +6,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.ManagerDrawerController">
    <children>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Packages" textFill="#272343" onAction="#handlePackagesButtonClick">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/vacation.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Customers" textFill="#272343" onAction="#handleCustomersButtonClick">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/people.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Suppliers" textFill="#272343" onAction="#handleSuppliersButtonClick">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/supplier.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Product" textFill="#272343" onAction="#handleProductsButtonClick">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/expenses.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Reports" textFill="#272343" onAction="#handleReportsButtonClick">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleReportsButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Dashboard" textFill="#272343">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -69,7 +20,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Profile" textFill="#272343" onAction="#handleProfileButtonClick">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleProfileButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Profile" textFill="#272343">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -81,7 +32,55 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Manager" textFill="#272343" onAction="#handleManagerButtonClick">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleCustomersButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Customers" textFill="#272343">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/people.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handlePackagesButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Packages" textFill="#272343">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/vacation.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleSuppliersButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Suppliers" textFill="#272343">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/supplier.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleProductsButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Product" textFill="#272343">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/expenses.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleManagerButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Manager" textFill="#272343">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -93,7 +92,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Logout" textFill="#272343" onAction="#handleLogoutButtonClick">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleLogoutButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Logout" textFill="#272343">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

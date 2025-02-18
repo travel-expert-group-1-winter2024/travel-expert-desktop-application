@@ -1,15 +1,13 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 
 public abstract class BaseDrawerController {
     protected DashboardController dashboardController;
 
     public void setDashboardController(DashboardController dashboardController) {
         this.dashboardController = dashboardController;
-        System.out.println("DashboardController set in BaseDrawerController: " + this + " with DashboardController: " + dashboardController);
+        //System.out.println("DashboardController set in BaseDrawerController: " + this + " with DashboardController: " + dashboardController);
     }
 
     //Methods handling button clicks
@@ -17,13 +15,15 @@ public abstract class BaseDrawerController {
 
     @FXML
     public void handlePackagesButtonClick() {
-        System.out.println("Packages Button Clicked in BaseDrawerController:" + this);
-        //* The below lines will be updated to reflect the appropriate controllers/views
-        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
-        //Parent packagesRoot = packagesLoader.load();
-        //PackagesController packagesController = packagesLoader.getController();
         if (dashboardController != null){
-            dashboardController.populateDashboardButtons(1);
+            System.out.println("Delegating button population to DashboardController...");
+            dashboardController.loadDashboardButtons(
+                    new String[]{"Packages", "Details"},
+                    new Runnable[]{
+                            dashboardController::loadAgentsView,
+                            dashboardController::loadAgenciesView,
+                    }
+            );
         } else {
             System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
         }
@@ -32,60 +32,103 @@ public abstract class BaseDrawerController {
 
     @FXML
     public void handleCustomersButtonClick() {
-        System.out.println("Customers Button Clicked!");
-        //* The below lines will be updated to reflect the appropriate controllers/views
-        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
-        //Parent packagesRoot = packagesLoader.load();
-        //PackagesController packagesController = packagesLoader.getController();
-        dashboardController.populateDashboardButtons(2);
+        if (dashboardController != null){
+            System.out.println("Delegating button population to DashboardController...");
+            dashboardController.loadDashboardButtons(
+                    new String[]{"Info", "Purchases"},
+                    new Runnable[]{
+                            dashboardController::loadAgentsView,
+                            dashboardController::loadAgenciesView,
+                    }
+            );
+        } else {
+            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
+        }
+
     }
 
     @FXML
     public void handleSuppliersButtonClick() {
-        System.out.println("Suppliers Button Clicked!");
-        //* The below lines will be updated to reflect the appropriate controllers/views
-        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
-        //Parent packagesRoot = packagesLoader.load();
-        //PackagesController packagesController = packagesLoader.getController();
-        dashboardController.populateDashboardButtons(3);
+        if (dashboardController != null){
+            System.out.println("Delegating button population to DashboardController...");
+            dashboardController.loadDashboardButtons(
+                    new String[]{"Suppliers", "Orders"},
+                    new Runnable[]{
+                            dashboardController::loadAgentsView,
+                            dashboardController::loadAgenciesView,
+                    }
+            );
+        } else {
+            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
+        }
     }
 
     @FXML
     public void handleProductsButtonClick() {
-        System.out.println("Products Button Clicked!");
-        //* The below lines will be updated to reflect the appropriate controllers/views
-        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
-        //Parent packagesRoot = packagesLoader.load();
-        //PackagesController packagesController = packagesLoader.getController();
-        dashboardController.populateDashboardButtons(4);
+        if (dashboardController != null){
+            System.out.println("Delegating button population to DashboardController...");
+            dashboardController.loadDashboardButtons(
+                    new String[]{"Products", "Services"},
+                    new Runnable[]{
+                            dashboardController::loadAgentsView,
+                            dashboardController::loadAgenciesView,
+
+                    }
+            );
+        } else {
+            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
+        }
     }
 
     @FXML
     public void handleReportsButtonClick() {
-        System.out.println("Reports Button Clicked!");
-        //* The below lines will be updated to reflect the appropriate controllers/views
-        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
-        //Parent packagesRoot = packagesLoader.load();
-        //PackagesController packagesController = packagesLoader.getController();
-        dashboardController.populateDashboardButtons(5);
+        if (dashboardController != null){
+            System.out.println("Delegating button population to DashboardController...");
+            dashboardController.loadDashboardButtons(
+                    new String[]{"Reports", "Charts"},
+                    new Runnable[]{
+                            dashboardController::loadAgentsView,
+                            dashboardController::loadAgenciesView,
+
+                    }
+            );
+        } else {
+            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
+        }
     }
 
     @FXML
     public void handleProfileButtonClick() {
-        System.out.println("Profile Button Clicked!");
-        //* The below lines will be updated to reflect the appropriate controllers/views
-        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
-        //Parent packagesRoot = packagesLoader.load();
-        //PackagesController packagesController = packagesLoader.getController();
-        dashboardController.populateDashboardButtons(6);
+        if (dashboardController != null){
+            System.out.println("Delegating button population to DashboardController...");
+            dashboardController.loadDashboardButtons(
+                    new String[]{"Profile"},
+                    new Runnable[]{
+                            dashboardController::loadAgentsView,
+
+
+                    }
+            );
+        } else {
+            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
+        }
     }
 
     public void handleLogoutButtonClick() {
-        System.out.println("Logout Button Clicked!");
-        //* The below lines will be updated to reflect the appropriate controllers/views
-        //FXMLLoader packagesLoader = new FXMLLoader(getClass().getResource("/views/packages-view.fxml"));
-        //Parent packagesRoot = packagesLoader.load();
-        //PackagesController packagesController = packagesLoader.getController();
+        System.out.println("Logout Clicked");
+//        if (dashboardController != null){
+//            System.out.println("Delegating button population to DashboardController...");
+//            dashboardController.delegateDashboardButtonPopulation(
+//                    new String[]{"Agents", "Agencies"},
+//                    new Runnable[]{
+//                            dashboardController::loadAgentsView,
+//                            dashboardController::loadAgenciesView,
+//
+//                    }
+//            );
+//        } else {
+//            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
+//        }
     }
 
 }//class

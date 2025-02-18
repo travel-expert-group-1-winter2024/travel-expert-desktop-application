@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.scene.control.Label?>
@@ -13,32 +12,28 @@
    <children>
       <StackPane fx:id="stackPaneContentArea" prefHeight="519.0" prefWidth="970.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
          <children>
-            <AnchorPane prefHeight="519.0" prefWidth="810.0">
+            <StackPane fx:id="mainContentWindow">
                <children>
-                  <Label layoutX="466.0" layoutY="208.0" text="Main Content Area" />
+                  <Label text="Main Content Area" />
                </children>
-            </AnchorPane>
+            </StackPane>
          </children>
       </StackPane>
+      <AnchorPane layoutY="70.0" prefHeight="460.0" prefWidth="200.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="800.0" AnchorPane.topAnchor="70.0">
+         <children>
+            <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" prefHeight="460.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
       <AnchorPane prefHeight="70.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #ffd803;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <HBox layoutX="159.0" prefHeight="43.0" prefWidth="811.0" style="-fx-background-color: pink;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
-               <children>
-                  <JFXButton fx:id="tabBtn1" buttonType="RAISED" prefHeight="46.0" prefWidth="98.0" />
-                  <JFXButton fx:id="tabBtn2" buttonType="RAISED" prefHeight="46.0" prefWidth="98.0" />
-               </children></HBox>
+            <HBox fx:id="dashBoardButtonHome" layoutX="209.0" prefHeight="45.0" prefWidth="791.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
             <AnchorPane layoutX="-27.0" layoutY="25.0" prefHeight="45.0" prefWidth="164.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="836.0" AnchorPane.topAnchor="25.0">
                <children>
                   <JFXHamburger fx:id="hamburger" layoutX="14.0" layoutY="13.0" />
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="17.0" prefHeight="17.0" prefWidth="52.0" text="Menu" />
                </children>
             </AnchorPane>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutY="70.0" prefHeight="460.0" prefWidth="200.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="800.0" AnchorPane.topAnchor="70.0">
-         <children>
-            <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" prefHeight="460.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </children>

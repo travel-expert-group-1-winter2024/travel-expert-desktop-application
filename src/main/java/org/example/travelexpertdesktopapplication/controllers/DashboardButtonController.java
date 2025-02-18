@@ -1,5 +1,10 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
+import com.jfoenix.controls.JFXButton;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+
 public class DashboardButtonController {
     protected DashboardController dashboardController;
 
@@ -7,60 +12,68 @@ public class DashboardButtonController {
         this.dashboardController = dashboardController;
     }
 
-    public void updateDashBoardButtons(int code) {
-        switch (code){
-            case 1:
-                displayPackagesButtons();
-                break;
-            case 2:
-                displayCustomerButtons();
-                break;
-            case 3:
-                displaySuppliersButtons();
-                break;
-            case 4:
-                displayProductButtons();
-                break;
-            case 5:
-                displayReportButtons();
-                break;
-            case 6:
-                displayProfileButtons();
-                break;
-            case 7:
-                displayManagerButtons();
-                break;
-            default:
-                System.out.println("Unknown code called");
-                break;
+    @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
+
+    @FXML
+    private JFXButton dashboardBtn1;
+
+    @FXML
+    private JFXButton dashboardBtn2;
+
+    @FXML
+    private JFXButton dashboardBtn3;
+
+    @FXML
+    void initialize() {
+        assert dashboardBtn1 != null : "fx:id=\"dashboardBtn1\" was not injected: check your FXML file 'dashboard-button-view.fxml'.";
+        assert dashboardBtn2 != null : "fx:id=\"dashboardBtn2\" was not injected: check your FXML file 'dashboard-button-view.fxml'.";
+        assert dashboardBtn3 != null : "fx:id=\"dashboardBtn3\" was not injected: check your FXML file 'dashboard-button-view.fxml'.";
+
+    }
+
+
+
+    public void generateButtons(String[] buttonTexts, Runnable[] buttonActions) {
+        //Setting the first button, assuming that the length of buttonTexts is greater than 0.
+        System.out.println("Updating buttons...");
+        for (int i = 0; i < buttonTexts.length; i++) {
+            System.out.println("Button " + (i + 1) + ": " + buttonTexts[i]);
         }
+        if(buttonTexts.length > 0){
+            System.out.println("Displaying the text for the first button: " + buttonTexts[0]);
+            dashboardBtn1.setText(buttonTexts[0]);
+            dashboardBtn1.setOnAction(event -> buttonActions[0].run());
+        } else {
+            dashboardBtn1.setText("");
+            dashboardBtn1.setOnAction(null);
+        }
+        //Setting the second button, assuming that the length of buttonTexts is greater than 1.
+        if (buttonTexts.length > 1){
+            dashboardBtn2.setVisible(true);
+            dashboardBtn2.setText(buttonTexts[1]);
+            dashboardBtn2.setOnAction(event -> buttonActions[1].run());
+        } else {
+            dashboardBtn2.setText("");
+            dashboardBtn2.setOnAction(null);
+            dashboardBtn2.setVisible(false);
+        }
+        // Same for Button 3, if the length is above 2.
+        if (buttonTexts.length > 3){
+            dashboardBtn3.setVisible(true);
+            dashboardBtn3.setText(buttonTexts[2]);
+            dashboardBtn3.setOnAction(event -> buttonActions[2].run());
+        } else {
+            dashboardBtn3.setText("");
+            dashboardBtn3.setOnAction(null);
+            dashboardBtn3.setVisible(false);
+        }
+            //dashboardController.loadDashboardButtons(buttonTexts, buttonActions);
     }
 
-    private void displayManagerButtons() {
-        System.out.println("Code 7 called");
-    }
 
-    private void displayProfileButtons() {
-        System.out.println("Code 6 called");
-    }
 
-    private void displayReportButtons() {
-        System.out.println("Code 5 called");
-    }
-
-    private void displayProductButtons() {
-        System.out.println("Code 4 called");
-    }
-
-    private void displaySuppliersButtons() {
-        System.out.println("Code 3 called");
-    }
-
-    private void displayCustomerButtons() {
-        System.out.println("Code 2 called");
-    }
-
-    private void displayPackagesButtons() {
-        System.out.println("Code 1 Called");
-    }
-}
+} //class
