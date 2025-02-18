@@ -1,8 +1,16 @@
 package org.example.travelexpertdesktopapplication.auth;
 
-public class AgentManager extends User {
+import java.util.UUID;
 
-    public AgentManager(String firstName, String middleInitial, String lastName, String email, String phone, String username, String password) {
-        super(firstName, middleInitial, lastName, email, phone, username, password, UserRole.MANAGER);
+public class AgentManager extends Agent {
+    // new manager
+    public AgentManager(String username, String password) {
+        super(username, password);
+        this.role = UserRole.MANAGER; // Override the role
+    }
+    // existing manager
+    public AgentManager(UUID id, String username, String passwordHash, Integer agentId) {
+        super(id, username, passwordHash, agentId);
+        this.role = UserRole.MANAGER; // Override the role
     }
 }
