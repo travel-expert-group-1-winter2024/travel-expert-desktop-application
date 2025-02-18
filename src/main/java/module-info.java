@@ -13,4 +13,6 @@ module org.example.travelexpertdesktopapplication {
     opens org.example.travelexpertdesktopapplication.controllers to javafx.fxml;
     exports org.example.travelexpertdesktopapplication.dao;
     opens org.example.travelexpertdesktopapplication.dao to javafx.fxml;
+    exports org.example.travelexpertdesktopapplication.auth;
+    opens org.example.travelexpertdesktopapplication.auth to javafx.fxml;
 }
