@@ -1,10 +1,14 @@
 package org.example.travelexpertdesktopapplication.auth;
 
-public class Agent extends User {
+import java.util.UUID;
 
-    public Agent(String firstName, String middleInitial, String lastName, String email, String phone, String username, String password) {
-        super(firstName, middleInitial, lastName, email, phone, username, password, UserRole.AGENT);
+public class Agent extends User {
+    // new agent
+    public Agent(String username, String password) {
+        super(username, password, UserRole.AGENT, null, null);
     }
 
-
+    public Agent(UUID id, String username, String passwordHash, Integer agentId) {
+        super(id, username, passwordHash, UserRole.AGENT, agentId, null);
+    }
 }
