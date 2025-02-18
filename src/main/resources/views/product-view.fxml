@@ -27,9 +27,9 @@
 
         <!-- Button Layout -->
         <HBox layoutX="20" layoutY="320" spacing="10">
-            <Button fx:id="btnAdd" minWidth="120" text="Add Product" />
-            <Button fx:id="btnUpdate" minWidth="120" text="Update Product" />
-            <Button fx:id="btnDelete" minWidth="120" text="Delete Product" />
+            <Button fx:id="btnAdd" minWidth="120" text="Add Product"  onAction="#onAddProduct"/>
+            <Button fx:id="btnUpdate" minWidth="120" text="Update Product" onAction="#onUpdateProduct"/>
+            <Button fx:id="btnDelete" minWidth="120" text="Delete Product" onAction="#onDeleteProduct"/>
         </HBox>
     </children>
 </AnchorPane>
