@@ -61,16 +61,12 @@ public class UserDAO {
      * @return A User object based on the role and database fields.
      */
     private User createUser(UUID id, String username, String passwordHash, UserRole role, Integer agentId, Integer customerId) {
-        switch (role) {
-            case ADMIN:
-                return new Admin(id, username, passwordHash);
-            case AGENT:
-                return new Agent(id, username, passwordHash, agentId);
-            case MANAGER:
-                return new AgentManager(id, username, passwordHash, agentId);
-            default:
-                throw new IllegalArgumentException("Unknown role: " + role);
-        }
+        return switch (role) {
+            case ADMIN -> new Admin(id, username, passwordHash);
+            case AGENT -> new Agent(id, username, passwordHash, agentId);
+            case MANAGER -> new AgentManager(id, username, passwordHash, agentId);
+            default -> throw new IllegalArgumentException("Unknown role: " + role);
+        };
     }
 
     /**
