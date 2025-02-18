@@ -6,53 +6,70 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.travelexpertdesktopapplication.controllers.*;
+
+import org.example.travelexpertdesktopapplication.controllers.LoginController;
+import org.example.travelexpertdesktopapplication.dao.DatabaseManager;
+import org.example.travelexpertdesktopapplication.dao.UserDAO;
+import org.example.travelexpertdesktopapplication.services.AuthService;
+
 
 import java.io.IOException;
 
 public class TEDesktopApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        //Loading the dashboard view and controller
-        FXMLLoader dashboardLoader = new FXMLLoader(getClass().getResource("/views/dashboard-view.fxml"));
-        //Grabbing the root element in the view, such as a AnchorPane or Vbox.
-        Parent dashboardRoot = dashboardLoader.load();
-        DashboardController dashboardController = dashboardLoader.getController();
 
-        //Repeating the steps to grab the Agent view and drawer
-        FXMLLoader agentDrawerLoader = new FXMLLoader(getClass().getResource("/views/agent-drawer-view.fxml"));
-        Parent agentDrawerRoot = agentDrawerLoader.load();
-        AgentDrawerController agentDrawerController = agentDrawerLoader.getController();
+//        //Loading the dashboard view and controller
+//        FXMLLoader dashboardLoader = new FXMLLoader(getClass().getResource("/views/dashboard-view.fxml"));
+//        //Grabbing the root element in the view, such as a AnchorPane or Vbox.
+//        Parent dashboardRoot = dashboardLoader.load();
+//        DashboardController dashboardController = dashboardLoader.getController();
+//
+//        //Repeating the steps to grab the Agent view and drawer
+//        FXMLLoader agentDrawerLoader = new FXMLLoader(getClass().getResource("/views/agent-drawer-view.fxml"));
+//        Parent agentDrawerRoot = agentDrawerLoader.load();
+//        AgentDrawerController agentDrawerController = agentDrawerLoader.getController();
+//
+//
+//        //Repeating to grab the Manager view and drawer
+//        FXMLLoader managerDrawerLoader = new FXMLLoader(getClass().getResource("/views/manager-drawer-view.fxml"));
+//        Parent managerDrawerRoot = managerDrawerLoader.load();
+//        ManagerDrawerController managerDrawerController = managerDrawerLoader.getController();
+//
+//        FXMLLoader dashboardButtonLoader = new FXMLLoader(getClass().getResource("/views/dashboard-button-view.fxml"));
+//        Parent dashboardButtonRoot = dashboardButtonLoader.load();
+//        DashboardButtonController dashboardButtonController = dashboardButtonLoader.getController();
+//
+//        //Instantiating the CentralController and setting the references to the other controllers
+//        dashboardController.setAgentDrawerController(agentDrawerController);
+//        dashboardController.setManagerDrawerController(managerDrawerController);
+//        dashboardController.setDashboardButtonController(dashboardButtonController);
+//
+//        // Inject the DashboardController into the AgentDrawerController
+//        agentDrawerController.setDashboardController(dashboardController);
+//        managerDrawerController.setDashboardController(dashboardController);
+//        dashboardButtonController.setDashboardController(dashboardController);
 
 
-        //Repeating to grab the Manager view and drawer
-        FXMLLoader managerDrawerLoader = new FXMLLoader(getClass().getResource("/views/manager-drawer-view.fxml"));
-        Parent managerDrawerRoot = managerDrawerLoader.load();
-        ManagerDrawerController managerDrawerController = managerDrawerLoader.getController();
-
-        FXMLLoader dashboardButtonLoader = new FXMLLoader(getClass().getResource("/views/dashboard-button-view.fxml"));
-        Parent dashboardButtonRoot = dashboardButtonLoader.load();
-        DashboardButtonController dashboardButtonController = dashboardButtonLoader.getController();
-
-        //Instantiating the CentralController and setting the references to the other controllers
-        dashboardController.setAgentDrawerController(agentDrawerController);
-        dashboardController.setManagerDrawerController(managerDrawerController);
-        dashboardController.setDashboardButtonController(dashboardButtonController);
-
-        // Inject the DashboardController into the AgentDrawerController
-        agentDrawerController.setDashboardController(dashboardController);
-        managerDrawerController.setDashboardController(dashboardController);
-        dashboardButtonController.setDashboardController(dashboardController);
 
 
+//        //Build scene and show
+//        //FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/dashboard-view.fxml"));
+//        //("/views/logic-view.fxml")
+//        Scene scene = new Scene(dashboardRoot, 1000, 600);
+//        //stage.initStyle(StageStyle.UNDECORATED);
+//        stage.setTitle("Travel Experts Desktop Application");
 
+        // test connection since the beginning of application
+        if (!DatabaseManager.testConnection()) {
+            System.exit(1);
+        }
 
-        //Build scene and show
-        //FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/dashboard-view.fxml"));
-        //("/views/logic-view.fxml")
-        Scene scene = new Scene(dashboardRoot, 1000, 600);
-        //stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("Travel Experts Desktop Application");
+        FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/logic-view.fxml"));
+        fxmlLoader.setControllerFactory(param -> new LoginController(new AuthService(new UserDAO())));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Welcome to Travel Expert!");
+
         //stage.setMaximized(true);
         //stage.setResizable(false);
         stage.setScene(scene);

@@ -1,8 +1,15 @@
 package org.example.travelexpertdesktopapplication.auth;
 
-public class Admin extends User {
+import java.util.UUID;
 
-    public Admin(String firstName, String middleInitial, String lastName, String email, String phone, String username, String password) {
-        super(firstName, middleInitial, lastName, email, phone, username, password, UserRole.ADMIN);
+public class Admin extends User {
+    // new admin
+    public Admin(String username, String password) {
+        super(username, password, UserRole.ADMIN, null, null);
+    }
+
+    // existing admin
+    public Admin(UUID id, String username, String passwordHash) {
+        super(id, username, passwordHash, UserRole.ADMIN, null, null);
     }
 }
