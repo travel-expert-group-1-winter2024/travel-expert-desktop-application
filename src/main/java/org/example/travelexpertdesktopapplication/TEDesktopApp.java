@@ -11,7 +11,7 @@ import java.io.IOException;
 public class TEDesktopApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/logic-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/supplier-list-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Welcome to Travel Expert!");
         //stage.setMaximized(true);
