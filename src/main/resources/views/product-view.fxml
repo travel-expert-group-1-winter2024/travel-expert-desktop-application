@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.travelexpertdesktopapplication.controllers.ProductController">
+
+    <children>
+        <!-- Search Field -->
+        <Label layoutX="20" layoutY="20" text="Search Product:"/>
+        <TextField fx:id="txtSearch" layoutX="150" layoutY="20" prefWidth="200"/>
+        <Button fx:id="btnSearch" layoutX="360" layoutY="20" text="Search"/>
+        <Button fx:id="btnReset" layoutX="430" layoutY="20" text="Reset"/>
+
+        <!-- TableView -->
+        <TableView fx:id="tableProducts" layoutX="20" layoutY="60" prefWidth="500" prefHeight="250">
+            <columns>
+                <TableColumn fx:id="productIdColumn" text="Product ID" prefWidth="100"/>
+                <TableColumn fx:id="productNameColumn" text="Product Name" prefWidth="400"/>
+            </columns>
+        </TableView>
+
+        <!-- Button Layout -->
+        <HBox layoutX="20" layoutY="320" spacing="10">
+            <Button fx:id="btnAdd" text="Add Product" minWidth="120"/>
+            <Button fx:id="btnUpdate" text="Update Product" minWidth="120"/>
+            <Button fx:id="btnDelete" text="Delete Product" minWidth="120"/>
+            <Button fx:id="btnLoad" text="Load Products" minWidth="120"/>
+        </HBox>
+    </children>
+</AnchorPane>
