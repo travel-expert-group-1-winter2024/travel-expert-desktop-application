@@ -13,6 +13,7 @@ import org.example.travelexpertdesktopapplication.models.Product;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ProductController {
@@ -26,17 +27,14 @@ public class ProductController {
 
     @FXML
     public void initialize() {
-        // Setup table columns
         productIdColumn.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getProductId()).asObject());
 
         productNameColumn.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(cellData.getValue().getProductName()));
 
-        // Load products initially
         loadProducts();
 
-        // Dynamic search
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> searchProducts(newValue.trim().toLowerCase()));
     }
 
@@ -51,7 +49,7 @@ public class ProductController {
     @FXML
     private void searchProducts(final String searchText) {
         if (searchText.isEmpty()) {
-            loadProducts(); // If empty, reload all products
+            loadProducts();
             return;
         }
 
@@ -66,12 +64,8 @@ public class ProductController {
     /**  Reset the search field and reload products */
     @FXML
     private void resetSearch() {
-        System.out.println("Reset button clicked!"); // Debugging
-
-        txtSearch.clear(); // Clear the search field
-        loadProducts();    // Reload all products
-
-        System.out.println("Search field cleared and products reloaded."); // Debugging
+        txtSearch.clear();
+        loadProducts();
     }
 
     /**  Open the product form to add a new product */
@@ -91,16 +85,26 @@ public class ProductController {
         }
     }
 
-    /**  Delete a selected product */
+    /**  Delete a selected product with confirmation */
     @FXML
     private void onDeleteProduct() {
         Product selected = tableProducts.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            boolean success = ProductDAO.deleteProduct(selected.getProductId());
-            if (success) {
-                loadProducts();
-            } else {
-                showAlert("Error", "Failed to delete product.");
+            // Confirm before deleting
+            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmAlert.setTitle("Confirm Deletion");
+            confirmAlert.setHeaderText(null);
+            confirmAlert.setContentText("Are you sure you want to delete this product: " + selected.getProductName() + "?");
+
+            Optional<ButtonType> result = confirmAlert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                boolean success = ProductDAO.deleteProduct(selected.getProductId());
+                if (success) {
+                    loadProducts();
+                    showSuccess("Success", "Product deleted successfully.");
+                } else {
+                    showAlert("Error", "Failed to delete product.");
+                }
             }
         } else {
             showAlert("No Selection", "Please select a product to delete.");
@@ -125,12 +129,29 @@ public class ProductController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.showAndWait();
+
+            // Show success message after closing the form
+            if (product == null) {
+                showSuccess("Success", "Product added successfully.");
+            } else {
+                showSuccess("Success", "Product updated successfully.");
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /**  Show an alert message */
+    /**  Show a success message */
+    private void showSuccess(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**  Show an error or warning message */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
