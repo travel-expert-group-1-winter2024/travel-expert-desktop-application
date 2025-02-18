@@ -15,7 +15,7 @@
         <Label layoutX="20" layoutY="20" text="Search Product:" />
         <TextField fx:id="txtSearch" layoutX="150" layoutY="20" prefWidth="200" />
         <Button fx:id="btnSearch" layoutX="360" layoutY="20" text="Search" />
-        <Button fx:id="btnReset" layoutX="430" layoutY="20" text="Reset" />
+        <Button fx:id="btnReset" layoutX="430" layoutY="20" text="Reset" onAction="#resetSearch" />
 
         <!-- TableView -->
         <TableView fx:id="tableProducts" layoutX="20" layoutY="60" prefHeight="250" prefWidth="500">

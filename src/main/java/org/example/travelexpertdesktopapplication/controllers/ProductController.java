@@ -20,32 +20,38 @@ public class ProductController {
     @FXML private TableView<Product> tableProducts;
     @FXML private TableColumn<Product, Integer> productIdColumn;
     @FXML private TableColumn<Product, String> productNameColumn;
-    @FXML private Button btnAdd, btnUpdate, btnDelete;
+    @FXML private Button btnAdd, btnUpdate, btnDelete, btnReset;
 
     private ObservableList<Product> productList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        // Setup table columns
         productIdColumn.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getProductId()).asObject());
 
         productNameColumn.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(cellData.getValue().getProductName()));
 
+        // Load products initially
         loadProducts();
+
+        // Dynamic search
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> searchProducts(newValue.trim().toLowerCase()));
     }
 
+    /**  Load all products from the database */
     @FXML
     public void loadProducts() {
         productList.setAll(ProductDAO.getAllProducts());
         tableProducts.setItems(productList);
     }
 
+    /**  Search for products dynamically */
     @FXML
     private void searchProducts(final String searchText) {
         if (searchText.isEmpty()) {
-            loadProducts();
+            loadProducts(); // If empty, reload all products
             return;
         }
 
@@ -57,11 +63,24 @@ public class ProductController {
         tableProducts.setItems(FXCollections.observableArrayList(filteredProducts));
     }
 
+    /**  Reset the search field and reload products */
+    @FXML
+    private void resetSearch() {
+        System.out.println("Reset button clicked!"); // Debugging
+
+        txtSearch.clear(); // Clear the search field
+        loadProducts();    // Reload all products
+
+        System.out.println("Search field cleared and products reloaded."); // Debugging
+    }
+
+    /**  Open the product form to add a new product */
     @FXML
     private void onAddProduct() {
         openProductForm(null);
     }
 
+    /**  Open the product form to update a selected product */
     @FXML
     private void onUpdateProduct() {
         Product selected = tableProducts.getSelectionModel().getSelectedItem();
@@ -72,6 +91,7 @@ public class ProductController {
         }
     }
 
+    /**  Delete a selected product */
     @FXML
     private void onDeleteProduct() {
         Product selected = tableProducts.getSelectionModel().getSelectedItem();
@@ -87,6 +107,7 @@ public class ProductController {
         }
     }
 
+    /**  Open the product form for adding or updating a product */
     private void openProductForm(Product product) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/product-form.fxml"));
@@ -109,7 +130,7 @@ public class ProductController {
         }
     }
 
-
+    /**  Show an alert message */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
