@@ -41,10 +41,17 @@ public class UserDAO {
 
                 return Optional.of(createUser(id, username, passwordHash, role, agentId, customerId));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DatabaseManager.releaseConnection(conn);
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return Optional.empty();
