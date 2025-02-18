@@ -16,7 +16,7 @@ public class ProductController {
     @FXML private TableColumn<Product, Integer> productIdColumn;
     @FXML private TableColumn<Product, String> productNameColumn;
     @FXML private Button btnSearch, btnReset;
-    @FXML private Button btnAdd, btnUpdate, btnDelete, btnLoad;
+    @FXML private Button btnAdd, btnUpdate, btnDelete;
 
     private ObservableList<Product> productList = FXCollections.observableArrayList();
 
