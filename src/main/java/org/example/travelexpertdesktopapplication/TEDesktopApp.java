@@ -19,6 +19,7 @@ public class TEDesktopApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
+        //! Havent removed this old code yet, haven't decided if I still need it or not.
 //        //Loading the dashboard view and controller
 //        FXMLLoader dashboardLoader = new FXMLLoader(getClass().getResource("/views/dashboard-view.fxml"));
 //        //Grabbing the root element in the view, such as a AnchorPane or Vbox.
@@ -51,14 +52,6 @@ public class TEDesktopApp extends Application {
 //        dashboardButtonController.setDashboardController(dashboardController);
 
 
-
-
-//        //Build scene and show
-//        //FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/dashboard-view.fxml"));
-//        //("/views/logic-view.fxml")
-//        Scene scene = new Scene(dashboardRoot, 1000, 600);
-//        //stage.initStyle(StageStyle.UNDECORATED);
-//        stage.setTitle("Travel Experts Desktop Application");
 
         // test connection since the beginning of application
         if (!DatabaseManager.testConnection()) {

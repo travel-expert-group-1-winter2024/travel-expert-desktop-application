@@ -25,17 +25,17 @@ public class DashboardController {
 
 
     //Setters
-    public void setAgentDrawerController(AgentDrawerController agentDrawerController) {
-        this.agentDrawerController = agentDrawerController;
-    }
-
-    public void setManagerDrawerController(ManagerDrawerController managerDrawerController) {
-        this.managerDrawerController = managerDrawerController;
-    }
-
-    public void setDashboardButtonController(DashboardButtonController dashboardButtonController) {
-        this.dashboardButtonController = dashboardButtonController;
-    }
+//    public void setAgentDrawerController(AgentDrawerController agentDrawerController) {
+//        this.agentDrawerController = agentDrawerController;
+//    }
+//
+//    public void setManagerDrawerController(ManagerDrawerController managerDrawerController) {
+//        this.managerDrawerController = managerDrawerController;
+//    }
+//
+//    public void setDashboardButtonController(DashboardButtonController dashboardButtonController) {
+//        this.dashboardButtonController = dashboardButtonController;
+//    }
 
 
     @FXML
