@@ -11,7 +11,7 @@ import java.util.Optional;
  * <p>
  * UserDAO is responsible for accessing and manipulating user data in the database.
  * It provides methods to find users by username and authenticate users.
- *
+ * <p>
  * @version 1.0.0
  */
 public class UserDAO {
