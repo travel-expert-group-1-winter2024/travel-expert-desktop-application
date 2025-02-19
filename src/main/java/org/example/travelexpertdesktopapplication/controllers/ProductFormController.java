@@ -17,6 +17,7 @@ public class ProductFormController {
 
     private ProductController productController;
     private Product selectedProduct;
+    private boolean productSaved = false; //  This tracks whether a product was saved
 
     public void setProductController(ProductController controller) {
         this.productController = controller;
@@ -50,6 +51,7 @@ public class ProductFormController {
             if (success) {
                 System.out.println("Product Added Successfully");
                 productController.loadProducts();
+                productSaved = true; //  Set flag to true
                 closeWindow();
             } else {
                 showAlert("Error", "Failed to add product.");
@@ -60,6 +62,7 @@ public class ProductFormController {
             if (success) {
                 System.out.println("Product Updated Successfully");
                 productController.loadProducts();
+                productSaved = true; //  Set flag to true
                 closeWindow();
             } else {
                 showAlert("Error", "Failed to update product.");
@@ -69,12 +72,18 @@ public class ProductFormController {
 
     @FXML
     private void onCancel() {
+        System.out.println("Cancel button clicked."); // Debugging
+        productSaved = false; //  Ensure that cancel does not trigger a success message
         closeWindow();
     }
 
     private void closeWindow() {
         Stage stage = (Stage) btnCancel.getScene().getWindow();
         stage.close();
+    }
+
+    public boolean isProductSaved() {
+        return productSaved;
     }
 
     private void showAlert(String title, String message) {

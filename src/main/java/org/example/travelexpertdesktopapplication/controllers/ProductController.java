@@ -111,7 +111,6 @@ public class ProductController {
         }
     }
 
-    /**  Open the product form for adding or updating a product */
     private void openProductForm(Product product) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/product-form.fxml"));
@@ -128,19 +127,24 @@ public class ProductController {
             stage.setTitle(product == null ? "Add Product" : "Edit Product");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
+
+            // Show and wait until the form is closed
             stage.showAndWait();
 
-            // Show success message after closing the form
-            if (product == null) {
-                showSuccess("Success", "Product added successfully.");
-            } else {
-                showSuccess("Success", "Product updated successfully.");
+            //  Check if the product was actually added/updated before showing a success message
+            if (controller.isProductSaved()) {
+                if (product == null) {
+                    showSuccess("Success", "Product added successfully.");
+                } else {
+                    showSuccess("Success", "Product updated successfully.");
+                }
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     /**  Show a success message */
     private void showSuccess(String title, String message) {
