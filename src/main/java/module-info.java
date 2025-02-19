@@ -3,8 +3,9 @@ module org.example.travelexpertdesktopapplication {
     requires java.sql;
     requires com.jfoenix;
     requires javafx.controls;
+    requires javafx.base;
 
-
+    opens org.example.travelexpertdesktopapplication.models to javafx.base;
     opens org.example.travelexpertdesktopapplication to javafx.fxml;
     exports org.example.travelexpertdesktopapplication;
     exports org.example.travelexpertdesktopapplication.services;
@@ -13,4 +14,6 @@ module org.example.travelexpertdesktopapplication {
     opens org.example.travelexpertdesktopapplication.controllers to javafx.fxml;
     exports org.example.travelexpertdesktopapplication.dao;
     opens org.example.travelexpertdesktopapplication.dao to javafx.fxml;
+    exports org.example.travelexpertdesktopapplication.auth;
+    opens org.example.travelexpertdesktopapplication.auth to javafx.fxml;
 }

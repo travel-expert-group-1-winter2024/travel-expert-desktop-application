@@ -1,5 +1,6 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 
@@ -10,12 +11,32 @@ import java.util.ResourceBundle;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 public class DashboardController {
+    //References to other controllers.
+    private AgentDrawerController agentDrawerController;
+    private ManagerDrawerController managerDrawerController;
+    private DashboardButtonController dashboardButtonController;
+
+
+    //Setters
+//    public void setAgentDrawerController(AgentDrawerController agentDrawerController) {
+//        this.agentDrawerController = agentDrawerController;
+//    }
+//
+//    public void setManagerDrawerController(ManagerDrawerController managerDrawerController) {
+//        this.managerDrawerController = managerDrawerController;
+//    }
+//
+//    public void setDashboardButtonController(DashboardButtonController dashboardButtonController) {
+//        this.dashboardButtonController = dashboardButtonController;
+//    }
+
 
     @FXML
     private ResourceBundle resources;
@@ -24,7 +45,7 @@ public class DashboardController {
     private URL location;
 
     @FXML
-    private BorderPane borderPaneMainView;
+    private HBox dashBoardButtonHome;
 
     @FXML
     private JFXDrawer drawer;
@@ -33,16 +54,20 @@ public class DashboardController {
     private JFXHamburger hamburger;
 
     @FXML
+    private StackPane mainContentWindow;
+
+    @FXML
     private StackPane stackPaneContentArea;
+
 
     boolean isManager = true;
 
     @FXML
     void initialize() {
-        assert borderPaneMainView != null : "fx:id=\"borderPaneMainView\" was not injected: check your FXML file 'dashboard-view.fxml'.";
+        assert dashBoardButtonHome != null : "fx:id=\"dashBoardButtonHome\" was not injected: check your FXML file 'dashboard-view.fxml'.";
         assert drawer != null : "fx:id=\"drawer\" was not injected: check your FXML file 'dashboard-view.fxml'.";
         assert hamburger != null : "fx:id=\"hamburger\" was not injected: check your FXML file 'dashboard-view.fxml'.";
-        assert stackPaneContentArea != null : "fx:id=\"stackPaneContentArea\" was not injected: check your FXML file 'dashboard-view.fxml'.";
+        assert mainContentWindow != null : "fx:id=\"mainContentWindow\" was not injected: check your FXML file 'dashboard-view.fxml'.";
 
         /**
          * Temporary logic to load admin or manager depending on credentials
@@ -50,15 +75,23 @@ public class DashboardController {
 
         if (isManager){
             try {
-                VBox box = FXMLLoader.load(getClass().getResource("/views/manager-drawer-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/manager-drawer-view.fxml"));
+                VBox box = loader.load();
+                ManagerDrawerController managerDrawerController = loader.getController();
+                managerDrawerController.setDashboardController(this); // Inject the DashboardController
                 drawer.setSidePane(box);
+                this.managerDrawerController = managerDrawerController; // Save the instance for reuse
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         } else {
             try {
-                VBox box = FXMLLoader.load(getClass().getResource("/views/agent-drawer-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agent-drawer-view.fxml"));
+                VBox box = loader.load();
+                AgentDrawerController agentDrawerController = loader.getController();
+                agentDrawerController.setDashboardController(this); // Inject the DashboardController
                 drawer.setSidePane(box);
+                this.agentDrawerController = agentDrawerController; // Save the instance for reuse
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -80,4 +113,95 @@ public class DashboardController {
 
     }
 
-}
+    //Todo: Finish logic that implements views.
+
+
+
+    public void loadDashboardButtons(String[] buttonTexts, Runnable[] buttonActions) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/dashboard-button-view.fxml"));
+            HBox blankButtons = loader.load();
+            dashBoardButtonHome.getChildren().clear();
+            dashBoardButtonHome.getChildren().add(blankButtons);
+            DashboardButtonController buttonController = loader.getController();
+            //buttonController.setDashboardController(this);
+
+            // Pass the button texts and actions to the controller
+            buttonController.generateButtons(buttonTexts, buttonActions);
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
+     * LOADING DYNAMIC BUTTON VIEWS
+     */
+
+    //Dashboard Hamburger Button --> Dynamic button methods
+    public void loadOverViewView(){
+        System.out.println("Loading Overview View");
+    }
+
+    //Customer Hamburger Menu Button --> Dashboard Button methods
+    public void loadCustomerDetailsView(){
+        System.out.println("Loading Customers View");
+    }
+
+    public void loadCustomerPurchasesView(){
+        System.out.println("Loading Customer Purchases");
+    }
+
+    //Packages Hamburger Menu Button --> Dashboard Button methods
+    public void loadPackagesView(){
+        System.out.println("Loading Packages View");
+    }
+
+    public void loadPackageDetailsView(){
+        System.out.println("Loading Packages details view");
+    }
+
+    //Suppliers Hamburger Menu Button --> Dashboard Button methods
+    public void loadSuppliersView(){
+        System.out.println("Loading Suppliers View");
+    }
+
+    public void loadSupplierOrdersView(){
+        System.out.println("Loading Products View");
+    }
+
+
+    public void loadAgentsView() {
+        System.out.println("loadAgentsView is also working");
+//        // Load the FXML file for the Agents view
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agents-view.fxml"));
+//        try {
+//            AnchorPane agentsView = loader.load();
+//            mainContentWindow.getChildren().clear();
+//            mainContentWindow.getChildren().add(agentsView);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+    }
+
+    public void loadAgenciesView() {
+        System.out.println("loadAgenciesView is also working");
+//        // Load the FXML file for the Agents view
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agencies-view.fxml"));
+//        try {
+//            AnchorPane agencyView = loader.load();
+//
+//            mainContentWindow.getChildren().clear();
+//            mainContentWindow.getChildren().add(agencyView);
+//
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+    }
+
+
+}//class
