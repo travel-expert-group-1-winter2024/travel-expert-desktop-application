@@ -12,8 +12,9 @@ public class ProductDAO {
     private static final String INSERT = "INSERT INTO public.products (productid, prodname) VALUES (?, ?)";
     private static final String UPDATE = "UPDATE public.products SET prodname = ? WHERE productid = ?";
     private static final String DELETE = "DELETE FROM public.products WHERE productid = ?";
+    private static final String GET_NEXT_ID = "SELECT MAX(productid) FROM public.products";
 
-    // Method to create a database connection using DbConfig properties
+    /** Get database connection from DbConfig */
     private static Connection getConnection() throws SQLException {
         String url = DbConfig.getProperty("url");
         String user = DbConfig.getProperty("user");
@@ -22,7 +23,7 @@ public class ProductDAO {
         return DriverManager.getConnection(url, user, password);
     }
 
-    // Method to get all products from the database
+    /** Get all products from the database */
     public static List<Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
         try (Connection conn = getConnection();
@@ -40,13 +41,32 @@ public class ProductDAO {
         return products;
     }
 
-    // Method to add a new product
-    public static boolean addProduct(int id, String name) {
+    /** Get the next available product ID */
+    public static int getNextProductId() {
+        int nextId = 1; // Default to 1 if there are no products
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(GET_NEXT_ID)) {
+
+            if (rs.next()) {
+                int lastId = rs.getInt(1);
+                nextId = lastId + 1; // Increment by 1
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nextId;
+    }
+
+    /** Add a new product */
+    public static boolean addProduct(String name) {
         boolean isInserted = false;
+        int newId = getNextProductId(); // Get next available ID
+
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(INSERT)) {
 
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, newId);
             pstmt.setString(2, name);
             isInserted = pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -55,7 +75,7 @@ public class ProductDAO {
         return isInserted;
     }
 
-    // Method to update a product
+    /**  Update a product */
     public static boolean updateProduct(int id, String name) {
         boolean isUpdated = false;
         try (Connection conn = getConnection();
@@ -70,7 +90,7 @@ public class ProductDAO {
         return isUpdated;
     }
 
-    // Method to delete a product
+    /**  Delete a product */
     public static boolean deleteProduct(int id) {
         boolean isDeleted = false;
         try (Connection conn = getConnection();

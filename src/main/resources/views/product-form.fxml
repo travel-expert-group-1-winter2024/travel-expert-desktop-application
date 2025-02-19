@@ -19,7 +19,8 @@
         <Label text="Product Form" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
         <Label text="Product ID:" />
-        <TextField fx:id="txtProductId" promptText="Enter product ID" />
+        <TextField fx:id="txtProductId" layoutX="150" layoutY="80" prefWidth="200" editable="false" disable="true"/>
+
 
         <Label text="Product Name:" />
         <TextField fx:id="txtProductName" promptText="Enter product name" />

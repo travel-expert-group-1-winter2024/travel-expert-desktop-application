@@ -17,52 +17,54 @@ public class ProductFormController {
 
     private ProductController productController;
     private Product selectedProduct;
-    private boolean productSaved = false; //  This tracks whether a product was saved
+    private boolean productSaved = false;
 
     public void setProductController(ProductController controller) {
         this.productController = controller;
     }
 
     public void setProductData(Product product) {
+        txtProductId.setEditable(false);
+        txtProductId.setDisable(true);
+
         if (product != null) {
             selectedProduct = product;
             txtProductId.setText(String.valueOf(product.getProductId()));
-            txtProductId.setDisable(true); // Prevent changing ID on update
             txtProductName.setText(product.getProductName());
+        } else {
+            txtProductId.setText("Auto-Generated");
+            txtProductName.clear();
         }
     }
 
+    /** Save new or updated product */
     @FXML
     private void onSave() {
         System.out.println("Save Product Clicked");
-        String idText = txtProductId.getText();
         String name = txtProductName.getText().trim();
 
-        if (idText.isEmpty() || name.isEmpty()) {
-            showAlert("Validation Error", "Product ID and Name cannot be empty.");
+        if (name.isEmpty()) {
+            showAlert("Validation Error", "Product Name cannot be empty.");
             return;
         }
 
-        int productId = Integer.parseInt(idText);
-
         if (selectedProduct == null) {
-            // Adding a new product
-            boolean success = ProductDAO.addProduct(productId, name);
+            boolean success = ProductDAO.addProduct(name);
             if (success) {
                 System.out.println("Product Added Successfully");
                 productController.loadProducts();
-                productSaved = true; //  Set flag to true
+                productSaved = true; //
                 closeWindow();
             } else {
                 showAlert("Error", "Failed to add product.");
             }
         } else {
-            // Updating existing product
+            int productId = selectedProduct.getProductId();
             boolean success = ProductDAO.updateProduct(productId, name);
             if (success) {
                 System.out.println("Product Updated Successfully");
                 productController.loadProducts();
-                productSaved = true; //  Set flag to true
+                productSaved = true;
                 closeWindow();
             } else {
                 showAlert("Error", "Failed to update product.");
@@ -70,10 +72,11 @@ public class ProductFormController {
         }
     }
 
+    /** Handle cancel button */
     @FXML
     private void onCancel() {
-        System.out.println("Cancel button clicked."); // Debugging
-        productSaved = false; //  Ensure that cancel does not trigger a success message
+        System.out.println("Cancel button clicked.");
+        productSaved = false;
         closeWindow();
     }
 
@@ -86,6 +89,7 @@ public class ProductFormController {
         return productSaved;
     }
 
+    /** Show alert messages */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
