@@ -1,28 +1,79 @@
 package org.example.travelexpertdesktopapplication.dao;
 
-import org.example.travelexpertdesktopapplication.auth.Admin;
-import org.example.travelexpertdesktopapplication.auth.Agent;
-import org.example.travelexpertdesktopapplication.auth.User;
+import org.example.travelexpertdesktopapplication.auth.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.UUID;
 import java.util.Optional;
 
+/**
+ * UserDAO.java
+ * <p>
+ * UserDAO is responsible for accessing and manipulating user data in the database.
+ * It provides methods to find users by username and authenticate users.
+ * <p>
+ * @version 1.0.0
+ */
 public class UserDAO {
-    private static final List<User> users = new ArrayList<>();
 
-    static {
-        users.add(new Admin("Admin", "", "Admin", "admin@example", "123-456-7890", "admin", "Admin@1234"));
-        users.add(new Agent("Agent", "", "Agent", "agent@example.com", "123-456-7890", "agent", "Agent@1234"));
-        users.add(new Agent("Manager", "", "Manager", "manager@example.com", "123-456-7890", "manager", "Manager@1234"));
-    }
-
+    /**
+     * Find a user by their username.
+     *
+     * @param username The username to search for.
+     * @return An Optional containing the User if found, or an empty Optional otherwise.
+     */
     public Optional<User> findByUsername(String username) {
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                return Optional.of(user);
+        String sql = "SELECT id, username, password_hash, role, agentid, customerid FROM users WHERE username = ?";
+        Connection conn = null;
+
+        try {
+            conn = DatabaseManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                UUID id = UUID.fromString(rs.getString("id"));
+                String passwordHash = rs.getString("password_hash");
+                UserRole role = UserRole.valueOf(rs.getString("role"));
+                Integer agentId = (rs.getObject("agentid") != null) ? rs.getInt("agentid") : null;
+                Integer customerId = (rs.getObject("customerid") != null) ? rs.getInt("customerid") : null;
+
+                return Optional.of(createUser(id, username, passwordHash, role, agentId, customerId));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
+
         return Optional.empty();
     }
+
+    /**
+     * Create a User object based on the role and database fields.
+     * @param id The user's UUID.
+     * @param username The user's username.
+     * @param passwordHash The user's password hash.
+     * @param role The user's role.
+     * @param agentId The user's agent ID.
+     * @param customerId The user's customer ID.
+     * @return A User object based on the role and database fields.
+     */
+    private User createUser(UUID id, String username, String passwordHash, UserRole role, Integer agentId, Integer customerId) {
+        return switch (role) {
+            case ADMIN -> new Admin(id, username, passwordHash);
+            case AGENT -> new Agent(id, username, passwordHash, agentId);
+            case MANAGER -> new AgentManager(id, username, passwordHash, agentId);
+            default -> throw new IllegalArgumentException("Unknown role: " + role);
+        };
+    }
+
 }

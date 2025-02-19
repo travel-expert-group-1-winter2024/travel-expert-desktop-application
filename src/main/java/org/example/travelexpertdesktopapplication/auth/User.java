@@ -6,33 +6,54 @@ import java.util.UUID;
 
 public abstract class User {
     protected UUID id;
-    protected String firstName;
-    protected String middleInitial;
-    protected String lastName;
-    protected String email;
-    protected String phone;
     protected String username;
     protected String passwordHash;
     protected UserRole role;
+    protected Integer agentId;  // Nullable (only for Agents)
+    protected Integer customerId;  // Nullable (only for Customers)
 
-    protected User(String firstName, String middleInitial, String lastName, String email, String phone, String username, String password, UserRole role) {
+    // this is for new user
+    protected User(String username, String plainPassword, UserRole role, Integer agentId, Integer customerId) {
         this.id = UUID.randomUUID();
-        this.firstName = firstName;
-        this.middleInitial = middleInitial;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
         this.username = username;
-        this.passwordHash = hashPassword(password);
+        this.passwordHash = hashPassword(plainPassword);
         this.role = role;
+        this.agentId = agentId;
+        this.customerId = customerId;
+    }
+
+    // this is for existing user
+    protected User(UUID id, String username, String hashedPassword, UserRole role, Integer agentId, Integer customerId) {
+        this.id = id;
+        this.username = username;
+        this.passwordHash = hashedPassword;
+        this.role = role;
+        this.agentId = agentId;
+        this.customerId = customerId;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public Integer getAgentId() {
+        return agentId;
+    }
+
+    public Integer getCustomerId() {
+        return customerId;
     }
 
     private String hashPassword(String password) {
@@ -53,9 +74,6 @@ public abstract class User {
         return hashPassword(password).equals(passwordHash);
     }
 
-    public UserRole getRole(){
-        return role;
-    }
 
     public void logout() {
         System.out.println("User logged out");

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox prefHeight="43.0" prefWidth="811.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.DashboardButtonController">
+   <children>
+      <JFXButton fx:id="dashboardBtn1" buttonType="RAISED" prefHeight="46.0" prefWidth="98.0" style="-fx-background-color: #e3f6f5; -fx-text-fill: black;" />
+      <JFXButton fx:id="dashboardBtn2" buttonType="RAISED" prefHeight="46.0" prefWidth="98.0" style="-fx-background-color: #e3f6f5;" />
+      <JFXButton fx:id="dashboardBtn3" buttonType="RAISED" prefHeight="46.0" prefWidth="98.0" style="-fx-background-color: #e3f6f5;" />
+   </children>
+</HBox>

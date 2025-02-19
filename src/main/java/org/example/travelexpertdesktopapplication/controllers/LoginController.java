@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,7 +23,7 @@ import org.example.travelexpertdesktopapplication.auth.User;
 import org.example.travelexpertdesktopapplication.services.AuthService;
 
 public class LoginController {
-    private final AuthService authService = new AuthService();
+    private final AuthService authService;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -41,6 +42,10 @@ public class LoginController {
 
     @FXML // fx:id="tfUsername"
     private TextField tfUsername; // Value injected by FXMLLoader
+
+    public LoginController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
