@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -20,7 +20,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.TEDesktopApp;
 import org.example.travelexpertdesktopapplication.dao.SupplierDAO;
-import org.example.travelexpertdesktopapplication.models.Supplier;
+import org.example.travelexpertdesktopapplication.models.SupplierContacts;
+import org.example.travelexpertdesktopapplication.utils.AlertBox;
 
 public class SupplierController {
 
@@ -32,59 +33,61 @@ public class SupplierController {
 
     @FXML
     private Button btnAddSupplier;
+    @FXML
+    private Button btnEditSupplier;
 
     @FXML
     private Button btnDeleteSupplier;
 
     @FXML
-    private TableColumn<Supplier, String> colAddress;
+    private TableColumn<SupplierContacts, String> colAddress;
 
     @FXML
-    private TableColumn<Supplier, String> colBusinessPhone;
+    private TableColumn<SupplierContacts, String> colBusinessPhone;
 
     @FXML
-    private TableColumn<Supplier, String> colCity;
+    private TableColumn<SupplierContacts, String> colCity;
 
     @FXML
-    private TableColumn<Supplier, String> colCompany;
+    private TableColumn<SupplierContacts, String> colCompany;
 
     @FXML
-    private TableColumn<Supplier, Integer> colContactID;
+    private TableColumn<SupplierContacts, Integer> colContactID;
 
     @FXML
-    private TableColumn<Supplier, String> colCountry;
+    private TableColumn<SupplierContacts, String> colCountry;
 
     @FXML
-    private TableColumn<Supplier, String> colEmail;
+    private TableColumn<SupplierContacts, String> colEmail;
 
     @FXML
-    private TableColumn<Supplier, String> colFax;
+    private TableColumn<SupplierContacts, String> colFax;
 
     @FXML
-    private TableColumn<Supplier, String> colFirstName;
+    private TableColumn<SupplierContacts, String> colFirstName;
 
     @FXML
-    private TableColumn<Supplier, String> colLastName;
+    private TableColumn<SupplierContacts, String> colLastName;
 
     @FXML
-    private TableColumn<Supplier, String> colPostalCode;
+    private TableColumn<SupplierContacts, String> colPostalCode;
 
     @FXML
-    private TableColumn<Supplier, String> colProvince;
+    private TableColumn<SupplierContacts, String> colProvince;
 
     @FXML
-    private TableColumn<Supplier, Integer> colSupplierID;
+    private TableColumn<SupplierContacts, Integer> colSupplierID;
 
     @FXML
-    private TableColumn<Supplier,String> colAffliationid;
+    private TableColumn<SupplierContacts,String> colAffliationid;
 
     @FXML
-    private TableColumn<Supplier,String> colWebsite;
+    private TableColumn<SupplierContacts,String> colWebsite;
 
     @FXML
-    private TableView<Supplier> tvSuppliers;
+    private TableView<SupplierContacts> tvSuppliers;
 
-    private ObservableList<Supplier> data = FXCollections.observableArrayList();
+    private ObservableList<SupplierContacts> data = FXCollections.observableArrayList();
     public String mode;
 
     @FXML
@@ -107,23 +110,29 @@ public class SupplierController {
         assert colSupplierID != null : "fx:id=\"colSupplierID\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
         assert colWebsite != null : "fx:id=\"colWebsite\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
         assert tvSuppliers != null : "fx:id=\"tvSuppliers\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
+        assert btnEditSupplier != null : "fx:id=\"btnAddSupplier\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
 
+        //Initialize and setup table and display data
         setupSupplierTable();
         displayAllSupplierData();
-        btnDeleteSupplier.setDisable(true);
+        btnDeleteSupplier.setDisable(true); //disable delete Button
+        btnEditSupplier.setDisable(true);   //disable Edit  Button
 
         //on Add set action
         btnAddSupplier.setOnAction(e -> {
             mode = "Add";
             openAddEditWindow(null, mode);
         });
+
         //on selection of data add listener
-        tvSuppliers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Supplier>() {
+        tvSuppliers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SupplierContacts>() {
             @Override
-            public void changed(ObservableValue<? extends Supplier> observableValue, Supplier oldValue, Supplier newValue) {
+            public void changed(ObservableValue<? extends SupplierContacts> observableValue, SupplierContacts oldValue, SupplierContacts newValue) {
                 int index = tvSuppliers.getSelectionModel().getSelectedIndex();
                 if(tvSuppliers.getSelectionModel().isSelected(index)) {
-                    Platform.runLater(() -> {
+                    btnDeleteSupplier.setDisable(false);
+                    btnEditSupplier.setDisable(false);
+                    btnEditSupplier.setOnAction(e->{
                         mode = "Edit";
                         openAddEditWindow(newValue, mode);
                     });
@@ -132,6 +141,9 @@ public class SupplierController {
         });
     }
 
+    /**
+     * Setup data for each column and bind them from database columns
+     */
     private void setupSupplierTable(){
         colContactID.setCellValueFactory(new PropertyValueFactory<>("suppliercontactid"));
         colFirstName.setCellValueFactory(new PropertyValueFactory<>("supconfirstname"));
@@ -150,7 +162,9 @@ public class SupplierController {
         colAddress.setCellValueFactory(new PropertyValueFactory<>("supconaddress"));
     }
 
-    //Display all Data for fees
+    /**
+     * Display all Data for Suppliers
+     */
     public void displayAllSupplierData() {
         // Clear the list for new data
         data.clear();
@@ -164,7 +178,12 @@ public class SupplierController {
         tvSuppliers.setItems(data);
     }
 
-    private void openAddEditWindow(Supplier supplier, String mode){
+    /**
+     * Opens a new window of Add/Edit
+     * @param supplierContacts-Object with all the data
+     * @param mode - Sets teh data as per Mode
+     */
+    private void openAddEditWindow(SupplierContacts supplierContacts, String mode){
         FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/add-edit-supplier-view.fxml"));
         Scene scene = null;
         try {
@@ -178,13 +197,30 @@ public class SupplierController {
 
         //As the mode is edit set the Data
         if(mode.equalsIgnoreCase("Edit")) {
-//            controller.setFeeDataForm(Fees);
+            controller.setSupplierData(supplierContacts);
         }
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Add/Edit Supplier");
+        stage.setTitle("Add/Edit SupplierContacts");
         stage.setScene(scene);
         stage.showAndWait();
+        displayAllSupplierData();
+    }
+
+
+    /**
+     * Delete Supplier as per selected data in Observable
+     */
+    @FXML
+    private void deleteSupplier(){
+        int selectedSupplierContactID = tvSuppliers.getSelectionModel().getSelectedItems().get(0).getSuppliercontactid();
+        int numRows = 0;
+        numRows = SupplierDAO.deleteSelectedSupplierContact(selectedSupplierContactID);
+        if (numRows == 1) {
+            AlertBox.showAlert("Delete", "The Supplier Contact has been deleted successfully.",Alert.AlertType.CONFIRMATION);
+        } else {
+            AlertBox.showAlert("Delete", "Delete operation failed. Supplier Contacts ID may not exist.",Alert.AlertType.ERROR);
+        }
         displayAllSupplierData();
     }
 }

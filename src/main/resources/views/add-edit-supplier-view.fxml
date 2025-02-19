@@ -188,11 +188,6 @@
                   <Insets left="25.0" right="70.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="tfProvince" promptText="Enter Province" GridPane.columnIndex="1" GridPane.rowIndex="7">
-               <GridPane.margin>
-                  <Insets left="25.0" right="70.0" />
-               </GridPane.margin>
-            </TextField>
             <TextField fx:id="tfPostalCode" promptText="Enter Postal Code" GridPane.columnIndex="1" GridPane.rowIndex="8">
                <GridPane.margin>
                   <Insets left="25.0" right="70.0" />
@@ -234,6 +229,11 @@
                   <Insets left="25.0" right="70.0" />
                </GridPane.margin>
             </ComboBox>
+            <ComboBox fx:id="cbProvince" prefHeight="26.0" prefWidth="239.0" promptText="Select Province" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets left="25.0" />
+               </GridPane.margin>
+            </ComboBox>
          </children>
          <padding>
             <Insets bottom="19.0" left="5.0" right="5.0" top="5.0" />
@@ -253,7 +253,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="48.0" prefWidth="679.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnSave" onMouseClicked="#onSaveButtonClick" mnemonicParsing="false" text="Save">
+            <Button fx:id="btnSave" mnemonicParsing="false" onMouseClicked="#onSaveButtonClick" text="Save">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
@@ -261,7 +261,7 @@
                   <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnExit" onMouseClicked="#onExit" cancelButton="true" mnemonicParsing="false" text="Exit">
+            <Button fx:id="btnExit" cancelButton="true" mnemonicParsing="false" onMouseClicked="#onExit" text="Exit">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
