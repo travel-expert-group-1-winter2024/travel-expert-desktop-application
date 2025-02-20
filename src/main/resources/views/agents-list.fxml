@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, #f8f9fa, #e9ecef);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.AgentsListController">
+
+    <!-- Title Label -->
+    <Label alignment="CENTER" layoutX="362.0" layoutY="14.0" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Agents" />
+
+    <!-- Search Bar and TableView -->
+    <VBox layoutX="50" layoutY="50" spacing="10">
+        <HBox>
+            <Label alignment="CENTER" prefHeight="37.0" prefWidth="55.0" text="Search ">
+            <font>
+               <Font name="System Bold" size="16.0" />
+            </font></Label>
+            <!-- Search Bar -->
+            <TextField fx:id="txtSearch" prefHeight="36.0" prefWidth="649.0" promptText="Search agents..." style="-fx-padding: 8px; -fx-border-radius: 5px; -fx-border-color: #bdc3c7;" />
+
+        </HBox>
+<!--        &lt;!&ndash; Search Bar &ndash;&gt;-->
+<!--        <TextField fx:id="txtSearch" prefHeight="36.0" prefWidth="649.0" promptText="Search agents..." style="-fx-padding: 8px; -fx-border-radius: 5px; -fx-border-color: #bdc3c7;" />-->
+
+        <!-- TableView for Agents -->
+        <TableView fx:id="agentTable" prefHeight="320" prefWidth="700" style="-fx-background-color: white; -fx-border-color: #bdc3c7; -fx-border-radius: 8px;">
+            <columns>
+                <TableColumn fx:id="colAgentID" prefWidth="80" text="Agent ID" />
+                <TableColumn fx:id="colFirstName" prefWidth="100" text="First Name" />
+                <TableColumn fx:id="colMiddleInitial" prefWidth="95.33338928222656" text="Middle Initial" />
+                <TableColumn fx:id="colLastName" prefWidth="84.6666259765625" text="Last Name" />
+                <TableColumn fx:id="colBusPhone" prefWidth="120" text="Business Phone" />
+                <TableColumn fx:id="colEmail" prefWidth="150" text="Email" />
+                <TableColumn fx:id="colPosition" prefWidth="120" text="Position" />
+                <TableColumn fx:id="colAgencyID" prefWidth="80" text="Agency" />
+            </columns>
+        </TableView>
+    </VBox>
+
+    <!-- Buttons for Add, Edit, Delete, and Exit -->
+    <HBox layoutX="208.0" layoutY="428.0" spacing="20">
+        <Button fx:id="btnAdd" onAction="#handleAddAgent" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 20px; -fx-border-radius: 5px;" text="Add Agent" />
+        <Button fx:id="btnEdit" onAction="#handleEditAgent" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 20px; -fx-border-radius: 5px;" text="Edit Agent" />
+        <Button fx:id="btnDelete" onAction="#handleDeleteAgent" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 20px; -fx-border-radius: 5px;" text="Delete Agent" />
+    </HBox>
+
+</AnchorPane>
