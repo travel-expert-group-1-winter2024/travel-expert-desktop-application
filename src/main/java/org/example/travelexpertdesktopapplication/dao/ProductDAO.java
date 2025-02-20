@@ -72,7 +72,7 @@ public class ProductDAO {
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(INSERT)) {
-
+            Logger.debug("Executing SQL query: {}", INSERT);
             pstmt.setInt(1, newId);
             pstmt.setString(2, name);
             int rowsInserted = pstmt.executeUpdate();
@@ -96,7 +96,7 @@ public class ProductDAO {
         Logger.debug("Updating product. ID={}, New Name={}", id, name);
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(UPDATE)) {
-
+            Logger.debug("Executing SQL query: {}", UPDATE);
             pstmt.setString(1, name);
             pstmt.setInt(2, id);
             int rowsUpdated = pstmt.executeUpdate();
@@ -121,7 +121,7 @@ public class ProductDAO {
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(DELETE)) {
-
+            Logger.debug("Executing SQL query: {}", DELETE);
             pstmt.setInt(1, id);
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
