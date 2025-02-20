@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,10 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -38,6 +36,12 @@ public class SupplierController {
 
     @FXML
     private Button btnDeleteSupplier;
+    @FXML
+    private JFXButton btnReset;
+
+    @FXML
+    private TextField txtSearch;
+
 
     @FXML
     private TableColumn<SupplierContacts, String> colAddress;
@@ -94,6 +98,8 @@ public class SupplierController {
     void initialize() {
         assert btnAddSupplier != null : "fx:id=\"btnAddSupplier\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
         assert btnDeleteSupplier != null : "fx:id=\"btnDeleteSupplier\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
+        assert btnEditSupplier != null : "fx:id=\"btnEditSupplier\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
+        assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
         assert colAddress != null : "fx:id=\"colAddress\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
         assert colAffliationid != null : "fx:id=\"colAffliationid\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
         assert colBusinessPhone != null : "fx:id=\"colBusinessPhone\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
@@ -110,7 +116,7 @@ public class SupplierController {
         assert colSupplierID != null : "fx:id=\"colSupplierID\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
         assert colWebsite != null : "fx:id=\"colWebsite\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
         assert tvSuppliers != null : "fx:id=\"tvSuppliers\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
-        assert btnEditSupplier != null : "fx:id=\"btnAddSupplier\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
+        assert txtSearch != null : "fx:id=\"txtSearch\" was not injected: check your FXML file 'supplier-list-view.fxml'.";
 
         //Initialize and setup table and display data
         setupSupplierTable();

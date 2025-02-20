@@ -59,12 +59,12 @@
       </AnchorPane>
       <StackPane alignment="CENTER_RIGHT" layoutX="149.0" layoutY="40.0" prefHeight="51.0" prefWidth="454.0">
          <children>
+              <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Seach for Product" />
             <ImageView fx:id="btnSearch" fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/magnifying-glass.png" />
                </image>
             </ImageView>
-              <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Seach for Product" />
          </children>
       </StackPane>
       <JFXButton fx:id="btnReset" buttonType="RAISED" layoutX="607.0" layoutY="53.0" onAction="#resetSearch" style="-fx-background-color: #994ff3;" text="Reset" textFill="#fffffe">
