@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, #f8f9fa, #e9ecef);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.AgencyListController">
+
+<!-- Title Label -->
+<Label alignment="CENTER" layoutX="362.0" layoutY="14.0" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Agencies" />
+
+<!-- TableView for Agencies -->
+<TableView fx:id="agencyTable" layoutX="50" layoutY="50" prefHeight="320" prefWidth="700" style="-fx-background-color: white; -fx-border-color: #bdc3c7; -fx-border-radius: 8px;">
+    <columns>
+        <TableColumn fx:id="colAgencyID" prefWidth="80" text="Agency ID" />
+        <TableColumn fx:id="colAgencyAddress" prefWidth="150" text="Address" />
+        <TableColumn fx:id="colAgencyCity" prefWidth="100" text="City" />
+        <TableColumn fx:id="colAgencyProv" prefWidth="100" text="Province" />
+        <TableColumn fx:id="colAgencyPostal" prefWidth="100" text="Postal Code" />
+        <TableColumn fx:id="colAgencyCountry" prefWidth="100" text="Country" />
+        <TableColumn fx:id="colAgencyPhone" prefWidth="100" text="Phone" />
+        <TableColumn fx:id="colAgencyFax" prefWidth="100" text="Fax" />
+    </columns>
+</TableView>
+
+<!-- Buttons for Add, Edit, Delete, and Exit -->
+<HBox layoutX="220" layoutY="400" spacing="20">
+    <Button fx:id="btnAdd" onAction="#handleAddAgency" style="-fx-background-color: #2ecc71; -fx-text-fill: white;                        -fx-font-weight: bold; -fx-padding: 8px 20px; -fx-border-radius: 5px;" text="Add Agency" />
+    <Button fx:id="btnEdit" onAction="#handleEditAgency" style="-fx-background-color: #3498db; -fx-text-fill: white;                        -fx-font-weight: bold; -fx-padding: 8px 20px; -fx-border-radius: 5px;" text="Edit Agency" />
+    <Button fx:id="btnDelete" onAction="#handleDeleteAgency" style="-fx-background-color: #e74c3c; -fx-text-fill: white;                        -fx-font-weight: bold; -fx-padding: 8px 20px; -fx-border-radius: 5px;" text="Delete Agency" />
+</HBox>
+
+</AnchorPane>
