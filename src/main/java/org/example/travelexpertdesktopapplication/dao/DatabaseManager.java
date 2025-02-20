@@ -16,11 +16,9 @@ public class DatabaseManager {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             if (connection != null && !connection.isClosed()) {
-                System.out.println("Database connection successful!");
                 return connection;
             }
         } catch (SQLException e) {
-            System.err.println("Database connection failed!");
             e.printStackTrace();
         }
         return null;
