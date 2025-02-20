@@ -34,7 +34,7 @@ public class AgentsDAO {
                 agentList.add(agent);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e, "Error fetching agents from the database.");
         }
         return agentList;
     }
