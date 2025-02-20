@@ -183,7 +183,7 @@ public class SupplierController {
      * @param supplierContacts-Object with all the data
      * @param mode - Sets teh data as per Mode
      */
-    private void openAddEditWindow(SupplierContacts supplierContacts, String mode){
+    protected void openAddEditWindow(SupplierContacts supplierContacts, String mode){
         FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/add-edit-supplier-view.fxml"));
         Scene scene = null;
         try {
@@ -212,7 +212,7 @@ public class SupplierController {
      * Delete Supplier as per selected data in Observable
      */
     @FXML
-    private void deleteSupplier(){
+    protected void deleteSupplier(){
         int selectedSupplierContactID = tvSuppliers.getSelectionModel().getSelectedItems().get(0).getSuppliercontactid();
         int numRows = 0;
         numRows = SupplierDAO.deleteSelectedSupplierContact(selectedSupplierContactID);

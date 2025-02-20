@@ -8,7 +8,8 @@ import org.example.travelexpertdesktopapplication.models.SupplierContacts;
 
 import java.sql.*;
 
-import static org.example.travelexpertdesktopapplication.services.DatabaseConnection.getConnection;
+import static org.example.travelexpertdesktopapplication.dao.DatabaseManager.getConnection;
+//import static org.example.travelexpertdesktopapplication.services.DatabaseManager.getConnection;
 
 public class SupplierDAO {
 

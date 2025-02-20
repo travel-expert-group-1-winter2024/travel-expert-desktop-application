@@ -8,17 +8,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.ProductController">
+<AnchorPane prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.ProductController">
 
     <children>
         <!-- Search Field -->
-        <Label layoutX="20" layoutY="20" text="Search Product:" />
-        <TextField fx:id="txtSearch" layoutX="150" layoutY="20" prefWidth="200" />
-        <Button fx:id="btnSearch" layoutX="360" layoutY="20" text="Search" />
-        <Button fx:id="btnReset" layoutX="430" layoutY="20" text="Reset" onAction="#resetSearch" />
+        <Label layoutX="150.0" layoutY="103.0" text="Search Product:" />
+        <TextField fx:id="txtSearch" layoutX="280.0" layoutY="103.0" prefWidth="200" />
+        <Button fx:id="btnSearch" layoutX="490.0" layoutY="103.0" text="Search" />
+        <Button fx:id="btnReset" layoutX="560.0" layoutY="103.0" onAction="#resetSearch" text="Reset" />
 
         <!-- TableView -->
-        <TableView fx:id="tableProducts" layoutX="20" layoutY="60" prefHeight="250" prefWidth="500">
+        <TableView fx:id="tableProducts" layoutX="150.0" layoutY="143.0" prefHeight="250" prefWidth="500">
             <columns>
                 <TableColumn fx:id="productIdColumn" prefWidth="100" text="Product ID" />
                 <TableColumn fx:id="productNameColumn" prefWidth="400" text="Product Name" />
@@ -26,10 +26,10 @@
         </TableView>
 
         <!-- Button Layout -->
-        <HBox layoutX="20" layoutY="320" spacing="10">
-            <Button fx:id="btnAdd" minWidth="120" text="Add Product"  onAction="#onAddProduct"/>
-            <Button fx:id="btnUpdate" minWidth="120" text="Update Product" onAction="#onUpdateProduct"/>
-            <Button fx:id="btnDelete" minWidth="120" text="Delete Product" onAction="#onDeleteProduct"/>
+        <HBox layoutX="150.0" layoutY="403.0" spacing="10">
+            <Button fx:id="btnAdd" minWidth="120" onAction="#onAddProduct" text="Add Product" />
+            <Button fx:id="btnUpdate" minWidth="120" onAction="#onUpdateProduct" text="Update Product" />
+            <Button fx:id="btnDelete" minWidth="120" onAction="#onDeleteProduct" text="Delete Product" />
         </HBox>
     </children>
 </AnchorPane>

@@ -1,6 +1,5 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 
@@ -11,10 +10,8 @@ import java.util.ResourceBundle;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
 
 public class DashboardController {
@@ -167,10 +164,28 @@ public class DashboardController {
     //Suppliers Hamburger Menu Button --> Dashboard Button methods
     public void loadSuppliersView(){
         System.out.println("Loading Suppliers View");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/supplier-list-view.fxml"));
+        try {
+            BorderPane supplierListView = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(supplierListView);
+        } catch (IOException e) {
+            System.out.println("Error is being caught in the Catch of loadProductsView");
+            throw new RuntimeException(e);
+        }
     }
 
-    public void loadSupplierOrdersView(){
+    public void loadProductsView(){
         System.out.println("Loading Products View");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/product-view.fxml"));
+        try {
+            AnchorPane productsView = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(productsView);
+        } catch (IOException e) {
+            System.out.println("Error is being caught in the Catch of loadProductsView");
+            throw new RuntimeException(e);
+        }
     }
 
 
