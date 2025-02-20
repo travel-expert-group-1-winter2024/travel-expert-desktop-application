@@ -8,7 +8,6 @@ import org.example.travelexpertdesktopapplication.models.SupplierContacts;
 
 import java.sql.*;
 
-import static org.example.travelexpertdesktopapplication.services.DatabaseConnection.getConnection;
 
 public class SupplierDAO {
 
@@ -19,7 +18,7 @@ public class SupplierDAO {
     public static ObservableList<SupplierContacts> getSupplierList() {
         ObservableList<SupplierContacts> supplierContactsList = FXCollections.observableArrayList();
         String query = "SELECT * FROM suppliercontacts;";
-        try (Connection conn = getConnection();
+        try (Connection conn = DatabaseManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             //Append data in the list
@@ -57,7 +56,7 @@ public class SupplierDAO {
         ObservableList<String> affiliations = FXCollections.observableArrayList();
         String query = "SELECT affilitationid FROM affiliations";
 
-        try (Connection conn = getConnection();
+        try (Connection conn = DatabaseManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
@@ -75,7 +74,7 @@ public class SupplierDAO {
      * @return affected rows
      */
     public static int deleteSelectedSupplierContact(int contactSupplierID) {
-        Connection conn = getConnection();
+        Connection conn = DatabaseManager.getConnection();
         int affectedRows = 0;
         String sql = "DELETE FROM suppliercontacts WHERE suppliercontactid = ?";
         PreparedStatement stmt = null;
@@ -96,7 +95,7 @@ public class SupplierDAO {
      * @return-  affected rows
      */
     public static int addSupplierContact(SupplierContacts supplierContacts) {
-        Connection conn = getConnection();
+        Connection conn = DatabaseManager.getConnection();
         int numAffectedRows = 0;
         int addSupplierID = addSupplier(supplierContacts);
         try {
@@ -135,7 +134,7 @@ public class SupplierDAO {
      * @return-  affected rows
      */
     public static int updateSupplierContact(SupplierContacts supplierContacts){
-        Connection conn = getConnection();
+        Connection conn = DatabaseManager.getConnection();
         int numAffectedRows = 0;
         try {
             String sql = "UPDATE suppliercontacts SET supconfirstname = ?, supconlastname = ?, supconcompany = ?, " +
@@ -173,7 +172,7 @@ public class SupplierDAO {
      * @return
      */
     public static int addSupplier(SupplierContacts supplier){
-        Connection conn = getConnection();
+        Connection conn = DatabaseManager.getConnection();
         int generatedId = 0;
         String sql = "Insert INTO suppliers (supname) VALUES (?) RETURNING supplierid;";
         try {
