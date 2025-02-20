@@ -15,7 +15,8 @@ public class Validator {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$");
     private static final Pattern PHONE_PATTERN = Pattern.compile("^\\+?1?[-\\s]?\\(?\\d{3}\\)?[-\\s]?\\d{3}[-\\s]?\\d{4}$");
     private static final Pattern POSTAL_CODE_PATTERN = Pattern.compile("^[A-Za-z]\\d[A-Za-z] \\d[A-Za-z]\\d$");
-
+    private static final Pattern URL_PATTERN = Pattern.compile("^(https?://)?" + "([\\w-]+\\.)+[a-zA-Z]{2,6}" +
+                                                                "(:\\d{1,5})?" + "(/.*)?$");
     /**
      * Checks for empty field
      * @param input - User input via Text field, general use.
@@ -93,6 +94,21 @@ public class Validator {
             return errorMessage+= "Invalid postal code format, Please use A1A 1A1 format.";
         }
         return null;
+    }
+
+    /**
+     * Checks for empty URL if not then checks with regex given
+     * @param url -  Entered by the user
+     * @return Errormessage if invalid, null if valid.
+     */
+    public static String validateURL(String url) {
+        if (checkForEmpty(url) != null) {
+            return "URL cannot be empty.";
+        }
+        if (!URL_PATTERN.matcher(url).matches()) {
+            return "Invalid URL format. Please enter a valid URL (e.g., http://www.example.com)";
+        }
+        return null; // URL is valid
     }
 
 

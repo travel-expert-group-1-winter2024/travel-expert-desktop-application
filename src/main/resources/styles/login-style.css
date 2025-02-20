@@ -1,0 +1,75 @@
+/* Apply to the entire root */
+.root {
+    -fx-background-color: linear-gradient(to right, #ffffff, #e3eaf8);
+    -fx-font-family: "Arial";
+}
+
+/* Style the VBox (login container) */
+.vbox {
+    -fx-background-color: white;
+    -fx-padding: 30px;
+    -fx-spacing: 15px;
+    -fx-alignment: center;
+    -fx-border-radius: 10px;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
+}
+
+/* Style Title Label */
+#lbltitle {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0078D7;
+}
+
+/* Style Labels */
+.label {
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Style TextFields & PasswordFields */
+.text-field, .password-field {
+    -fx-pref-width: 250px;
+    -fx-pref-height: 35px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 8px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #0078D7;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 120, 215, 0.3), 10, 0, 0, 2);
+}
+
+/* Style the Login Button */
+.button {
+    -fx-background-color: #0078D7;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-pref-width: 120px;
+    -fx-pref-height: 40px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #005ea6;
+}
+
+.button:pressed {
+    -fx-background-color: #004b8a;
+}
+
+/* Style Error Message Label */
+#lblLoginErrorMessage {
+    -fx-text-fill: red;
+    -fx-font-size: 12px;
+}
