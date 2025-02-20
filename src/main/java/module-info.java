@@ -4,6 +4,7 @@ module org.example.travelexpertdesktopapplication {
     requires com.jfoenix;
     requires javafx.controls;
     requires javafx.base;
+    requires org.tinylog.api;
 
     opens org.example.travelexpertdesktopapplication.models to javafx.base;
     opens org.example.travelexpertdesktopapplication to javafx.fxml;
