@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.AgentDrawerController">
+<VBox style="-fx-background-color: #6246ea;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.AgentDrawerController">
    <children>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleDashboardButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Dashboard" textFill="#272343">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleDashboardButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Dashboard" textFill="#fffffe">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -20,7 +20,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleCustomersButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Customers" textFill="#272343">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleCustomersButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Customers" textFill="#fffffe">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -32,7 +32,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handlePackagesButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Packages" textFill="#272343">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handlePackagesButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Packages" textFill="#fffffe">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -44,7 +44,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleSuppliersButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Suppliers" textFill="#272343">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleSuppliersButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Suppliers" textFill="#fffffe">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -56,7 +56,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleProductsButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Product" textFill="#272343">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleProductsButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Product" textFill="#fffffe">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -68,7 +68,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleLogoutButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #ffd803;" text="Logout" textFill="#272343">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleLogoutButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Logout" textFill="#fffffe">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

@@ -1,11 +1,13 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.dao.ProductDAO;
@@ -21,7 +23,9 @@ public class ProductController {
     @FXML private TableView<Product> tableProducts;
     @FXML private TableColumn<Product, Integer> productIdColumn;
     @FXML private TableColumn<Product, String> productNameColumn;
-    @FXML private Button btnAdd, btnUpdate, btnDelete, btnReset;
+
+    @FXML private JFXButton btnAdd, btnDelete, btnUpdate, btnReset;
+    private ImageView btnSearch;
 
     private ObservableList<Product> productList = FXCollections.observableArrayList();
 

@@ -1,0 +1,48 @@
+/* Base TableView styling */
+.table-view {
+    -fx-background-color: #ffffff; /* White background for a clean look */
+    -fx-border-color: #e0e0e0; /* Light gray border */
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2); /* Subtle shadow for elevation */
+    -fx-background-radius: 5px; /* Rounded corners */
+}
+
+/* Header styling */
+.table-view .column-header-background {
+    -fx-background-color: #f5f5f5; /* Light gray header background */
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1px 0; /* Bottom border only */
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #616161; /* Dark gray text */
+}
+
+/* Row styling */
+.table-row-cell {
+    -fx-background-color: #ffffff; /* Default row background */
+    -fx-border-color: transparent; /* No borders between rows */
+    -fx-padding: 5px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9; /* Light gray for alternate rows */
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #4fc4cf; /* Light teal for selected rows */
+    -fx-text-fill: #004d40; /* Dark teal text for contrast */
+}
+
+/* Cell styling */
+.table-cell {
+    -fx-padding: 10px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #424242; /* Dark gray text */
+    -fx-alignment: CENTER_LEFT; /* Align text to the left */
+}
+
+/* Focused row styling */
+.table-row-cell:focused {
+    -fx-background-color: #e3f2fd; /* Light blue for focused row */
+}
