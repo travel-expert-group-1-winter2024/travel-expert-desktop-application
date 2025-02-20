@@ -35,27 +35,27 @@
          <children>
             <AnchorPane prefHeight="52.0" prefWidth="295.0">
                <children>
-                  <JFXButton fx:id="btnAddSupplier" buttonType="RAISED" layoutX="86.0" layoutY="14.0" prefHeight="52.0" prefWidth="280.0" style="-fx-background-color: #fbdd74;" text="Add Supplier" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <JFXButton fx:id="btnAddSupplier" buttonType="RAISED" layoutX="86.0" layoutY="14.0" style="-fx-background-color: #fbdd74;" text="Add Supplier" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="2.0">
                      <font>
-                        <Font name="Calibri Bold" size="18.0" />
+                        <Font name="Calibri Bold Italic" size="16.0" />
                      </font>
                   </JFXButton>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="52.0" prefWidth="280.0">
                <children>
-                  <JFXButton fx:id="btnEditSupplier" buttonType="RAISED" layoutX="75.0" layoutY="16.0" style="-fx-background-color: #fbdd74;" text="Edit Supplier" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <JFXButton fx:id="btnEditSupplier" buttonType="RAISED" layoutX="75.0" layoutY="16.0" style="-fx-background-color: #fbdd74;" text="Edit Supplier" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
                      <font>
-                        <Font name="Calibri Bold" size="18.0" />
+                        <Font name="Calibri Bold Italic" size="16.0" />
                      </font>
                   </JFXButton>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="52.0" prefWidth="280.0">
                <children>
-                  <JFXButton fx:id="btnDeleteSupplier" buttonType="RAISED" layoutX="80.0" layoutY="14.0" style="-fx-background-color: #fbdd74;" text="Delete Supplier" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <JFXButton fx:id="btnDeleteSupplier" buttonType="RAISED" layoutX="80.0" layoutY="14.0" style="-fx-background-color: #fbdd74;" text="Delete Supplier" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
                      <font>
-                        <Font name="Calibri Bold" size="18.0" />
+                        <Font name="Calibri Bold Italic" size="16.0" />
                      </font>
                   </JFXButton>
                </children>

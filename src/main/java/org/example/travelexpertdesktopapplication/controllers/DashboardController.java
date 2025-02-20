@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXHamburger;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
@@ -169,6 +170,7 @@ public class DashboardController {
             BorderPane supplierListView = loader.load();
             mainContentWindow.getChildren().clear();
             mainContentWindow.getChildren().add(supplierListView);
+            supplierListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
         } catch (IOException e) {
             System.out.println("Error is being caught in the Catch of loadProductsView");
             throw new RuntimeException(e);
@@ -182,6 +184,9 @@ public class DashboardController {
             AnchorPane productsView = loader.load();
             mainContentWindow.getChildren().clear();
             mainContentWindow.getChildren().add(productsView);
+
+            // Add the stylesheet to the productsView
+            productsView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
         } catch (IOException e) {
             System.out.println("Error is being caught in the Catch of loadProductsView");
             throw new RuntimeException(e);
@@ -204,18 +209,19 @@ public class DashboardController {
 
     public void loadAgenciesView() {
         System.out.println("loadAgenciesView is also working");
-//        // Load the FXML file for the Agents view
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agencies-view.fxml"));
-//        try {
-//            AnchorPane agencyView = loader.load();
-//
-//            mainContentWindow.getChildren().clear();
-//            mainContentWindow.getChildren().add(agencyView);
-//
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        // Load the FXML file for the Agents view
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agency-list.fxml"));
+        try {
+            AnchorPane agencyView = loader.load();
+
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(agencyView);
+
+            agencyView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
