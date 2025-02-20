@@ -9,12 +9,14 @@ public class ManagerDrawerController extends BaseDrawerController {
         if (dashboardController != null){
             System.out.println("Delegating button population to DashboardController...");
             dashboardController.loadDashboardButtons(
-                    new String[]{"Agents", "Agencies"},
+                    new String[]{"Agencies", "Agents"},
                     new Runnable[]{
-                            dashboardController::loadAgentsView,
                             dashboardController::loadAgenciesView,
+                            dashboardController::loadAgentsView
+
                     }
             );
+            dashboardController.loadAgenciesView();
         } else {
             System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
         }
