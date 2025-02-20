@@ -34,4 +34,14 @@ public class DatabaseManager {
             return false;
         }
     }
+
+    public static void closeConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logger.error(e, "Error closing database connection.");
+            }
+        }
+    }
 }
