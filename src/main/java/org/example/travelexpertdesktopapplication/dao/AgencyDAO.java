@@ -2,6 +2,7 @@ package org.example.travelexpertdesktopapplication.dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.travelexpertdesktopapplication.models.Agency;
+import org.tinylog.Logger;
 
 import java.sql.*;
 
@@ -11,6 +12,9 @@ public class AgencyDAO {
     public static ObservableList<Agency> getAllAgencies() {
         ObservableList<Agency> agencyList = FXCollections.observableArrayList();
         String query = "SELECT * FROM agencies";
+
+        Logger.info("Fetching all agencies from the database.");
+        Logger.debug("SQL Query: {}", query);
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
@@ -29,9 +33,9 @@ public class AgencyDAO {
                 );
                 agencyList.add(agency);
             }
-            System.out.println(agencyList);
+            Logger.info("Retrieved {} agencies.", agencyList.size());
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e, "Error fetching agencies from the database.");
         }
         return agencyList;
     }
@@ -40,6 +44,9 @@ public class AgencyDAO {
     public static boolean addAgency(Agency agency) {
         String query = "INSERT INTO agencies (agncyaddress, agncycity, agncyprov, agncypostal, agncycountry, agncyphone, agncyfax) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        Logger.info("Attempting to add a new agency: {}", agency);
+        Logger.debug("SQL Query: {}", query);
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -53,17 +60,28 @@ public class AgencyDAO {
             statement.setString(7, agency.getAgncyFax());
 
             int rowsInserted = statement.executeUpdate();
-            return rowsInserted > 0;
+            if (rowsInserted > 0) {
+                Logger.info("Agency added successfully.");
+                return true;
+            } else {
+                Logger.warn("Failed to add agency.");
+                return false;
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e, "Error adding agency.");
             return false;
         }
     }
 
     // Update an existing agency in the database
     public static boolean updateAgency(Agency agency) {
+        // SQL query to update an agency
         String query = "UPDATE agencies SET agncyaddress = ?, agncycity = ?, agncyprov = ?, agncypostal = ?, agncycountry = ?, agncyphone = ?, agncyfax = ? " +
                 "WHERE agencyid = ?";
+
+        Logger.info("Attempting to update agency with ID: {}", agency.getAgencyID());
+        Logger.debug("SQL Query: {}", query);
+        Logger.debug("Updated Agency Data: {}", agency);
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -78,9 +96,15 @@ public class AgencyDAO {
             statement.setInt(8, agency.getAgencyID());
 
             int rowsUpdated = statement.executeUpdate();
-            return rowsUpdated > 0;
+            if (rowsUpdated > 0) {
+                Logger.info("Agency with ID {} updated successfully.", agency.getAgencyID());
+                return true;
+            } else {
+                Logger.warn("No agency updated, possibly invalid ID: {}", agency.getAgencyID());
+                return false;
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e, "Error updating agency with ID {}", agency.getAgencyID());
             return false;
         }
     }
@@ -89,15 +113,24 @@ public class AgencyDAO {
     public static boolean deleteAgency(int agencyID) {
         String query = "DELETE FROM agencies WHERE agencyid = ?";
 
+        Logger.info("Attempting to delete agency with ID: {}", agencyID);
+        Logger.debug("SQL Query: {}", query);
+
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, agencyID);
 
             int rowsDeleted = statement.executeUpdate();
-            return rowsDeleted > 0;
+            if (rowsDeleted > 0) {
+                Logger.info("Agency with ID {} deleted successfully.", agencyID);
+                return true;
+            } else {
+                Logger.warn("No agency deleted, possibly invalid ID: {}", agencyID);
+                return false;
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e, "Error deleting agency with ID {}", agencyID);
             return false;
         }
     }
