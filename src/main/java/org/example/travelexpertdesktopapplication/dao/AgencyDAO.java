@@ -13,7 +13,7 @@ public class AgencyDAO {
         ObservableList<Agency> agencyList = FXCollections.observableArrayList();
         String query = "SELECT * FROM agencies";
 
-        Logger.info("Fetching all agencies from the database.");
+        Logger.debug("Fetching all agencies from the database.");
         Logger.debug("SQL Query: {}", query);
 
         try (Connection connection = getConnection();
@@ -45,7 +45,7 @@ public class AgencyDAO {
         String query = "INSERT INTO agencies (agncyaddress, agncycity, agncyprov, agncypostal, agncycountry, agncyphone, agncyfax) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        Logger.info("Attempting to add a new agency: {}", agency);
+        Logger.debug("Attempting to add a new agency: {}", agency);
         Logger.debug("SQL Query: {}", query);
 
         try (Connection connection = getConnection();
@@ -79,7 +79,7 @@ public class AgencyDAO {
         String query = "UPDATE agencies SET agncyaddress = ?, agncycity = ?, agncyprov = ?, agncypostal = ?, agncycountry = ?, agncyphone = ?, agncyfax = ? " +
                 "WHERE agencyid = ?";
 
-        Logger.info("Attempting to update agency with ID: {}", agency.getAgencyID());
+        Logger.debug("Attempting to update agency with ID: {}", agency.getAgencyID());
         Logger.debug("SQL Query: {}", query);
         Logger.debug("Updated Agency Data: {}", agency);
 
@@ -113,7 +113,7 @@ public class AgencyDAO {
     public static boolean deleteAgency(int agencyID) {
         String query = "DELETE FROM agencies WHERE agencyid = ?";
 
-        Logger.info("Attempting to delete agency with ID: {}", agencyID);
+        Logger.debug("Attempting to delete agency with ID: {}", agencyID);
         Logger.debug("SQL Query: {}", query);
 
         try (Connection connection = getConnection();
