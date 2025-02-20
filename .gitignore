@@ -1,3 +1,4 @@
+logs/
 db.properties
 target/
 !.mvn/wrapper/maven-wrapper.jar
