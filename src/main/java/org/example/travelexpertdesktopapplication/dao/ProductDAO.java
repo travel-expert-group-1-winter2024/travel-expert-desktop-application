@@ -14,19 +14,11 @@ public class ProductDAO {
     private static final String DELETE = "DELETE FROM public.products WHERE productid = ?";
     private static final String GET_NEXT_ID = "SELECT MAX(productid) FROM public.products";
 
-    /** Get database connection from DbConfig */
-    private static Connection getConnection() throws SQLException {
-        String url = DbConfig.getProperty("url");
-        String user = DbConfig.getProperty("user");
-        String password = DbConfig.getProperty("password");
-
-        return DriverManager.getConnection(url, user, password);
-    }
 
     /** Get all products from the database */
     public static List<Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
-        try (Connection conn = getConnection();
+        try (Connection conn = DatabaseManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(SELECT_ALL)) {
 
@@ -44,7 +36,7 @@ public class ProductDAO {
     /** Get the next available product ID */
     public static int getNextProductId() {
         int nextId = 1; // Default to 1 if there are no products
-        try (Connection conn = getConnection();
+        try (Connection conn = DatabaseManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(GET_NEXT_ID)) {
 
@@ -63,7 +55,7 @@ public class ProductDAO {
         boolean isInserted = false;
         int newId = getNextProductId(); // Get next available ID
 
-        try (Connection conn = getConnection();
+        try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(INSERT)) {
 
             pstmt.setInt(1, newId);
@@ -78,7 +70,7 @@ public class ProductDAO {
     /**  Update a product */
     public static boolean updateProduct(int id, String name) {
         boolean isUpdated = false;
-        try (Connection conn = getConnection();
+        try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(UPDATE)) {
 
             pstmt.setString(1, name);
@@ -93,7 +85,7 @@ public class ProductDAO {
     /**  Delete a product */
     public static boolean deleteProduct(int id) {
         boolean isDeleted = false;
-        try (Connection conn = getConnection();
+        try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(DELETE)) {
 
             pstmt.setInt(1, id);
