@@ -2,6 +2,7 @@ package org.example.travelexpertdesktopapplication.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,11 +32,16 @@ public class AgencyListController {
     @FXML
     private Button btnAdd, btnEdit, btnDelete ;
 
+    @FXML
+    private TextField txtSearch;
+
     private ObservableList<Agency> agencyList = FXCollections.observableArrayList();
+    private FilteredList<Agency> filteredAgencies;
+
+
 
     @FXML
     private void initialize() {
-//        agencyList.setAll();
         colAgencyID.setCellValueFactory(new PropertyValueFactory<Agency, Integer>("agencyID"));
         colAgencyAddress.setCellValueFactory(new PropertyValueFactory<Agency, String>("agncyAddress"));
         colAgencyCity.setCellValueFactory(new PropertyValueFactory<Agency, String>("agncyCity"));
@@ -45,9 +51,45 @@ public class AgencyListController {
         colAgencyProv.setCellValueFactory(new PropertyValueFactory<Agency, String>("agncyProv"));
         colAgencyPostal.setCellValueFactory(new PropertyValueFactory<Agency, String>("agncyPostal"));
 
+        // Load agencies into the list
+        agencyList.setAll(AgencyDAO.getAllAgencies());
 
-        System.out.println("AgencyListController initialize");
-        agencyTable.setItems(AgencyDAO.getAllAgencies());
+        // Set up filtered list
+        filteredAgencies = new FilteredList<>(agencyList, p -> true);
+
+        // Bind the search text to the filtered list
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredAgencies.setPredicate(agency -> {
+                // If search text is empty, display all agencies
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Convert search text to lowercase for case-insensitive search
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Check if any field matches the search text
+                if (agency.getAgncyAddress().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (agency.getAgncyCity().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (agency.getAgncyProv().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (agency.getAgncyPostal().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (agency.getAgncyCountry().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (agency.getAgncyPhone().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (agency.getAgncyFax().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false; // No match
+            });
+        });
+
+        // Bind the filtered list to the table
+        agencyTable.setItems(filteredAgencies);
         agencyTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         // Disable buttons by default

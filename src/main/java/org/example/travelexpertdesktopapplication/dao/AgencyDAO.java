@@ -101,4 +101,25 @@ public class AgencyDAO {
             return false;
         }
     }
+
+    // Method to get agency by ID
+    public static String getAgencyCityById(int agencyId) {
+        String agencyCity = null;
+        String query = "SELECT agncycity FROM agencies WHERE agencyid = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, agencyId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                agencyCity = rs.getString("agncycity");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return agencyCity;
+    }
 }
