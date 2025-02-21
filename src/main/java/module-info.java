@@ -5,6 +5,7 @@ module org.example.travelexpertdesktopapplication {
     requires javafx.controls;
     requires javafx.base;
     requires org.tinylog.api;
+    requires org.postgresql.jdbc;
 
     opens org.example.travelexpertdesktopapplication.models to javafx.base;
     opens org.example.travelexpertdesktopapplication to javafx.fxml;
