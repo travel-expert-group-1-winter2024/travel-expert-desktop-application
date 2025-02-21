@@ -36,7 +36,7 @@
    <top>
       <AnchorPane prefHeight="94.0" prefWidth="828.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutX="10.0" layoutY="9.0" prefHeight="52.0" prefWidth="271.0">
+            <AnchorPane layoutX="10.0" layoutY="9.0" prefHeight="39.0" prefWidth="271.0" style="-fx-border-color: black; -fx-border-style: dotted; -fx-border-width: 0 0 1  0;">
                <children>
                   <JFXButton fx:id="btnAddSupplier" buttonType="RAISED" layoutX="86.0" layoutY="14.0" style="-fx-background-color: #fbdd74;" text="Add Supplier" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="2.0">
                      <font>
@@ -45,16 +45,16 @@
                   </JFXButton>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="286.0" layoutY="9.0" prefHeight="52.0" prefWidth="280.0">
+            <AnchorPane layoutX="278.0" layoutY="9.0" prefHeight="39.0" prefWidth="288.0" style="-fx-border-color: black; -fx-border-style: dotted; -fx-border-width: 0 0 1 0;">
                <children>
-                  <JFXButton fx:id="btnEditSupplier" buttonType="RAISED" layoutX="-4.0" layoutY="1.0" prefHeight="52.0" prefWidth="270.0" style="-fx-background-color: #fbdd74;" text="Edit Supplier" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="-4.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="1.0">
+                  <JFXButton fx:id="btnEditSupplier" buttonType="RAISED" layoutX="-4.0" layoutY="1.0" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: #fbdd74;" text="Edit Supplier" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="1.0">
                      <font>
                         <Font name="Calibri Bold Italic" size="16.0" />
                      </font>
                   </JFXButton>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="548.0" layoutY="9.0" prefHeight="52.0" prefWidth="280.0">
+            <AnchorPane layoutX="548.0" layoutY="9.0" prefHeight="39.0" prefWidth="280.0" style="-fx-border-color: black; -fx-border-style: dotted; -fx-border-width: 0 0 1 0;">
                <children>
                   <JFXButton fx:id="btnDeleteSupplier" buttonType="RAISED" layoutX="17.0" layoutY="1.0" prefHeight="50.0" prefWidth="246.0" style="-fx-background-color: #fbdd74;" text="Delete Supplier" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="1.0">
                      <font>
@@ -63,7 +63,7 @@
                   </JFXButton>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="14.0" layoutY="64.0" prefHeight="33.0" prefWidth="800.0">
+            <AnchorPane layoutX="14.0" layoutY="48.0" prefHeight="49.0" prefWidth="800.0">
                <children>
                   <StackPane alignment="CENTER_RIGHT" layoutX="176.0" prefHeight="26.0" prefWidth="407.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="176.0" AnchorPane.rightAnchor="217.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -75,7 +75,7 @@
                         </ImageView>
                      </children>
                   </StackPane>
-                  <JFXButton fx:id="btnReset" buttonType="RAISED" layoutX="591.0" layoutY="2.0" prefHeight="21.0" prefWidth="51.0" style="-fx-background-color: #994ff3;" text="Reset" textFill="#fffffe" />
+                  <JFXButton fx:id="btnReset" buttonType="RAISED" layoutX="591.0" layoutY="12.0" prefHeight="21.0" prefWidth="51.0" style="-fx-background-color: #994ff3;" text="Reset" textFill="#fffffe" />
                </children>
             </AnchorPane>
          </children>
