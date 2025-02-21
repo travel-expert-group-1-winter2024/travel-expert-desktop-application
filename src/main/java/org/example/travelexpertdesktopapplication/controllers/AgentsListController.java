@@ -1,5 +1,6 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -10,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.dao.AgencyDAO;
 import org.example.travelexpertdesktopapplication.dao.AgentsDAO;
@@ -28,10 +30,20 @@ public class AgentsListController {
     private TableColumn<Agent, String> colFirstName, colLastName,colMiddleInitial, colEmail, colBusPhone, colPosition, colAgencyID;
 
     @FXML
-    private Button btnAdd, btnEdit, btnDelete;
+    private ImageView btnSearch;
 
     @FXML
     private TextField txtSearch;
+
+    @FXML
+    private JFXButton btnAdd;
+
+    @FXML
+    private JFXButton btnDelete;
+
+    @FXML
+    private JFXButton btnEdit;
+
 
     private ObservableList<Agent> agentList = FXCollections.observableArrayList();
     private FilteredList<Agent> filteredAgents;

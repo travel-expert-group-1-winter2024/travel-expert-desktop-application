@@ -1,5 +1,6 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.auth.Agent;
 import org.example.travelexpertdesktopapplication.dao.AgencyDAO;
@@ -30,7 +32,16 @@ public class AgencyListController {
     private TableColumn<Agency, Integer> colAgencyID;
 
     @FXML
-    private Button btnAdd, btnEdit, btnDelete ;
+    private JFXButton btnAdd;
+
+    @FXML
+    private JFXButton btnDelete;
+
+    @FXML
+    private JFXButton btnEdit;
+
+    @FXML
+    private ImageView btnSearch;
 
     @FXML
     private TextField txtSearch;

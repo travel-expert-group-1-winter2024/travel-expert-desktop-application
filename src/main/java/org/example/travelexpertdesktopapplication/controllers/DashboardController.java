@@ -196,15 +196,16 @@ public class DashboardController {
 
     public void loadAgentsView() {
         System.out.println("loadAgentsView is also working");
-//        // Load the FXML file for the Agents view
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agents-view.fxml"));
-//        try {
-//            AnchorPane agentsView = loader.load();
-//            mainContentWindow.getChildren().clear();
-//            mainContentWindow.getChildren().add(agentsView);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        // Load the FXML file for the Agents view
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agents-list.fxml"));
+        try {
+            AnchorPane agentsView = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(agentsView);
+            agentsView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void loadAgenciesView() {
