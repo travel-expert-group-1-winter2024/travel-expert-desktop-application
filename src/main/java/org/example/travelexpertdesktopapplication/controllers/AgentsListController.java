@@ -174,7 +174,11 @@ public class AgentsListController {
     }
 
     public void refreshTable() {
-        agentTable.getItems().clear();
-        agentTable.getItems().addAll(AgentsDAO.getAllAgents());
+        try{
+        agentTable.setItems(AgentsDAO.getAllAgents());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
