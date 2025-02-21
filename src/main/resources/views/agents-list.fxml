@@ -65,7 +65,7 @@
    </AnchorPane>
    <StackPane alignment="CENTER_RIGHT" layoutX="174.0" layoutY="40.0" prefHeight="51.0" prefWidth="454.0">
       <children>
-         <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Seach for Product" />
+         <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Search for Agents..." />
          <ImageView fx:id="btnSearch" fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../images/magnifying-glass.png" />
