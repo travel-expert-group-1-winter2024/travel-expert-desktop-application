@@ -5,8 +5,14 @@ module org.example.travelexpertdesktopapplication {
     requires javafx.controls;
     requires javafx.base;
     requires org.tinylog.api;
+    requires spring.messaging;
+    requires spring.websocket;
 
-    opens org.example.travelexpertdesktopapplication.models to javafx.base;
+    opens org.example.travelexpertdesktopapplication.models to
+            com.fasterxml.jackson.databind,
+            spring.core,
+            spring.messaging;
+    exports org.example.travelexpertdesktopapplication.models;
     opens org.example.travelexpertdesktopapplication to javafx.fxml;
     exports org.example.travelexpertdesktopapplication;
     exports org.example.travelexpertdesktopapplication.services;

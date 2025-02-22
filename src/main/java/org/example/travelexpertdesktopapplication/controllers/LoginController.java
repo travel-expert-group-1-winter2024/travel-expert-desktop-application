@@ -73,7 +73,7 @@ public class LoginController {
     }
 
     private void openDashboard() {
-        Stage dashboardStage = createStage("/views/dashboard-view.fxml", "Dashboard");
+        Stage dashboardStage = createStage("/views/chat-view.fxml", "Dashboard");
         if (dashboardStage != null) {
             dashboardStage.show();
             closeCurrentStage();
