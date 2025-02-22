@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.ChatController">
-    <TextArea fx:id="chatArea" editable="false"/>
-    <TextField fx:id="messageField" promptText="Type a message..."/>
-    <Button text="Send" onAction="#sendMessage"/>
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.ChatController">
+    <ListView fx:id="customerListView" prefHeight="100"/>  <!-- ✅ Displays active chatrooms -->
+    <TextArea fx:id="chatArea" editable="false" wrapText="true" prefHeight="300"/>
+    <HBox spacing="5">
+        <TextField fx:id="messageField" promptText="Enter message"/>
+        <Button fx:id="sendButton" text="Send" onAction="#sendMessage"/>
+    </HBox>
 </VBox>

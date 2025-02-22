@@ -7,6 +7,7 @@ module org.example.travelexpertdesktopapplication {
     requires org.tinylog.api;
     requires spring.messaging;
     requires spring.websocket;
+    requires com.fasterxml.jackson.annotation;
 
     opens org.example.travelexpertdesktopapplication.models to
             com.fasterxml.jackson.databind,

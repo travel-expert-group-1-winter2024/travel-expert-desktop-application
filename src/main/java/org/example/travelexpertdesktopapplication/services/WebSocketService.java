@@ -1,6 +1,7 @@
 package org.example.travelexpertdesktopapplication.services;
 
-import org.example.travelexpertdesktopapplication.models.Message;
+import org.example.travelexpertdesktopapplication.auth.SessionManager;
+import org.example.travelexpertdesktopapplication.models.ChatMessage;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
 import org.springframework.web.socket.client.WebSocketClient;
@@ -9,14 +10,16 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.tinylog.Logger;
 
 import java.lang.reflect.Type;
-import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 public class WebSocketService {
     private StompSession stompSession;
-    private Consumer<String> onMessageReceived;  // Callback for UI updates
+    private Consumer<ChatMessage> onMessageReceived;  // Callback for UI updates
+    private final String userId;
 
-    public WebSocketService(String serverUri, Consumer<String> onMessageReceived) {
+    public WebSocketService(String serverUri,  Consumer<ChatMessage> onMessageReceived) {
+        this.userId = SessionManager.getInstance().getUser().getId().toString();
+        Logger.info("User ID: " + userId);
         this.onMessageReceived = onMessageReceived;
         connectToWebSocket(serverUri);
     }
@@ -32,7 +35,8 @@ public class WebSocketService {
             public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
                 Logger.info("New session established : " + session.getSessionId());
                 stompSession = session;
-                stompSession.subscribe("/topic/messages", this);
+                String topic = "/user/" + userId + "/queue/messages";
+                stompSession.subscribe(topic, this);
             }
 
             @Override
@@ -42,16 +46,17 @@ public class WebSocketService {
 
             @Override
             public Type getPayloadType(StompHeaders headers) {
-                return Message.class;
+                return ChatMessage.class;
             }
+
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                if (payload instanceof Message) {
-                    Message msg = (Message) payload;
-                    Logger.info("Received : " + msg.getText() + " from : " + msg.getFrom());
+                if (payload instanceof ChatMessage) {
+                    ChatMessage chatMessage = (ChatMessage) payload;
+                    Logger.info("Received: " + chatMessage.getContent() + " from: " + chatMessage.getSenderId());
                     if (onMessageReceived != null) {
-                        onMessageReceived.accept(createDisplayMessage(msg));
+                        onMessageReceived.accept(chatMessage);
                     }
                 } else {
                     Logger.error("Unexpected payload type: " + payload.getClass());
@@ -60,18 +65,15 @@ public class WebSocketService {
         });
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(String receiverId, String message) {
         if (stompSession != null && stompSession.isConnected()) {
-            Message msg = new Message();
-            msg.setFrom("Nicky"); // TODO: Replace with user name
-            msg.setText(message);
-            stompSession.send("/app/chat", msg);
-            Logger.info("Message sent to websocket server");
-        }
-    }
+            String destination = "/app/chat.send";
+            Logger.info("Sending message from " + userId + " to " + receiverId);
 
-    private String createDisplayMessage(Message message) {
-        LocalDateTime now = LocalDateTime.now();
-        return now.getHour() + ":" + now.getMinute() + " [" + message.getFrom() + "]: " + message.getText();
+            ChatMessage chatMessage = new ChatMessage(userId, receiverId, message);
+            stompSession.send(destination, chatMessage);
+        } else {
+            Logger.warn("WebSocket session is not connected. Cannot send message.");
+        }
     }
 }
