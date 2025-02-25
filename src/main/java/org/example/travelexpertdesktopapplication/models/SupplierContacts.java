@@ -3,6 +3,9 @@ package org.example.travelexpertdesktopapplication.models;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class SupplierContacts {
     private SimpleIntegerProperty suppliercontactid;
     private SimpleStringProperty supconfirstname;
@@ -162,4 +165,13 @@ public class SupplierContacts {
         return supconaddress.get();
     }
 
+    public String toSearchableString() {
+        return Stream.of(
+                        supconfirstname, supconlastname, supconcompany, supconaddress,
+                        supconcity, supconprov, supconpostal, supconcountry,
+                        supconbusphone, supconfax, supconemail, supconurl, affiliationid)
+                .filter(field -> field != null)
+                .map(field->field.toString().toLowerCase())
+                .collect(Collectors.joining(" "));
+    }
 }

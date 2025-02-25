@@ -4,8 +4,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Packages {
     private SimpleIntegerProperty packageid;
@@ -27,6 +28,7 @@ public class Packages {
         this.pkgbaseprice = pkgbaseprice;
         this.pkgagencycommission = pkgagencycommission;
     }
+
 
     public int getPackageid() {
         return packageid.get();
@@ -75,4 +77,13 @@ public class Packages {
     public SimpleIntegerProperty pkgagencycommissionProperty() {
         return pkgagencycommission;
     }
+
+    public String toSearchableStringPackages() {
+        return Stream.of(pkgname, pkgstartdate, pkgenddate,
+                        pkgdesc, pkgbaseprice, pkgagencycommission)
+                .filter(field -> field != null)
+                .map(field->field.toString().toLowerCase())
+                .collect(Collectors.joining(" "));
+    }
+
 }

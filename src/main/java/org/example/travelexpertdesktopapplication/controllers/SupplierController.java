@@ -3,12 +3,13 @@ package org.example.travelexpertdesktopapplication.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -93,6 +94,7 @@ public class SupplierController {
 
     private ObservableList<SupplierContacts> data = FXCollections.observableArrayList();
     public String mode;
+    private FilteredList<SupplierContacts> filteredData;
 
     @FXML
     void initialize() {
@@ -121,8 +123,25 @@ public class SupplierController {
         //Initialize and setup table and display data
         setupSupplierTable();
         displayAllSupplierData();
+        filteredData = new FilteredList<>(data, p -> true);
         btnDeleteSupplier.setDisable(true); //disable delete Button
         btnEditSupplier.setDisable(true);   //disable Edit  Button
+
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(supplierContacts -> {
+                if (newValue == null || newValue.trim().isEmpty()) {
+                    return true; // Show all if search is empty
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Use the searchable string for comparison
+                return supplierContacts.toSearchableString().contains(lowerCaseFilter);
+            });
+        });
+        SortedList<SupplierContacts> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tvSuppliers.comparatorProperty());
+        tvSuppliers.setItems(sortedData);
 
         //on Add set action
         btnAddSupplier.setOnAction(e -> {
@@ -227,6 +246,12 @@ public class SupplierController {
         } else {
             AlertBox.showAlert("Delete", "Delete operation failed. Supplier Contacts ID may not exist.",Alert.AlertType.ERROR);
         }
+        displayAllSupplierData();
+    }
+
+    @FXML
+    private void onResetClick(){
+        txtSearch.clear();
         displayAllSupplierData();
     }
 }

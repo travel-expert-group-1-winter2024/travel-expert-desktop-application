@@ -74,6 +74,7 @@ public class AddEditPackageController {
         assert tfPackageID != null : "fx:id=\"tfPackageID\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
         assert tfPackageName != null : "fx:id=\"tfPackageName\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
 
+        tfPackageID.setDisable(true);
     }
 
     public void setMode(String mode) {
@@ -92,7 +93,8 @@ public class AddEditPackageController {
                 AlertBox.showAlert("Success", "Package has been saved successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
             }else{
-                PackagesDAO.updatePackeDetails(packagesData);
+                SimpleIntegerProperty packageID = new SimpleIntegerProperty(Integer.parseInt(tfPackageID.getText()));
+                PackagesDAO.updatePackeDetails(packageID,packagesData);
                 AlertBox.showAlert("Success", "Supplier Contacts updated successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
             }
@@ -122,11 +124,38 @@ public class AddEditPackageController {
         // Validate each field using the Validator class
         isValid &= validateField(tfPackageName, Validator.validateName(tfPackageName.getText()));
         isValid &= validateField(dpStartDate, dpStartDate.getValue() == null ? "Start date is required" : null);
-        isValid &= validateField(dpStartDate, dpStartDate.getValue() == null ? "Start date is required" : null);
+        isValid &= validateField(dpStartDate, dpStartDate.getValue() == null ? "End date is required" : null);
         isValid &= validateField(tfDesc, Validator.checkForEmpty(tfDesc.getText()));
         isValid &= validateField(tfBasePrice,Validator.checkForEmpty(tfBasePrice.getText()));
         isValid &= validateField(tfCommission,Validator.checkForEmpty(tfCommission.getText()));
+        isValid &= validateField(dpStartDate, isStartDateValid());
+        isValid &= validateField(tfBasePrice, isAgencyCommissionValid());
         return isValid;
+    }
+
+    private String isStartDateValid() {
+        if (dpStartDate.getValue() == null || dpEndDate.getValue() == null) {
+            return "Both start and end dates are required";
+        }
+        if (dpStartDate.getValue().isAfter(dpEndDate.getValue())) {
+            return "Start date cannot be after the end date";
+        }
+        return null;
+    }
+
+    private String isAgencyCommissionValid() {
+        try {
+            double basePrice = Double.parseDouble(tfBasePrice.getText());
+            double commission = Double.parseDouble(tfCommission.getText());
+
+            if (commission > basePrice) {
+                return "Commission should not be greater than Base Price";
+            }
+        } catch (NumberFormatException e) {
+            return "Base Price and Commission must be valid numbers";
+        }
+
+        return null; // No error (valid)
     }
 
     /**

@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.travelexpertdesktopapplication.models.Packages;
-import org.example.travelexpertdesktopapplication.models.SupplierContacts;
 import org.tinylog.Logger;
 
 import java.sql.*;
@@ -47,7 +46,7 @@ public class PackagesDAO {
 
     public static int deletePackage(int packageID) {
         String sql = "DELETE FROM packages WHERE packageid = ?";
-        Logger.debug("Deleting supplier contact with ID: {}", packageID);
+        Logger.debug("Deleting package with ID: {}", packageID);
         int affectedRows = 0;
 
         try (Connection conn = DatabaseManager.getConnection();
@@ -87,19 +86,19 @@ public class PackagesDAO {
 
             Logger.debug("Executing query: {}", sql);
             numAffectedRows = stmt.executeUpdate();
-            Logger.info("Supplier contact added successfully.");
+            Logger.info("Package added successfully.");
         } catch (SQLException e) {
-            Logger.error(e, "Error adding supplier contact.");
+            Logger.error(e, "Error adding Package.");
         }
         return numAffectedRows;
     }
 
-    public static int updatePackeDetails(Packages p) {
+    public static int updatePackeDetails(SimpleIntegerProperty packageID, Packages p) {
         String sql = "UPDATE packages SET pkgName = ?, pkgstartdate = ?, pkgenddate = ?, " +
                 "pkgdesc = ?, pkgbaseprice = ?, pkgagencycommission = ? " +
                 "WHERE packageid = ?";
 
-        Logger.debug("Updating supplier contact. ID={}", p.getPackageid());
+        Logger.debug("Updating package. ID={}", packageID);
         Logger.debug("Executing query: {}", sql);
 
         int numAffectedRows = 0;
@@ -118,12 +117,12 @@ public class PackagesDAO {
             numAffectedRows = stmt.executeUpdate();
 
             if (numAffectedRows > 0) {
-                Logger.info("Supplier contact updated successfully. ID={}", p.getPackageid());
+                Logger.info("Package updated successfully. ID={}", p.getPackageid());
             } else {
-                Logger.warn("No supplier contact updated. Possibly invalid ID: {}", p.getPackageid());
+                Logger.warn("No Package updated. Possibly invalid ID: {}", p.getPackageid());
             }
         } catch (SQLException e) {
-            Logger.error(e, "Error updating supplier contact. ID={}", p.getPackageid());
+            Logger.error(e, "Error updating Package. ID={}", p.getPackageid());
         }
         return numAffectedRows;
     }
