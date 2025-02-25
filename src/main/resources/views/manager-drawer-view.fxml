@@ -80,6 +80,18 @@
             </ImageView>
          </graphic>
       </JFXButton>
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleChatButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Chat" textFill="#fffffe">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/bubble-chat.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
       <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleLogoutButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Logout" textFill="#fffffe">
          <font>
             <Font name="System Bold" size="18.0" />
