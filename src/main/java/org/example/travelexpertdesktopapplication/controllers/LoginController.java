@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.TEDesktopApp;
+import org.example.travelexpertdesktopapplication.auth.SessionManager;
 import org.example.travelexpertdesktopapplication.auth.User;
 import org.example.travelexpertdesktopapplication.services.AuthService;
 import org.tinylog.Logger;
@@ -67,6 +68,7 @@ public class LoginController {
         Optional<User> user = authService.login(username, password);
         lblLoginErrorMessage.setVisible(true);
         if (user.isPresent()) {
+            SessionManager.getInstance().setUser(user.get());
             openDashboard();
         } else {
             lblLoginErrorMessage.setText("Invalid username or password.");
