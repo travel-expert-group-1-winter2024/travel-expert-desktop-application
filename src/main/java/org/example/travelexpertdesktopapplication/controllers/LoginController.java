@@ -19,8 +19,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.TEDesktopApp;
+import org.example.travelexpertdesktopapplication.auth.SessionManager;
 import org.example.travelexpertdesktopapplication.auth.User;
 import org.example.travelexpertdesktopapplication.services.AuthService;
+import org.tinylog.Logger;
 
 public class LoginController {
     private final AuthService authService;
@@ -66,9 +68,26 @@ public class LoginController {
         Optional<User> user = authService.login(username, password);
         lblLoginErrorMessage.setVisible(true);
         if (user.isPresent()) {
+            SessionManager.getInstance().setUser(user.get());
             openDashboard();
         } else {
             lblLoginErrorMessage.setText("Invalid username or password.");
+        }
+    }
+
+    @FXML
+    private void onSignUpButtonClicked() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/signup-view.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Sign Up");
+            stage.setScene(new Scene(root, 400, 500));
+            stage.show();
+        } catch (IOException e) {
+            Logger.error(e, "Failed to open sign up view.");
+            lblLoginErrorMessage.setText("Failed to open sign up view.");
         }
     }
 

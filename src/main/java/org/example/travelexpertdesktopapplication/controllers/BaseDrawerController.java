@@ -1,6 +1,7 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
 import javafx.fxml.FXML;
+import org.tinylog.Logger;
 
 public abstract class BaseDrawerController {
     protected DashboardController dashboardController;
@@ -17,12 +18,12 @@ public abstract class BaseDrawerController {
         if (dashboardController != null){
             System.out.println("Delegating button population to DashboardController...");
             dashboardController.loadDashboardButtons(
-                    new String[]{"Packages", "Details"},
+                    new String[]{"Packages"},
                     new Runnable[]{
                             dashboardController::loadPackagesView,
-                            dashboardController::loadPackageDetailsView,
                     }
             );
+            dashboardController.loadPackagesView();
         } else {
             System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
         }
@@ -114,6 +115,19 @@ public abstract class BaseDrawerController {
 //            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
 //        }
 //    }
+
+    public void handleChatButtonClick() {
+        if (dashboardController != null){
+            dashboardController.loadDashboardButtons(
+                    new String[]{"Chat"},
+                    new Runnable[]{
+                            dashboardController::loadChatView,
+                    }
+            );
+        } else {
+            Logger.error("Error: DashboardController is null in BaseDrawerController" + this);
+        }
+    }
 
     public void handleLogoutButtonClick() {
         System.out.println("Logout Clicked");

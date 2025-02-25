@@ -3,6 +3,8 @@ package org.example.travelexpertdesktopapplication.dao;
 import org.example.travelexpertdesktopapplication.auth.*;
 import org.tinylog.Logger;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.UUID;
 import java.util.Optional;
@@ -74,4 +76,63 @@ public class UserDAO {
         };
     }
 
+//    **************************
+
+    /**
+     *  Register a new user (Signup)
+     * Supports AGENT, MANAGER, and ADMIN roles only.
+     * @param username The user's username.
+     * @param plainPassword The user's plaintext password.
+     * @param role The user's role.
+     * @param agentId The agent ID (nullable).
+     * @return True if the user was added successfully, False otherwise.
+     */
+    public boolean addUser(String username, String plainPassword, UserRole role, Integer agentId) {
+
+
+        String sql = "INSERT INTO users (id, username, password_hash, role, agentid) VALUES (?, ?, ?, ?, ?)";
+        UUID userId = UUID.randomUUID();
+        String passwordHash = hashPassword(plainPassword);
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setObject(1, userId);
+            stmt.setString(2, username);
+            stmt.setString(3, passwordHash);
+            stmt.setString(4, role.name());
+            stmt.setObject(5, agentId);
+
+            int rowsInserted = stmt.executeUpdate();
+            if (rowsInserted > 0) {
+                Logger.info(" New user registered: Username={}, Role={}", username, role);
+                return true;
+            }
+        } catch (SQLException e) {
+            Logger.error(e, " Error while adding new user: {}", username);
+        }
+
+        return false;
+    }
+
+    /**
+     *  Hash passwords using SHA-256.
+     * @param password Plain text password.
+     * @return Hashed password.
+     */
+    private String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                hexString.append(String.format("%02x", b));
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 algorithm not available", e);
+        }
+    }
 }
+
+

@@ -12,11 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.LoginController">
-<!--   Add Styling login.css-->
    <stylesheets>
       <URL value="@../styles/login-style.css" />
    </stylesheets>
-
 
    <children>
       <ImageView fx:id="imgView" fitHeight="400.0" fitWidth="205.0" pickOnBounds="true">
@@ -27,7 +25,6 @@
       <VBox alignment="CENTER" spacing="10.0">
          <children>
             <Label fx:id="lbltitle" text="Login">
-               
                <VBox.margin>
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </VBox.margin>
@@ -45,7 +42,13 @@
                </children>
             </HBox>
             <Label fx:id="lblLoginErrorMessage" text="Label" />
+
             <Button fx:id="btnLogin" mnemonicParsing="false" onMouseClicked="#onLoginButtonClicked" text="Login" />
+
+            <Label text="Don't have an account?" style="-fx-text-fill: #333333;" />
+            <Button fx:id="btnSignUp" text="Sign Up" onMouseClicked="#onSignUpButtonClicked"
+                    style="-fx-background-color: transparent; -fx-text-fill: #0078D7; -fx-underline: true; -fx-font-size: 12px;" />
+
          </children>
          <HBox.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
