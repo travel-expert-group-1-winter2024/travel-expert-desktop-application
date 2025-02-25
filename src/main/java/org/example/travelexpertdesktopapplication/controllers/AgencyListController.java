@@ -168,8 +168,11 @@ public class AgencyListController {
     }
 
     public void refreshTable() {
-        agencyTable.getItems().clear();
-        agencyTable.getItems().addAll(AgencyDAO.getAllAgencies()); // Fetch updated list from DB
+        try {
+            agencyTable.setItems(AgencyDAO.getAllAgencies()); // Fetch updated list from DB
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
