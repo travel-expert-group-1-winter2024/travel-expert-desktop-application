@@ -32,6 +32,11 @@ public class WebSocketService {
 
         stompClient.connect(serverUri, new StompSessionHandlerAdapter() {
             @Override
+            public void handleTransportError(StompSession session, Throwable exception) {
+                Logger.error(exception, "Error occurred while connecting to the server");
+            }
+
+            @Override
             public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
                 Logger.info("New session established : " + session.getSessionId());
                 stompSession = session;
