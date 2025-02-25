@@ -9,16 +9,20 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.TEDesktopApp;
 import org.example.travelexpertdesktopapplication.dao.PackagesDAO;
 import org.example.travelexpertdesktopapplication.models.Packages;
+import org.example.travelexpertdesktopapplication.models.SupplierContacts;
 import org.example.travelexpertdesktopapplication.utils.AlertBox;
 
 public class PackageController {
@@ -37,6 +41,9 @@ public class PackageController {
 
     @FXML
     private Button btnEdit;
+
+    @FXML
+    private Button btnReset;
 
     @FXML
     private TableColumn<Packages,Integer> colpkgBasePrice;
@@ -61,15 +68,20 @@ public class PackageController {
 
     @FXML
     private TableView<Packages> lvPackages;
+    @FXML
+    private TextField txtSearch;
 
+    String mode;
     private ObservableList<Packages> packagesList = FXCollections.observableArrayList();
-    public String mode;
+    private FilteredList<Packages> filteredData;
+
 
     @FXML
     void initialize() {
         assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'package-list-view.fxml'.";
         assert btnDelete != null : "fx:id=\"btnDelete\" was not injected: check your FXML file 'package-list-view.fxml'.";
         assert btnEdit != null : "fx:id=\"btnEdit\" was not injected: check your FXML file 'package-list-view.fxml'.";
+        assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'package-list-view.fxml'.";
         assert colpkgBasePrice != null : "fx:id=\"colpkgBasePrice\" was not injected: check your FXML file 'package-list-view.fxml'.";
         assert colpkgCommission != null : "fx:id=\"colpkgCommission\" was not injected: check your FXML file 'package-list-view.fxml'.";
         assert colpkgDesc != null : "fx:id=\"colpkgDesc\" was not injected: check your FXML file 'package-list-view.fxml'.";
@@ -79,12 +91,17 @@ public class PackageController {
         assert colpkgStartDate != null : "fx:id=\"colpkgStartDate\" was not injected: check your FXML file 'package-list-view.fxml'.";
         assert lvPackages != null : "fx:id=\"lvPackages\" was not injected: check your FXML file 'package-list-view.fxml'.";
 
-
         btnDelete.setDisable(true);
         btnEdit.setDisable(true);
 
         setupTableForPackages();
         displayPackages();
+        filteredData = new FilteredList<>(packagesList, p -> true);
+
+        btnReset.setOnAction(e->{
+        txtSearch.clear();
+        displayPackages();
+        });
 
         btnAdd.setOnAction(e->{
             mode="Add";
@@ -105,6 +122,23 @@ public class PackageController {
                 }
             }
         });
+
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(packages -> {
+                if (newValue == null || newValue.trim().isEmpty()) {
+                    return true; // Show all if search is empty
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Use the searchable string for comparison
+                return packages.toSearchableStringPackages().contains(lowerCaseFilter);
+            });
+        });
+
+        SortedList<Packages> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(lvPackages.comparatorProperty());
+        lvPackages.setItems(sortedData);
     }
 
     private void setupTableForPackages() {

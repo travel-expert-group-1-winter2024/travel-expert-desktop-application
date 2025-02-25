@@ -58,7 +58,7 @@ public class SupplierDAO {
      */
     public static ObservableList<String> getAffiliations() {
         ObservableList<String> affiliations = FXCollections.observableArrayList();
-        String query = "SELECT affiliationid FROM affiliations";
+        String query = "SELECT affilitationid FROM affiliations ";
         Logger.debug("Fetching affiliations from the database.");
 
         try (Connection conn = DatabaseManager.getConnection();
@@ -67,7 +67,7 @@ public class SupplierDAO {
 
             Logger.debug("Executing query: {}", query);
             while (rs.next()) {
-                affiliations.add(rs.getString("affiliationid"));
+                affiliations.add(rs.getString("affilitationid"));
             }
             Logger.info("Retrieved {} affiliations.", affiliations.size());
         } catch (SQLException e) {

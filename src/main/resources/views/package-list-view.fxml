@@ -5,13 +5,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="711.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.PackageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="789.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.PackageController">
    <center>
-      <TableView fx:id="lvPackages" prefHeight="472.0" prefWidth="746.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="lvPackages" prefHeight="482.0" prefWidth="764.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="colpkgID" prefWidth="42.4000244140625" text="Package ID" />
           <TableColumn fx:id="colpkgName" prefWidth="208.0" text="Package Name" />
@@ -28,12 +29,25 @@
          <children>
             <Label text="Package">
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="100.0" top="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="25.0" top="10.0" />
                </HBox.margin>
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
+            <TextField fx:id="txtSearch">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="25.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Button fx:id="btnReset" mnemonicParsing="false" text="Reset">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+               </HBox.margin>
+            </Button>
             <Button fx:id="btnAdd" mnemonicParsing="false" text="Add Packge">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -50,7 +64,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnDelete" onMouseClicked="#deletePackage" mnemonicParsing="false" text="Delete Package">
+            <Button fx:id="btnDelete" mnemonicParsing="false" onMouseClicked="#deletePackage" text="Delete Package">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
