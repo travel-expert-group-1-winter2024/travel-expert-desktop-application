@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.layout.StackPane;
+import org.tinylog.Logger;
 
 public class DashboardController {
     //References to other controllers.
@@ -221,6 +222,22 @@ public class DashboardController {
             agencyView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
 
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadChatView(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/chat-view.fxml"));
+        try {
+            AnchorPane chatView = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(chatView);
+
+            // Add the stylesheet to the productsView
+            chatView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+        } catch (IOException e) {
+            Logger.error(e, "Error loading ChatView");
+            System.out.println("Error is being caught in the Catch of loadProductsView");
             throw new RuntimeException(e);
         }
     }
