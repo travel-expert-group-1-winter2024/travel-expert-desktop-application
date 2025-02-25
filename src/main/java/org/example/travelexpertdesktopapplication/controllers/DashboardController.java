@@ -156,7 +156,19 @@ public class DashboardController {
 
     //Packages Hamburger Menu Button --> Dashboard Button methods
     public void loadPackagesView(){
-        Logger.info("Loading Packages View");
+
+        System.out.println("Loading Packages View");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/package-list-view.fxml"));
+        try {
+            BorderPane packageListView = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(packageListView);
+            packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+        } catch (IOException e) {
+            System.out.println("Error is being caught in the Catch of loadProductsView");
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void loadPackageDetailsView(){
