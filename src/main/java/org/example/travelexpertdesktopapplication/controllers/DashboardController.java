@@ -147,20 +147,20 @@ public class DashboardController {
 
     //Customer Hamburger Menu Button --> Dashboard Button methods
     public void loadCustomerDetailsView(){
-        System.out.println("Loading Customers View");
+        Logger.info("Loading Customer Details");
     }
 
     public void loadCustomerPurchasesView(){
-        System.out.println("Loading Customer Purchases");
+        Logger.info("Loading Customer Purchases");
     }
 
     //Packages Hamburger Menu Button --> Dashboard Button methods
     public void loadPackagesView(){
-        System.out.println("Loading Packages View");
+        Logger.info("Loading Packages View");
     }
 
     public void loadPackageDetailsView(){
-        System.out.println("Loading Packages details view");
+        Logger.info("Loading Package Details");
     }
 
     //Suppliers Hamburger Menu Button --> Dashboard Button methods
@@ -173,7 +173,7 @@ public class DashboardController {
             mainContentWindow.getChildren().add(supplierListView);
             supplierListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
         } catch (IOException e) {
-            System.out.println("Error is being caught in the Catch of loadProductsView");
+            Logger.error(e, "Error loading SuppliersView");
             throw new RuntimeException(e);
         }
     }
@@ -189,7 +189,7 @@ public class DashboardController {
             // Add the stylesheet to the productsView
             productsView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
         } catch (IOException e) {
-            System.out.println("Error is being caught in the Catch of loadProductsView");
+            Logger.error(e, "Error loading ProductsView");
             throw new RuntimeException(e);
         }
     }
@@ -205,6 +205,7 @@ public class DashboardController {
             mainContentWindow.getChildren().add(agentsView);
             agentsView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
         } catch (IOException e) {
+            Logger.error(e, "Error loading AgentsView");
             throw new RuntimeException(e);
         }
     }
@@ -222,6 +223,7 @@ public class DashboardController {
             agencyView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
 
         } catch (IOException e) {
+            Logger.error(e, "Error loading AgenciesView");
             throw new RuntimeException(e);
         }
     }
@@ -237,7 +239,6 @@ public class DashboardController {
             chatView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
         } catch (IOException e) {
             Logger.error(e, "Error loading ChatView");
-            System.out.println("Error is being caught in the Catch of loadProductsView");
             throw new RuntimeException(e);
         }
     }
