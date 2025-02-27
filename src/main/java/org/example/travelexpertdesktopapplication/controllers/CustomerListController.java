@@ -3,12 +3,16 @@ package org.example.travelexpertdesktopapplication.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.travelexpertdesktopapplication.auth.SessionManager;
 import org.example.travelexpertdesktopapplication.dao.CustomerDAO;
@@ -59,9 +63,15 @@ public class CustomerListController {
 
     @FXML
     private TableView<Customer> lvCustomers;
+    @FXML
+    private Button btnReset;
+
+    @FXML
+    private TextField txtSearch;
 
     private ObservableList<Customer> customerData = FXCollections.observableArrayList();
     private FilteredList<Customer> filteredData;
+
 
     @FXML
     void initialize() {
@@ -77,9 +87,30 @@ public class CustomerListController {
         assert colProvince != null : "fx:id=\"colProvince\" was not injected: check your FXML file 'customer-view.fxml'.";
         assert colCountry != null : "fx:id=\"colCountry\" was not injected: check your FXML file 'customer-view.fxml'.";
         assert lvCustomers != null : "fx:id=\"lvCustomers\" was not injected: check your FXML file 'customer-view.fxml'.";
+        assert txtSearch != null : "fx:id=\"txtSearch\" was not injected: check your FXML file 'customer-view.fxml'.";
+        assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'customer-view.fxml'.";
 
         setupCustomerTable();
         displayAllCustomerData();
+
+        filteredData = new FilteredList<>(customerData, p -> true);
+
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(customer -> {
+                if (newValue == null || newValue.trim().isEmpty()) {
+                    return true; // Show all if search is empty
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Use the searchable string for comparison
+                return customer.toSearchableString().contains(lowerCaseFilter);
+            });
+        });
+        SortedList<Customer> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(lvCustomers.comparatorProperty());
+        lvCustomers.setItems(sortedData);
+
 //        System.out.println(SessionManager.getUser().getRole());
 //        System.out.println(SessionManager.getUser().getId());
 
@@ -137,6 +168,11 @@ public class CustomerListController {
         }
         // Populate table view
         lvCustomers.setItems(customerData);
+    }
+
+    @FXML
+    private void onResetClick(){
+        txtSearch.clear();
     }
 
 

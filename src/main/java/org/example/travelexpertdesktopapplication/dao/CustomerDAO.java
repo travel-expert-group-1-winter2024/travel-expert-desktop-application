@@ -13,6 +13,10 @@ import java.sql.*;
 
 public class CustomerDAO {
 
+    /**
+     * get customer list from database
+     * @return array of customer
+     */
     public static ObservableList<Customer> getCustomerList() {
         ObservableList<Customer> customersList = FXCollections.observableArrayList();
         String query = "SELECT * FROM customers;";
