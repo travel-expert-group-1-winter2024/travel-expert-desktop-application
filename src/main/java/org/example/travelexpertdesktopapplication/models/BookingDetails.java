@@ -43,12 +43,12 @@ public class BookingDetails {
         this.tripstart = new SimpleObjectProperty<>((LocalDateTime)tripstart);
         this.tripend = new SimpleObjectProperty<>((LocalDateTime) tripend);
         this.description = new SimpleStringProperty(description);
-        this.destination = new SimpleStringProperty(description);
+        this.destination = new SimpleStringProperty(destination);
         this.baseprice = new SimpleDoubleProperty(baseprice);
         this.agencycommission = new SimpleDoubleProperty(agencycommission);
         this.bookingid = new SimpleIntegerProperty(bookingid);
         this.regionid = new SimpleStringProperty(regionid);
-        this.classid = new SimpleStringProperty(regionid);
+        this.classid = new SimpleStringProperty(classid);
         this.feeid = new SimpleStringProperty(feeid);
         this.productsupplierid = new SimpleIntegerProperty(productsupplierid);
     }
