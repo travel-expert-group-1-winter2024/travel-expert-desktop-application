@@ -2,13 +2,19 @@ package org.example.travelexpertdesktopapplication.models;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 public class AgentDashboardKPI {
     //* Props
+    private SimpleStringProperty agentFirstName;
     private SimpleIntegerProperty bookingid;
     private SimpleDoubleProperty baseprice;
     private SimpleDoubleProperty agencycommission;
     private SimpleIntegerProperty customerid;
+
+
+
+
 
     //* Constructor
     public AgentDashboardKPI() {
@@ -16,8 +22,21 @@ public class AgentDashboardKPI {
         this.baseprice = new SimpleDoubleProperty();
         this.agencycommission = new SimpleDoubleProperty();
         this.customerid = new SimpleIntegerProperty();
+        this.agentFirstName = new SimpleStringProperty();
     }
 
+
+    public SimpleStringProperty agentFirstNameProperty() {
+        return agentFirstName;
+    }
+
+    public String getAgentFirstName() {
+        return agentFirstName.get();
+    }
+
+    public void setAgentFirstName(String agentFirstName) {
+        this.agentFirstName.set(agentFirstName);
+    }
     public int getBookingid() {
         return bookingid.get();
     }
@@ -66,15 +85,15 @@ public class AgentDashboardKPI {
         this.agencycommission.set(agencycommission);
     }
 
-
     @Override
     public String toString() {
         return "AgentDashboardKPI{" +
-                "\n\tbookingId=" + bookingid.get() +
-                ",\n\tbasePrice=" + baseprice.get() +
-                ",\n\tagencyCommission=" + agencycommission.get() +
-                ",\n\tcustomerid=" + customerid.get() +
-                "\n}";
+                "agentFirstName=" + agentFirstName +
+                ", bookingid=" + bookingid +
+                ", baseprice=" + baseprice +
+                ", agencycommission=" + agencycommission +
+                ", customerid=" + customerid +
+                '}';
     }
 
 }

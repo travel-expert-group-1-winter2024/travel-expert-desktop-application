@@ -16,7 +16,7 @@ public class AgentDashboardDAO {
 
     public List<AgentDashboardKPI> getAgentKPIs(int agentid){
         List<AgentDashboardKPI> kpiList = new ArrayList<>();
-        String query = "SELECT a.agentid, c.customerid, bt.bookingid, bd.baseprice, bd.agencycommission " +
+        String query = "SELECT a.agentid, a.agtfirstname , c.customerid, bt.bookingid, bd.baseprice, bd.agencycommission " +
                 "FROM agents a " +
                 "JOIN customers c ON a.agentid = c.agentid " +
                 "JOIN bookings bt ON c.customerid = bt.customerid " +
@@ -32,6 +32,7 @@ public class AgentDashboardDAO {
 
             while (resultSet.next()){
                 AgentDashboardKPI kpi = new AgentDashboardKPI();
+                kpi.setAgentFirstName(resultSet.getString("agtfirstname"));
                 kpi.setBookingid(resultSet.getInt("bookingid"));
                 kpi.setBaseprice(resultSet.getDouble("baseprice"));
                 kpi.setAgencycommission(resultSet.getDouble("agencycommission"));
