@@ -61,8 +61,8 @@ public class TEDesktopApp extends Application {
             System.exit(1);
         }
 
-        FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/agent-kpi-view.fxml"));
-        //fxmlLoader.setControllerFactory(param -> new LoginController(new AuthService(new UserDAO())));
+        FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/logic-view.fxml"));
+        fxmlLoader.setControllerFactory(param -> new LoginController(new AuthService(new UserDAO())));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Welcome to Travel Expert!");
         //stage.setMaximized(true);
