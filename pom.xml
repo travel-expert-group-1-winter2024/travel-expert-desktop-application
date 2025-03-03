@@ -86,6 +86,11 @@
             <version>1.18</version>
         </dependency>
         <dependency>
+            <groupId>eu.hansolo</groupId>
+            <artifactId>tilesfx</artifactId>
+            <version>21.0.9</version>
+        </dependency>
+        <dependency>
             <groupId>org.glassfish.tyrus</groupId>
             <artifactId>tyrus-container-grizzly-client</artifactId>
             <version>1.18</version>
