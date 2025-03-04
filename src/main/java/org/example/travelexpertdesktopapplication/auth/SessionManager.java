@@ -20,4 +20,8 @@ public class SessionManager {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public UserRole getUserRole() {
+        return user.getRole();
+    }
 }

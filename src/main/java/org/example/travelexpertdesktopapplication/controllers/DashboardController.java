@@ -14,6 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.layout.StackPane;
+import org.example.travelexpertdesktopapplication.auth.SessionManager;
+import org.example.travelexpertdesktopapplication.auth.UserRole;
 import org.tinylog.Logger;
 
 public class DashboardController {
@@ -21,21 +23,6 @@ public class DashboardController {
     private AgentDrawerController agentDrawerController;
     private ManagerDrawerController managerDrawerController;
     private DashboardButtonController dashboardButtonController;
-
-
-    //Setters
-//    public void setAgentDrawerController(AgentDrawerController agentDrawerController) {
-//        this.agentDrawerController = agentDrawerController;
-//    }
-//
-//    public void setManagerDrawerController(ManagerDrawerController managerDrawerController) {
-//        this.managerDrawerController = managerDrawerController;
-//    }
-//
-//    public void setDashboardButtonController(DashboardButtonController dashboardButtonController) {
-//        this.dashboardButtonController = dashboardButtonController;
-//    }
-
 
     @FXML
     private ResourceBundle resources;
@@ -58,9 +45,6 @@ public class DashboardController {
     @FXML
     private StackPane stackPaneContentArea;
 
-
-    boolean isManager = true;
-
     @FXML
     void initialize() {
         assert dashBoardButtonHome != null : "fx:id=\"dashBoardButtonHome\" was not injected: check your FXML file 'dashboard-view.fxml'.";
@@ -68,11 +52,8 @@ public class DashboardController {
         assert hamburger != null : "fx:id=\"hamburger\" was not injected: check your FXML file 'dashboard-view.fxml'.";
         assert mainContentWindow != null : "fx:id=\"mainContentWindow\" was not injected: check your FXML file 'dashboard-view.fxml'.";
 
-        /**
-         * Temporary logic to load admin or manager depending on credentials
-         */
-
-        if (isManager){
+        UserRole userRole = SessionManager.getInstance().getUserRole();
+        if (userRole == UserRole.MANAGER) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/manager-drawer-view.fxml"));
                 VBox box = loader.load();
