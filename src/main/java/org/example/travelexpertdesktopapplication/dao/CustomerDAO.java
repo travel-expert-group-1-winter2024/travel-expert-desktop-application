@@ -79,11 +79,52 @@ public class CustomerDAO {
                     agentCustomersList.add(customer);
                 }
             }
-
         } catch (SQLException e) {
             Logger.error(e, "Error retrieving customers.");
         }
         return agentCustomersList;
     }
+
+    public static int updateCustomer(Customer customer) {
+        String sql = "UPDATE customers SET custfirstname = ?, custlastname = ?, custaddress = ?, custcity = ?, " +
+                "custprov = ?, custpostal = ?, custcountry = ?, custhomephone = ?, custbusphone = ?, " +
+                "custemail = ?, agentid = ? WHERE customerid = ?";
+
+        Logger.debug("Updating customer. ID={}", customer.getCustomerid());
+        Logger.debug("Executing query: {}", sql);
+
+        int numAffectedRows = 0;
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, customer.getCustfirstname());
+            stmt.setString(2, customer.getCustlastname());
+            stmt.setString(3, customer.getCustaddress());
+            stmt.setString(4, customer.getCustcity());
+            stmt.setString(5, customer.getCustprov());
+            stmt.setString(6, customer.getCustpostal());
+            stmt.setString(7, customer.getCustcountry());
+            stmt.setString(8, customer.getCusthomephone());
+            stmt.setString(9, customer.getCustbusphone());
+            stmt.setString(10, customer.getCustemail());
+            stmt.setInt(11, customer.getAgentid());
+            stmt.setInt(12, customer.getCustomerid());
+
+            numAffectedRows = stmt.executeUpdate();
+
+            if (numAffectedRows > 0) {
+                Logger.info("Customer updated successfully. ID={}", customer.getCustomerid());
+            } else {
+                Logger.warn("No customer updated. Possibly invalid ID: {}", customer.getCustomerid());
+            }
+
+        } catch (SQLException e) {
+            Logger.error(e, "Error updating customer. ID={}", customer.getCustomerid());
+        }
+
+        return numAffectedRows;
+    }
+
 
 }
