@@ -1,22 +1,31 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.example.travelexpertdesktopapplication.TEDesktopApp;
 import org.example.travelexpertdesktopapplication.auth.SessionManager;
 import org.example.travelexpertdesktopapplication.dao.CustomerDAO;
 import org.example.travelexpertdesktopapplication.dao.SupplierDAO;
+import org.example.travelexpertdesktopapplication.models.Customer;
 import org.example.travelexpertdesktopapplication.models.Customer;
 import org.example.travelexpertdesktopapplication.models.SupplierContacts;
 
@@ -67,10 +76,13 @@ public class CustomerListController {
     private Button btnReset;
 
     @FXML
+    private Button btnEditCustomer;
+    @FXML
     private TextField txtSearch;
 
     private ObservableList<Customer> customerData = FXCollections.observableArrayList();
     private FilteredList<Customer> filteredData;
+    String mode;
 
 
     @FXML
@@ -89,9 +101,11 @@ public class CustomerListController {
         assert lvCustomers != null : "fx:id=\"lvCustomers\" was not injected: check your FXML file 'customer-view.fxml'.";
         assert txtSearch != null : "fx:id=\"txtSearch\" was not injected: check your FXML file 'customer-view.fxml'.";
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'customer-view.fxml'.";
+        assert btnEditCustomer != null : "fx:id=\"btnEditCustomer\" was not injected: check your FXML file 'customer-view.fxml'.";
 
         setupCustomerTable();
         displayAllCustomerData();
+        btnEditCustomer.setDisable(true);
 
         filteredData = new FilteredList<>(customerData, p -> true);
 
@@ -110,6 +124,19 @@ public class CustomerListController {
         SortedList<Customer> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(lvCustomers.comparatorProperty());
         lvCustomers.setItems(sortedData);
+
+        lvCustomers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Customer>() {
+            @Override
+            public void changed(ObservableValue<? extends Customer> observableValue, Customer oldValue, Customer newValue) {
+                int index = lvCustomers.getSelectionModel().getSelectedIndex();
+                if(lvCustomers.getSelectionModel().isSelected(index)) {
+                    btnEditCustomer.setDisable(false);
+                    btnEditCustomer.setOnAction(e->{
+                        openEditWindow(newValue);
+                    });
+                }
+            }
+        });
 
 //        System.out.println(SessionManager.getUser().getRole());
 //        System.out.println(SessionManager.getUser().getId());
@@ -173,6 +200,25 @@ public class CustomerListController {
     @FXML
     private void onResetClick(){
         txtSearch.clear();
+    }
+
+    protected void openEditWindow(Customer Customer){
+        FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/edit-customer-view.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        //get the controller
+        EditCustomerController controller = fxmlLoader.getController();
+        controller.setCustomerData(Customer);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Edit Customer");
+        stage.setScene(scene);
+        stage.showAndWait();
+        displayAllCustomerData();
     }
 
 
