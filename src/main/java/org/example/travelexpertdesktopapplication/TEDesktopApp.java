@@ -32,7 +32,7 @@ public class TEDesktopApp extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Welcome to Travel Expert!");
         //stage.setMaximized(true);
-        //stage.setResizable(false);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
         Logger.info("Application started successfully!");

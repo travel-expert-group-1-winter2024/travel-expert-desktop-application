@@ -151,7 +151,7 @@ public class DashboardController {
         System.out.println("Loading Packages View");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/package-list-view.fxml"));
         try {
-            BorderPane packageListView = loader.load();
+            AnchorPane packageListView = loader.load();
             mainContentWindow.getChildren().clear();
             mainContentWindow.getChildren().add(packageListView);
             packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
