@@ -3,14 +3,18 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.PackageController">
-   <center>
-      <TableView fx:id="lvPackages" prefHeight="472.0" prefWidth="746.0" BorderPane.alignment="CENTER">
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.PackageController">
+   <children>
+      <TableView fx:id="lvPackages" layoutX="40.0" layoutY="90.0" prefHeight="364.0" prefWidth="719.0">
         <columns>
           <TableColumn fx:id="colpkgID" prefWidth="42.4000244140625" text="Package ID" />
           <TableColumn fx:id="colpkgName" prefWidth="208.0" text="Package Name" />
@@ -21,9 +25,7 @@
             <TableColumn fx:id="colpkgCommission" prefWidth="109.5999755859375" text="Commission" />
         </columns>
       </TableView>
-   </center>
-   <top>
-      <HBox prefHeight="40.0" prefWidth="730.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="40.0" prefWidth="800.0">
          <children>
             <AnchorPane prefHeight="35.0" prefWidth="800.0" style="-fx-border-color: black; -fx-border-style: dotted; -fx-border-width: 0 0 1 0;">
                <children>
@@ -58,5 +60,15 @@
             </AnchorPane>
          </children>
       </HBox>
-   </top>
-</BorderPane>
+      <StackPane alignment="CENTER_RIGHT" layoutX="173.0" layoutY="40.0" prefHeight="51.0" prefWidth="454.0">
+         <children>
+            <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Search for Agents..." />
+            <ImageView fx:id="btnSearch" fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/magnifying-glass.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

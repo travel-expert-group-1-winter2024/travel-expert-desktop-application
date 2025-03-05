@@ -5,6 +5,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -33,17 +35,21 @@ public class PackageController {
     @FXML
     private URL location;
 
-    @FXML
-    private Button btnAdd;
 
     @FXML
-    private Button btnDelete;
+    private JFXButton btnAdd;
 
     @FXML
-    private Button btnEdit;
+    private JFXButton btnDelete;
 
     @FXML
-    private Button btnReset;
+    private JFXButton btnEdit;
+
+    @FXML
+    private ImageView btnSearch;
+
+//    @FXML
+//    private Button btnReset;
 
     @FXML
     private TableColumn<Packages,Integer> colpkgBasePrice;
@@ -81,7 +87,7 @@ public class PackageController {
         assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'package-list-view.fxml'.";
         assert btnDelete != null : "fx:id=\"btnDelete\" was not injected: check your FXML file 'package-list-view.fxml'.";
         assert btnEdit != null : "fx:id=\"btnEdit\" was not injected: check your FXML file 'package-list-view.fxml'.";
-        assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'package-list-view.fxml'.";
+//        assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'package-list-view.fxml'.";
         assert colpkgBasePrice != null : "fx:id=\"colpkgBasePrice\" was not injected: check your FXML file 'package-list-view.fxml'.";
         assert colpkgCommission != null : "fx:id=\"colpkgCommission\" was not injected: check your FXML file 'package-list-view.fxml'.";
         assert colpkgDesc != null : "fx:id=\"colpkgDesc\" was not injected: check your FXML file 'package-list-view.fxml'.";
@@ -98,10 +104,10 @@ public class PackageController {
         displayPackages();
         filteredData = new FilteredList<>(packagesList, p -> true);
 
-        btnReset.setOnAction(e->{
-        txtSearch.clear();
-        displayPackages();
-        });
+//        btnReset.setOnAction(e->{
+//        txtSearch.clear();
+//        displayPackages();
+//        });
 
         btnAdd.setOnAction(e->{
             mode="Add";
