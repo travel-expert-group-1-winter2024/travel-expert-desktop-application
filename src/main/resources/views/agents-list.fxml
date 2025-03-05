@@ -32,6 +32,16 @@
             </columns>
         </TableView>
     </VBox>
+   <StackPane alignment="CENTER_RIGHT" layoutX="174.0" layoutY="40.0" prefHeight="51.0" prefWidth="454.0">
+      <children>
+         <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Search for Agents..." />
+         <ImageView fx:id="btnSearch" fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../images/magnifying-glass.png" />
+            </image>
+         </ImageView>
+      </children>
+   </StackPane>
    <AnchorPane layoutX="1.0" layoutY="1.0" prefHeight="39.0" prefWidth="800.0" style="-fx-border-color: black; -fx-border-style: dotted; -fx-border-width: 0 0 1 0;">
       <children>
          <AnchorPane prefHeight="52.0" prefWidth="266.0" style="-fx-background-color: 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -63,15 +73,5 @@
          </AnchorPane>
       </children>
    </AnchorPane>
-   <StackPane alignment="CENTER_RIGHT" layoutX="174.0" layoutY="40.0" prefHeight="51.0" prefWidth="454.0">
-      <children>
-         <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Search for Agents..." />
-         <ImageView fx:id="btnSearch" fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../images/magnifying-glass.png" />
-            </image>
-         </ImageView>
-      </children>
-   </StackPane>
 
 </AnchorPane>

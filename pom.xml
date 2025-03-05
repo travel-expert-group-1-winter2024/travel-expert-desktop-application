@@ -74,10 +74,21 @@
             <artifactId>spring-messaging</artifactId>
             <version>5.3.10</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.palexdev</groupId>
+            <artifactId>materialfx</artifactId>
+            <version>11.17.0</version>
+        </dependency>
         <dependency>
             <groupId>org.glassfish.tyrus</groupId>
             <artifactId>tyrus-client</artifactId>
             <version>1.18</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.hansolo</groupId>
+            <artifactId>tilesfx</artifactId>
+            <version>21.0.9</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.tyrus</groupId>
