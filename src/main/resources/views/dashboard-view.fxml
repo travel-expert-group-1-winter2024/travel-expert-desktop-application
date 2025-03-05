@@ -22,11 +22,6 @@
             <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" prefHeight="460.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
-      <StackPane fx:id="mainContentWindow" layoutX="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
-         <children>
-            <Label text="Main Content Area" />
-         </children>
-      </StackPane>
       <AnchorPane prefHeight="70.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #7829d9;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
@@ -39,5 +34,10 @@
             </AnchorPane>
          </children>
       </AnchorPane>
+      <StackPane fx:id="mainContentWindow" layoutX="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+         <children>
+            <Label text="Main Content Area" />
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>
