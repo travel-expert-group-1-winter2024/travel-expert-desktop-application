@@ -7,8 +7,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import org.example.travelexpertdesktopapplication.controllers.LoginController;
+import org.example.travelexpertdesktopapplication.dao.AgentDashboardDAO;
 import org.example.travelexpertdesktopapplication.dao.DatabaseManager;
 import org.example.travelexpertdesktopapplication.dao.UserDAO;
+import org.example.travelexpertdesktopapplication.models.AgentDashboardKPI;
 import org.example.travelexpertdesktopapplication.services.AuthService;
 import org.tinylog.Logger;
 import org.tinylog.configuration.Configuration;
@@ -34,6 +36,10 @@ public class TEDesktopApp extends Application {
         stage.setScene(scene);
         stage.show();
         Logger.info("Application started successfully!");
+        AgentDashboardDAO kpi = new AgentDashboardDAO();
+        kpi.getAgentKPIs(1);
+
+
     }
 
     public static void main(String[] args) {

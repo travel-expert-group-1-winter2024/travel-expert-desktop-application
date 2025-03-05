@@ -129,6 +129,16 @@ public class DashboardController {
     //Customer Hamburger Menu Button --> Dashboard Button methods
     public void loadCustomerDetailsView(){
         Logger.info("Loading Customer Details");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/customer-view.fxml"));
+        try {
+            BorderPane packageListView = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(packageListView);
+            packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+        } catch (IOException e) {
+            System.out.println("Error is being caught in the Catch of loadProductsView");
+            throw new RuntimeException(e);
+        }
     }
 
     public void loadCustomerPurchasesView(){

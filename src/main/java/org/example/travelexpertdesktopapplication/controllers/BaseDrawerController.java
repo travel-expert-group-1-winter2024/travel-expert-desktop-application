@@ -35,12 +35,13 @@ public abstract class BaseDrawerController {
         if (dashboardController != null){
             System.out.println("Delegating button population to DashboardController...");
             dashboardController.loadDashboardButtons(
-                    new String[]{"Details", "Purchases"},
+                    new String[]{"Details"},
                     new Runnable[]{
                             dashboardController::loadCustomerDetailsView,
-                            dashboardController::loadCustomerPurchasesView,
+
                     }
             );
+            dashboardController.loadCustomerDetailsView();
         } else {
             System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
         }
