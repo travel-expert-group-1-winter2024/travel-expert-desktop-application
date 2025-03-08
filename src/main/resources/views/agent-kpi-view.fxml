@@ -1,8 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.AgentKPIController">
-
-</AnchorPane>
+<MFXScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.AgentKPIController">
+   <content>
+      <AnchorPane prefHeight="500.0" prefWidth="800.0">
+         <children>
+            <AnchorPane prefHeight="130.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <HBox prefHeight="70.0" prefWidth="792.0">
+                     <children>
+                        <Text fx:id="greeting" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back, [Agent Name]! Are you ready to conquer the day?">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+               </children></AnchorPane>
+            <HBox layoutY="130.0" prefHeight="147.0" prefWidth="800.0" style="-fx-background-color: pink;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <AnchorPane fx:id="dataPanel1" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="labelTotalCustomers" layoutX="86.0" layoutY="65.0" text="Label" />
+                        <Label contentDisplay="BOTTOM" graphicTextGap="1.0" layoutX="57.0" layoutY="5.0" text="Total Customers">
+                           <graphic>
+                              <Label contentDisplay="BOTTOM" text="(To date)">
+                                 <font>
+                                    <Font size="8.0" />
+                                 </font>
+                              </Label>
+                           </graphic>
+                        </Label>
+                     </children></AnchorPane>
+                  <AnchorPane fx:id="dataPanel2" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="labelTotalSales" layoutX="86.0" layoutY="65.0" text="Label" />
+                        <Label contentDisplay="BOTTOM" graphicTextGap="1.0" layoutX="72.0" layoutY="5.0" text="Total Sales">
+                           <graphic>
+                              <Label text="(To date)">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </Label>
+                           </graphic>
+                        </Label>
+                     </children></AnchorPane>
+                  <AnchorPane fx:id="dataPanel3" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="labelTotalCommissions" layoutX="86.0" layoutY="65.0" text="Label" />
+                        <Label contentDisplay="BOTTOM" graphicTextGap="1.0" layoutX="50.0" layoutY="5.0" text="Total Commissions">
+                           <graphic>
+                              <Label text="(To date)">
+                                 <font>
+                                    <Font size="8.0" />
+                                 </font>
+                              </Label>
+                           </graphic>
+                        </Label>
+                     </children></AnchorPane>
+                  <AnchorPane fx:id="dataPanel4" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="86.0" layoutY="65.0" text="Label" />
+                        <Label layoutX="86.0" layoutY="6.0" text="Label" />
+                     </children></AnchorPane>
+               </children>
+            </HBox>
+            <AnchorPane layoutY="287.0" prefHeight="199.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0">
+                     <children>
+                        <PieChart fx:id="pieChart" layoutX="-132.0" layoutY="-129.0" prefWidth="493.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <BarChart fx:id="barChart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </content>
+</MFXScrollPane>

@@ -12,16 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AgentDashboardDAO {
+public class AgentKPIDAO {
 
     public List<AgentDashboardKPI> getAgentKPIs(int agentid){
         List<AgentDashboardKPI> kpiList = new ArrayList<>();
-        String query = "SELECT a.agentid, a.agtfirstname , c.customerid, bt.bookingid, bd.baseprice, bd.agencycommission " +
+
+        double totalBasePrice = 0.0;
+        double totalAgencyCommission = 0.0;
+        int totalCustomerCount = 0;
+
+        String query = "SELECT a.agentid, a.agtfirstname , COUNT(DISTINCT c.customerid ) AS total_customers, bt.bookingid, bd.destination, bd.baseprice, bd.agencycommission " +
                 "FROM agents a " +
                 "JOIN customers c ON a.agentid = c.agentid " +
                 "JOIN bookings bt ON c.customerid = bt.customerid " +
                 "JOIN bookingdetails bd ON bt.bookingid  = bd.bookingid " +
-                "WHERE a.agentid =?";
+                "WHERE a.agentid =? " +
+                "GROUP BY a.agentid, a.agtfirstname, bt.bookingid, bd.destination, bd.baseprice, bd.agencycommission";
 
         try (Connection connection = DatabaseManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -36,10 +42,17 @@ public class AgentDashboardDAO {
                 kpi.setBookingid(resultSet.getInt("bookingid"));
                 kpi.setBaseprice(resultSet.getDouble("baseprice"));
                 kpi.setAgencycommission(resultSet.getDouble("agencycommission"));
-                kpi.setCustomerid(resultSet.getInt("customerid"));
+                kpi.setTotalCustomers(resultSet.getInt("total_customers"));
                 kpiList.add(kpi);
+
+                totalBasePrice += kpi.getBaseprice();
+                totalAgencyCommission += kpi.getAgencycommission();
+
             }
-            System.out.println(kpiList);
+            System.out.println("Total Base Price: " + totalBasePrice);
+            System.out.println("Total Agency Commission: " + totalAgencyCommission);
+            System.out.println("Total Customer Count: " + totalCustomerCount);
+
 
         } catch (SQLException e) {
             e.printStackTrace();
