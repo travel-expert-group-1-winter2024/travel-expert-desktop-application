@@ -26,5 +26,22 @@ public class ManagerDrawerController extends BaseDrawerController {
         System.out.println("ManagerDrawerController instance created: " + this);
     }
 
+    @FXML
+    public void handleDashboardButtonClick() {
+        if (dashboardController != null){
+            System.out.println("Delegating button population to DashboardController...");
+            dashboardController.loadDashboardButtons(
+                    new String[]{"Stats", "Agencies", "Agents"},
+                    new Runnable[]{
+                            dashboardController::loadSalesDashboardView,
+
+                    }
+            );
+            dashboardController.loadSalesDashboardView();
+        } else {
+            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
+        }
+    }
+
 
 }

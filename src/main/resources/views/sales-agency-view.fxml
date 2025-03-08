@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.chart.PieChart?>
+<AnchorPane prefHeight="600" prefWidth="1000" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.travelexpertdesktopapplication.controllers.SalesAgencyDashboard">
+
+    <HBox spacing="20" layoutX="20" layoutY="20">
+        <ComboBox fx:id="agencyComboBox" prefWidth="300" promptText="Select an Agency"/>
+    </HBox>
+
+    <!-- Sales vs Commission Chart -->
+    <BarChart fx:id="salesCommissionChart" title="Sales vs Commission" layoutX="20" layoutY="80"
+              prefHeight="400" prefWidth="475">
+        <xAxis>
+            <CategoryAxis label="Category" />
+        </xAxis>
+        <yAxis>
+            <NumberAxis label="Amount ($)" />
+        </yAxis>
+    </BarChart>
+
+    <!-- Market Share Chart -->
+    <PieChart fx:id="marketShareChart" title="Market Share" layoutX="505" layoutY="80"
+              prefHeight="400" prefWidth="475" />
+
+
+</AnchorPane>

@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.layout.StackPane;
@@ -242,6 +243,24 @@ public class DashboardController {
             chatView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
         } catch (IOException e) {
             Logger.error(e, "Error loading ChatView");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadSalesDashboardView() {
+        System.out.println("loadSalesDashboardView is also working");
+        // Load the FXML file for the Sales Dashboard view
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sales-dashboard.fxml"));
+        try {
+            AnchorPane salesDashboard = loader.load();
+
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(salesDashboard);
+
+            salesDashboard.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+
+        } catch (IOException e) {
+            Logger.error(e, "Error loading SalesDashboardView");
             throw new RuntimeException(e);
         }
     }
