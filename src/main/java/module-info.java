@@ -9,6 +9,7 @@ module org.example.travelexpertdesktopapplication {
     requires spring.websocket;
     requires com.fasterxml.jackson.annotation;
     requires org.postgresql.jdbc;
+    requires java.desktop;
 
     opens org.example.travelexpertdesktopapplication.models to
             com.fasterxml.jackson.databind,
