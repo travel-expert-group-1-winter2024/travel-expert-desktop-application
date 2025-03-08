@@ -125,6 +125,9 @@ public class AgentsListController {
 
     @FXML
     private void handleAddAgent(ActionEvent event) {
+
+        System.out.println("Add Agent button clicked!");
+
         openAgentForm(null);
     }
 
@@ -155,6 +158,7 @@ public class AgentsListController {
     }
 
     public void openAgentForm(Agent agent) {
+        System.out.println("openAgentForm Called");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agents-form.fxml"));
             Parent root = loader.load();

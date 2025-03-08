@@ -71,6 +71,37 @@ public class AgentsDAO {
         }
     }
 
+    public static int addAgentAndGetId(Agent agent) {
+        String sql = "INSERT INTO agents (agtfirstname, agtmiddleinitial, agtlastname, agtbusphone, agtemail, agtposition, agencyid) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, agent.getAgtFirstName());
+            stmt.setString(2, agent.getAgtMiddleInitial());
+            stmt.setString(3, agent.getAgtLastName());
+            stmt.setString(4, agent.getAgtBusPhone());
+            stmt.setString(5, agent.getAgtEmail());
+            stmt.setString(6, agent.getAgtPosition());
+            stmt.setInt(7, agent.getAgencyId());
+
+            int rowsInserted = stmt.executeUpdate();
+            if (rowsInserted > 0) {
+                // Retrieve the generated AgentID
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1); // Return the generated AgentID
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            Logger.error(e, "Error while adding new agent: {}", agent.getAgtEmail());
+        }
+
+        return -1; // Return -1 if the insertion failed
+    }
+
     // Update an existing agent in the database
     public static boolean updateAgent(Agent agent) {
         String query = "UPDATE agents SET agtfirstname = ?, agtmiddleinitial = ?, agtlastname = ?, agtbusphone = ?, agtemail = ?, agtposition = ?, agencyid = ? " +
