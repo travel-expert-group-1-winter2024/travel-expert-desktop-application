@@ -1,5 +1,6 @@
 package org.example.travelexpertdesktopapplication.services;
 
+import org.example.travelexpertdesktopapplication.auth.SessionManager;
 import org.example.travelexpertdesktopapplication.auth.User;
 import org.example.travelexpertdesktopapplication.dao.UserDAO;
 
@@ -9,8 +10,8 @@ import java.util.Optional;
 public class AuthService {
     private final UserDAO userDAO;
 
-    public AuthService(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public AuthService() {
+        this.userDAO = new UserDAO();
     }
 
     /**
@@ -26,5 +27,9 @@ public class AuthService {
             return userOpt;
         }
         return Optional.empty();
+    }
+
+    public void logout() {
+        SessionManager.getInstance().clearSession();
     }
 }

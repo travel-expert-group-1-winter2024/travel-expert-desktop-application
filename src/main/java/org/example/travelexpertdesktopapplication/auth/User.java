@@ -74,10 +74,4 @@ public abstract class User {
         return hashPassword(password).equals(passwordHash);
     }
 
-
-    public void logout() {
-        System.out.println("User logged out");
-        //TODO: might need to implement more logic here
-    }
-
 }

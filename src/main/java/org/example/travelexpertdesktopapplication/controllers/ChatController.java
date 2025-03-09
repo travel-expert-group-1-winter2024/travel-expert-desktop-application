@@ -26,12 +26,12 @@ public class ChatController {
     @FXML
     private ListView<String> customerListView;
 
-    private WebSocketService webSocketService;
     private final Map<String, StringBuilder> chatRooms = new HashMap<>();  // stores chat history per customer
     private String selectedCustomerId = null;
 
     public void initialize() {
-        webSocketService = new WebSocketService("ws://localhost:8080/chat", this::updateChat);
+//        webSocketService = new WebSocketService("ws://localhost:8080/chat", this::updateChat);
+        WebSocketService.getInstance().initialize("ws://localhost:8080/chat", this::updateChat);
         customerListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 selectedCustomerId = newVal;
@@ -43,7 +43,7 @@ public class ChatController {
     @FXML
     private void sendMessage() {
         String message = messageField.getText();
-        webSocketService.sendMessage(selectedCustomerId, message);
+        WebSocketService.getInstance().sendMessage(selectedCustomerId, message);
 
         String formattedMessage = formatMessage("Me", message);
 
