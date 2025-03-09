@@ -2,6 +2,7 @@ package org.example.travelexpertdesktopapplication.dao;
 
 
 import org.example.travelexpertdesktopapplication.models.AgentDashboardKPI;
+import org.example.travelexpertdesktopapplication.models.DestinationCount;
 
 
 import java.sql.Connection;
@@ -59,4 +60,34 @@ public class AgentKPIDAO {
         }
         return kpiList;
     }
-}
+
+    public List<DestinationCount> getDestinationCount(int agentid){
+        List<DestinationCount> destinationCountList = new ArrayList<>();
+        String query = "SELECT bd.destination, COUNT(*) as destination_count " +
+                "FROM agents a " +
+                "JOIN customers c ON a.agentid = c.agentid " +
+                "JOIN bookings bt ON c.customerid = bt.customerid " +
+                "JOIN bookingdetails bd ON bt.bookingid = bd.bookingid " +
+                "WHere a.agentid = ? " +
+                "GROUP BY bd.destination ";
+
+        try (Connection connection = DatabaseManager.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, agentid);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()){
+                String destination = resultSet.getString("destination");
+                int destinationCount = resultSet.getInt("destination_count");
+                destinationCountList.add(new DestinationCount(destination, destinationCount));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } ;
+        return destinationCountList;
+    }
+
+
+
+
+}//class

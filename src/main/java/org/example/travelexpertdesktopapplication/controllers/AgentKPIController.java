@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
@@ -14,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import org.example.travelexpertdesktopapplication.dao.AgentKPIDAO;
 import org.example.travelexpertdesktopapplication.models.AgentDashboardKPI;
+import org.example.travelexpertdesktopapplication.models.DestinationCount;
 
 public class AgentKPIController {
 
@@ -72,6 +75,7 @@ public class AgentKPIController {
 
         int agentId = 1;
         List<AgentDashboardKPI> kpiList = agentKPIDAO.getAgentKPIs(agentId);
+        List<DestinationCount> destinationList = agentKPIDAO.getDestinationCount(agentId);
 
         String agentName;
         double totalCommissions = 0.0;
@@ -95,13 +99,79 @@ public class AgentKPIController {
             labelTotalSales.setText(currencyFormat.format(totalSales));
 
 
+            //Pie Chart
+
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            for (DestinationCount destination : destinationList) {
+                if (destination.destination() != null && !destination.destination().isBlank()) {
+                    //Normalize destination name, as DB destinations are inconsistent.
+                    String formattedDestinationName = formatDestinationName(destination.destination());
+                    pieChartData.add(new PieChart.Data(formattedDestinationName, destination.count()));
+                }
+            }
+
+            // Set the pie chart data
+            //pieChart.getData().addAll(pieChartData);
+            pieChart.setData(pieChartData);
+
+
         }
     }
 
-
-
-
-
+    private String formatDestinationName(String destination) {
+        switch (destination) {
+            case "Athens, Greece":
+                return "Athens";
+            case "Cairo, Egypt":
+                return "Cairo";
+            case "Calcutta, India": // **Consider checking this entry**
+                return "Calcutta";
+            case "canada": // **This entry should be corrected to "Canada"**
+                return "canada"; // **Consider standardizing to "Canada"**
+            case "Canada":
+                return "Canada";
+            case "Cape Town, South Africa":
+                return "Cape Town";
+            case "Edmonton":
+                return "Edmonton";
+            case "Grande Prairie":
+                return "Grande Prairie";
+            case "Greece": // **This entry does not follow city-country format**
+                return "Greece"; // **Consider removing or adjusting this entry**
+            case "Hong Kong, China":
+                return "Hong Kong";
+            case "Houston":
+                return "Houston";
+            case "London, England":
+                return "London";
+            case "Montreal":
+                return "Montreal";
+            case "Niagara": // **This entry does not follow city-country format**
+                return "Niagara"; // **Consider removing or adjusting this entry**
+            case "NZ": // **This entry does not follow the format**
+                return "NZ"; // **Consider removing or adjusting this entry**
+            case "Paris, France":
+                return "Paris";
+            case "Peru, argentina, Bollivi": // **This entry does not follow city-country format**
+                return "Peru, argentina, Bollivi"; // **Consider fixing or clarifying this entry**
+            case "Rio de Janeiro, Brazil":
+                return "Rio de Janeiro";
+            case "Sydney, Australia":
+                return "Sydney";
+            case "Toronto":
+                return "Toronto";
+            case "USA, Mexic": // **This entry should be corrected for consistency**
+                return "USA, Mexic"; // **Consider fixing this entry**
+            case "Vancouver":
+                return "Vancouver";
+            case "Victoria":
+                return "Victoria";
+            case "Winnipeg":
+                return "Winnipeg";
+            default:
+                return destination; // Return original if not found
+        }
+    }
 
 
 }//class
