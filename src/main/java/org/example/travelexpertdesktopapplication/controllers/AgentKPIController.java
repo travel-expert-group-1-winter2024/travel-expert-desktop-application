@@ -9,14 +9,14 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import org.example.travelexpertdesktopapplication.dao.AgentKPIDAO;
 import org.example.travelexpertdesktopapplication.models.AgentDashboardKPI;
 import org.example.travelexpertdesktopapplication.models.DestinationCount;
+import org.example.travelexpertdesktopapplication.models.MonthlyBookingCount;
 
 public class AgentKPIController {
 
@@ -27,7 +27,7 @@ public class AgentKPIController {
     private URL location;
 
     @FXML
-    private BarChart<?, ?> barChart;
+    private BarChart<String, Number> barChart;
 
     @FXML
     private AnchorPane dataPanel1;
@@ -76,6 +76,7 @@ public class AgentKPIController {
         int agentId = 1;
         List<AgentDashboardKPI> kpiList = agentKPIDAO.getAgentKPIs(agentId);
         List<DestinationCount> destinationList = agentKPIDAO.getDestinationCount(agentId);
+        List<MonthlyBookingCount> monthlyBookingList = agentKPIDAO.getMonthlyBookingCount(agentId);
 
         String agentName;
         double totalCommissions = 0.0;
@@ -109,15 +110,39 @@ public class AgentKPIController {
                     pieChartData.add(new PieChart.Data(formattedDestinationName, destination.count()));
                 }
             }
-
-            // Set the pie chart data
-            //pieChart.getData().addAll(pieChartData);
             pieChart.setData(pieChartData);
+
+            // Check if monthlyBookingList has data
+            System.out.println("Monthly Booking List Size: " + monthlyBookingList.size());
+
+            //Bar Chart
+            barChart.setTitle("Monthly Booking Trends");
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Bookings");
+
+            //Populate the series with data
+            // Populate the series with data
+            for (MonthlyBookingCount monthlyBooking : monthlyBookingList) {
+                series.getData().add(new XYChart.Data<>(monthlyBooking.month(), monthlyBooking.bookingCount()));
+            }
+
+            //Add the series to the chart
+            barChart.getData().clear(); // Clear previous data if any
+            barChart.getData().add(series);
+
+
+
+
 
 
         }
     }
 
+    /**
+     * A method that takes the inconsistent naming of the destinations from the DB and applies a standardized naming convention to properly display data in the pie chart
+     * @param destination, the destination being recieved from the db, before being formatted
+     * @return The formatted destination to maintain consistent naming in the pie graph.
+     */
     private String formatDestinationName(String destination) {
         switch (destination) {
             case "Athens, Greece":

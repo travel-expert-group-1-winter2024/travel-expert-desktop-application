@@ -3,6 +3,7 @@ package org.example.travelexpertdesktopapplication.dao;
 
 import org.example.travelexpertdesktopapplication.models.AgentDashboardKPI;
 import org.example.travelexpertdesktopapplication.models.DestinationCount;
+import org.example.travelexpertdesktopapplication.models.MonthlyBookingCount;
 
 
 import java.sql.Connection;
@@ -85,6 +86,34 @@ public class AgentKPIDAO {
             throw new RuntimeException(e);
         } ;
         return destinationCountList;
+    }
+
+    public List<MonthlyBookingCount> getMonthlyBookingCount(int agentid){
+        List<MonthlyBookingCount> monthlyBookingCountList = new ArrayList<>();
+        String query = "SELECT TO_CHAR(bd.tripstart, 'YYYY-MM') AS month, COUNT(*) AS month_count " +
+                "FROM agents a " +
+                "JOIN customers c ON a.agentid = c.agentid " +
+                "JOIN bookings bt ON c.customerid = bt.customerid " +
+                "JOIN bookingdetails bd ON bt.bookingid = bd.bookingid " +
+                "Where a.agentid = ? " +
+                "GROUP BY month " +
+                "ORDER BY month";
+
+        try (Connection connection = DatabaseManager.getConnection()){
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, agentid);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()){
+                String tripstart = resultSet.getString("month");
+                int monthCount = resultSet.getInt("month_count");
+
+                monthlyBookingCountList.add(new MonthlyBookingCount(tripstart, monthCount));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return monthlyBookingCountList;
     }
 
 
