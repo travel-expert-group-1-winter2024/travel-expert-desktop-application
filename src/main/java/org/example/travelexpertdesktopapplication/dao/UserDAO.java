@@ -70,7 +70,7 @@ public class UserDAO {
     private User createUser(UUID id, String username, String passwordHash, UserRole role, Integer agentId, Integer customerId) {
         return switch (role) {
             case AGENT -> new Agent(id, username, passwordHash, agentId);
-            case MANAGER -> new AgentManager(id, username, passwordHash, agentId);
+            case MANAGER -> new Manager(id, username, passwordHash, agentId);
             default -> throw new IllegalArgumentException("Unknown role: " + role);
         };
     }
