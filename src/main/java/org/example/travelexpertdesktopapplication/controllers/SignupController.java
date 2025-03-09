@@ -23,7 +23,7 @@ public class SignupController {
     @FXML
     public void initialize() {
         Logger.info(" SignupController initialized!");
-        roleChoiceBox.getItems().addAll("AGENT", "MANAGER", "ADMIN");
+        roleChoiceBox.getItems().addAll("AGENT", "MANAGER");
         roleChoiceBox.setValue("AGENT");
     }
 

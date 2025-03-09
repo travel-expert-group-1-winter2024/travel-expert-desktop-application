@@ -69,7 +69,6 @@ public class UserDAO {
      */
     private User createUser(UUID id, String username, String passwordHash, UserRole role, Integer agentId, Integer customerId) {
         return switch (role) {
-            case ADMIN -> new Admin(id, username, passwordHash);
             case AGENT -> new Agent(id, username, passwordHash, agentId);
             case MANAGER -> new AgentManager(id, username, passwordHash, agentId);
             default -> throw new IllegalArgumentException("Unknown role: " + role);
@@ -80,7 +79,7 @@ public class UserDAO {
 
     /**
      *  Register a new user (Signup)
-     * Supports AGENT, MANAGER, and ADMIN roles only.
+     * Supports AGENT AND MANAGER roles only.
      * @param username The user's username.
      * @param plainPassword The user's plaintext password.
      * @param role The user's role.
