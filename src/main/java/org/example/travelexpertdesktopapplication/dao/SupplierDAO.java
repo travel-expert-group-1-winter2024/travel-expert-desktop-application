@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.example.travelexpertdesktopapplication.models.Supplier;
 import org.example.travelexpertdesktopapplication.models.SupplierContacts;
 import org.tinylog.Logger;
 
@@ -226,5 +227,29 @@ public class SupplierDAO {
             Logger.error(e, "Error adding supplier.");
         }
         return generatedId;
+    }
+
+    public static ObservableList<Supplier> getAllSuppliers() {
+        ObservableList<Supplier> suppliers = FXCollections.observableArrayList();
+        String query = "SELECT * FROM suppliers";
+        Logger.debug("Fetching all suppliers from the database.");
+
+        try (Connection conn = DatabaseManager.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            Logger.debug("Executing query: {}", query);
+            while (rs.next()) {
+                Supplier supplier = new Supplier(
+                        new SimpleIntegerProperty(rs.getInt("supplierid")),
+                        new SimpleStringProperty(rs.getString("supname"))
+                );
+                suppliers.add(supplier);
+            }
+            Logger.info("Retrieved {} suppliers.", suppliers.size());
+        } catch (SQLException e) {
+            Logger.error(e, "Error retrieving suppliers.");
+        }
+        return suppliers;
     }
 }

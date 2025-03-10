@@ -15,8 +15,11 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.travelexpertdesktopapplication.dao.PackagesDAO;
+import org.example.travelexpertdesktopapplication.dao.ProductDAO;
 import org.example.travelexpertdesktopapplication.dao.SupplierDAO;
 import org.example.travelexpertdesktopapplication.models.Packages;
+import org.example.travelexpertdesktopapplication.models.Product;
+import org.example.travelexpertdesktopapplication.models.Supplier;
 import org.example.travelexpertdesktopapplication.models.SupplierContacts;
 import org.example.travelexpertdesktopapplication.utils.AlertBox;
 import org.example.travelexpertdesktopapplication.utils.Province;
@@ -61,6 +64,13 @@ public class AddEditPackageController {
 
     @FXML
     private TextField tfPackageName;
+
+    @FXML
+    private ComboBox<Product> cbProduct;
+
+    @FXML
+    private ComboBox<Supplier> cbSupplier;
+
     private String mode;
 
     @FXML
@@ -75,8 +85,16 @@ public class AddEditPackageController {
         assert tfDesc != null : "fx:id=\"tfDesc\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
         assert tfPackageID != null : "fx:id=\"tfPackageID\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
         assert tfPackageName != null : "fx:id=\"tfPackageName\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
+        assert cbProduct != null : "fx:id=\"cbProduct\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
+        assert cbSupplier != null : "fx:id=\"cbSupplier\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
 
         tfPackageID.setDisable(true);
+
+        // get product and supplier data from database
+        List<Product> productList = ProductDAO.getAllProducts();
+        cbProduct.setItems(FXCollections.observableArrayList(productList));
+        List<Supplier> supplierList = SupplierDAO.getAllSuppliers();
+        cbSupplier.setItems(FXCollections.observableArrayList(supplierList));
     }
 
     public void setMode(String mode) {
@@ -86,7 +104,7 @@ public class AddEditPackageController {
     }
 
     @FXML
-    private void onClickSave(){
+    private void onClickSave() {
         if (validateForm()) {
 
             Packages packagesData = getDetailsOfPackageFromForm();
@@ -94,9 +112,9 @@ public class AddEditPackageController {
                 PackagesDAO.addPackage(packagesData);
                 AlertBox.showAlert("Success", "Package has been saved successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
-            }else{
+            } else {
                 SimpleIntegerProperty packageID = new SimpleIntegerProperty(Integer.parseInt(tfPackageID.getText()));
-                PackagesDAO.updatePackeDetails(packageID,packagesData);
+                PackagesDAO.updatePackeDetails(packageID, packagesData);
                 AlertBox.showAlert("Success", "Supplier Contacts updated successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
             }
@@ -114,11 +132,12 @@ public class AddEditPackageController {
         SimpleStringProperty pkgdesc = new SimpleStringProperty(tfDesc.getText());
         SimpleIntegerProperty pkgbaseprice = new SimpleIntegerProperty(Integer.parseInt(tfBasePrice.getText()));
         SimpleIntegerProperty pkgagencycommission = new SimpleIntegerProperty(Integer.parseInt(tfCommission.getText()));
-        return new Packages(packageID,pkgName,pkgstartdate,pkgenddate,pkgdesc,pkgbaseprice,pkgagencycommission);
+        return new Packages(packageID, pkgName, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission);
     }
 
     /**
      * Validate fields from the form
+     *
      * @return - true/false depending on the validity of fields
      */
     private boolean validateForm() {
@@ -128,8 +147,8 @@ public class AddEditPackageController {
         isValid &= validateField(dpStartDate, dpStartDate.getValue() == null ? "Start date is required" : null);
         isValid &= validateField(dpStartDate, dpStartDate.getValue() == null ? "End date is required" : null);
         isValid &= validateField(tfDesc, Validator.checkForEmpty(tfDesc.getText()));
-        isValid &= validateField(tfBasePrice,Validator.checkForEmpty(tfBasePrice.getText()));
-        isValid &= validateField(tfCommission,Validator.checkForEmpty(tfCommission.getText()));
+        isValid &= validateField(tfBasePrice, Validator.checkForEmpty(tfBasePrice.getText()));
+        isValid &= validateField(tfCommission, Validator.checkForEmpty(tfCommission.getText()));
         isValid &= validateField(dpStartDate, isStartDateValid());
         isValid &= validateField(tfBasePrice, isAgencyCommissionValid());
         return isValid;
@@ -174,7 +193,7 @@ public class AddEditPackageController {
     }
 
     @FXML
-    private void onExit(){
+    private void onExit() {
         Stage stage = (Stage) btnExit.getScene().getWindow();
         stage.close();
     }

@@ -17,6 +17,7 @@ public class Packages {
     private SimpleIntegerProperty pkgbaseprice;
     private SimpleIntegerProperty pkgagencycommission;
 
+
     public Packages(SimpleIntegerProperty packageid, SimpleStringProperty pkgname, SimpleObjectProperty<LocalDate>  pkgstartdate,
                     SimpleObjectProperty<LocalDate>  pkgenddate, SimpleStringProperty pkgdesc, SimpleIntegerProperty pkgbaseprice,
                     SimpleIntegerProperty pkgagencycommission) {
