@@ -1,7 +1,6 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -13,16 +12,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import org.example.travelexpertdesktopapplication.dao.PackagesDAO;
-import org.example.travelexpertdesktopapplication.dao.ProductDAO;
-import org.example.travelexpertdesktopapplication.dao.SupplierDAO;
-import org.example.travelexpertdesktopapplication.models.Packages;
-import org.example.travelexpertdesktopapplication.models.Product;
-import org.example.travelexpertdesktopapplication.models.Supplier;
-import org.example.travelexpertdesktopapplication.models.SupplierContacts;
+import org.example.travelexpertdesktopapplication.dao.*;
+import org.example.travelexpertdesktopapplication.models.*;
 import org.example.travelexpertdesktopapplication.utils.AlertBox;
-import org.example.travelexpertdesktopapplication.utils.Province;
 import org.example.travelexpertdesktopapplication.utils.Validator;
 
 import static org.example.travelexpertdesktopapplication.utils.ValidateFields.validateField;
@@ -108,13 +100,21 @@ public class AddEditPackageController {
         if (validateForm()) {
 
             Packages packagesData = getDetailsOfPackageFromForm();
+            Product product = getProductDetails();
+            Supplier supplier = getSupplierDetails();
             if (mode.equalsIgnoreCase("add")) {
-                PackagesDAO.addPackage(packagesData);
+                int packageId = PackagesDAO.addPackage(packagesData);
+
+                saveProductSupplier(product, supplier, packageId);
+
                 AlertBox.showAlert("Success", "Package has been saved successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
             } else {
                 SimpleIntegerProperty packageID = new SimpleIntegerProperty(Integer.parseInt(tfPackageID.getText()));
                 PackagesDAO.updatePackeDetails(packageID, packagesData);
+
+                updateProductSupplier(product, supplier, packageID.get());
+
                 AlertBox.showAlert("Success", "Supplier Contacts updated successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
             }
@@ -133,6 +133,71 @@ public class AddEditPackageController {
         SimpleIntegerProperty pkgbaseprice = new SimpleIntegerProperty(Integer.parseInt(tfBasePrice.getText()));
         SimpleIntegerProperty pkgagencycommission = new SimpleIntegerProperty(Integer.parseInt(tfCommission.getText()));
         return new Packages(packageID, pkgName, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission);
+    }
+
+    // get details of product and supplier
+    private Product getProductDetails() {
+        Product selectedProduct = cbProduct.getSelectionModel().getSelectedItem();
+        return new Product(
+                selectedProduct.getProductId(),
+                selectedProduct.getProductName()
+        );
+    }
+
+    private Supplier getSupplierDetails() {
+        Supplier selectedSupplier = cbSupplier.getSelectionModel().getSelectedItem();
+        return new Supplier(
+                new SimpleIntegerProperty(selectedSupplier.getSupplierid()),
+                new SimpleStringProperty(selectedSupplier.getSupname())
+        );
+    }
+
+    private void saveProductSupplier(Product selectedProduct, Supplier selectedSupplier, int packageId) {
+        // check product and supplier relation in product_supplier
+        ProductsSuppliers productSupplier = ProductSupplierDAO.getProductSupplierIdByProductIdAndSupplierId(
+                selectedProduct.getProductId(),
+                selectedSupplier.getSupplierid()
+        );
+
+        // if not exist, add it
+        if (productSupplier == null) {
+            ProductsSuppliers productsSuppliers = new ProductsSuppliers(
+                    selectedProduct.getProductId(),
+                    selectedSupplier.getSupplierid()
+            );
+            ProductSupplierDAO.addProductSupplier(productsSuppliers);
+        } else {
+            // if existed, get product supplier id then create packages_products_suppliers relation
+            int productSupplierId = productSupplier.getProductSupplierId();
+            PackagesProductsSuppliers packagesProductsSuppliers = new PackagesProductsSuppliers(
+                    packageId,
+                    productSupplierId
+            );
+            PackagesProductsSuppliersDAO.addPackageProductSupplier(packagesProductsSuppliers);
+        }
+
+    }
+
+    private void updateProductSupplier(Product selectedProduct, Supplier selectedSupplier, int packageId) {
+        // Check if the product and supplier are already associated with the package
+        ProductsSuppliers existingProductSupplier = ProductSupplierDAO.getProductSupplierIdByProductIdAndSupplierId(
+                selectedProduct.getProductId(),
+                selectedSupplier.getSupplierid()
+        );
+
+        if (existingProductSupplier == null) {
+            // Create a new association
+            ProductSupplierDAO.addProductSupplier(new ProductsSuppliers(
+                    selectedProduct.getProductId(),
+                    selectedSupplier.getSupplierid())
+            );
+            // Update the packages_products_suppliers table
+            PackagesProductsSuppliers packagesProductsSuppliers = new PackagesProductsSuppliers(
+                    packageId,
+                    existingProductSupplier.getProductSupplierId()
+            );
+            PackagesProductsSuppliersDAO.updatePackageProductSupplier(packagesProductsSuppliers);
+        }
     }
 
     /**

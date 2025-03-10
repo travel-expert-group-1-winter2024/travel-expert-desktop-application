@@ -67,8 +67,8 @@ public class PackagesDAO {
         return affectedRows;
     }
 
-    public static int addPackage(Packages p){
-        int numAffectedRows =0;
+    public static int addPackage(Packages p) {
+        int generatedId = -1;
 //        Logger.debug("Adding new package: {}", package);
 
         String sql = "INSERT INTO packages (pkgName, pkgstartdate, pkgenddate, pkgdesc, " +
@@ -77,7 +77,7 @@ public class PackagesDAO {
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1,p.getPkgname());
+            stmt.setString(1, p.getPkgname());
             stmt.setDate(2, java.sql.Date.valueOf(p.getPkgstartdate().get()));
             stmt.setDate(3, java.sql.Date.valueOf(p.getPkgenddate().get()));
             stmt.setString(4, p.getPkgdesc());
@@ -85,12 +85,18 @@ public class PackagesDAO {
             stmt.setInt(6, p.getPkgagencycommission());
 
             Logger.debug("Executing query: {}", sql);
-            numAffectedRows = stmt.executeUpdate();
-            Logger.info("Package added successfully.");
+            stmt.executeUpdate();
+            // Retrieve the generated key
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    generatedId = generatedKeys.getInt(1);
+                    Logger.info("Package added successfully with ID: {}", generatedId);
+                }
+            }
         } catch (SQLException e) {
             Logger.error(e, "Error adding Package.");
         }
-        return numAffectedRows;
+        return generatedId;
     }
 
     public static int updatePackeDetails(SimpleIntegerProperty packageID, Packages p) {
