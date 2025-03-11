@@ -252,4 +252,27 @@ public class SupplierDAO {
         }
         return suppliers;
     }
+
+    public static Supplier getSupplierById(int supplierId) {
+        String sql = "SELECT supplierid, supname FROM suppliers WHERE supplierid = ?";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, supplierId);
+            ResultSet rs = stmt.executeQuery();
+
+            Logger.debug("Executing query: {}", sql);
+
+            if (rs.next()) {
+                return new Supplier(
+                        new SimpleIntegerProperty(rs.getInt("supplierid")),
+                        new SimpleStringProperty(rs.getString("supname"))
+                );
+            }
+        } catch (SQLException e) {
+            Logger.error(e, "Error fetching supplier with ID: {}", supplierId);
+        }
+        return null; // Return null if no supplier is found
+    }
 }

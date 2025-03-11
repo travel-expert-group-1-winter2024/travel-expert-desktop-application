@@ -1,21 +1,27 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.example.travelexpertdesktopapplication.TEDesktopApp;
 import org.example.travelexpertdesktopapplication.dao.*;
 import org.example.travelexpertdesktopapplication.models.*;
 import org.example.travelexpertdesktopapplication.utils.AlertBox;
 import org.example.travelexpertdesktopapplication.utils.Validator;
+import org.tinylog.Logger;
 
 import static org.example.travelexpertdesktopapplication.utils.ValidateFields.validateField;
 
@@ -57,13 +63,12 @@ public class AddEditPackageController {
     @FXML
     private TextField tfPackageName;
 
-    @FXML
-    private ComboBox<Product> cbProduct;
 
     @FXML
-    private ComboBox<Supplier> cbSupplier;
+    private Button btnProductsSuppliersAddEdit;
 
     private String mode;
+    private int currentPackageId;
 
     @FXML
     void initialize() {
@@ -77,16 +82,9 @@ public class AddEditPackageController {
         assert tfDesc != null : "fx:id=\"tfDesc\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
         assert tfPackageID != null : "fx:id=\"tfPackageID\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
         assert tfPackageName != null : "fx:id=\"tfPackageName\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
-        assert cbProduct != null : "fx:id=\"cbProduct\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
-        assert cbSupplier != null : "fx:id=\"cbSupplier\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
+        assert btnProductsSuppliersAddEdit != null : "fx:id=\"btnProductsSuppliersAddEdit\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
 
         tfPackageID.setDisable(true);
-
-        // get product and supplier data from database
-        List<Product> productList = ProductDAO.getAllProducts();
-        cbProduct.setItems(FXCollections.observableArrayList(productList));
-        List<Supplier> supplierList = SupplierDAO.getAllSuppliers();
-        cbSupplier.setItems(FXCollections.observableArrayList(supplierList));
     }
 
     public void setMode(String mode) {
@@ -96,16 +94,36 @@ public class AddEditPackageController {
     }
 
     @FXML
+    void onProductSupplierAddEditClick(MouseEvent event) {
+        FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/add-edit-products-suppliers-view.fxml"));
+        Scene scene;
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        AddEditProductSupplierController controller = fxmlLoader.getController();
+        controller.setCurrentPackageId(currentPackageId);
+        if (mode.equalsIgnoreCase("edit")) {
+            controller.loadProductsAndSuppliersForEdit();
+        }
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Add/Edit Product Supplier");
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
+    @FXML
     private void onClickSave() {
         if (validateForm()) {
 
             Packages packagesData = getDetailsOfPackageFromForm();
-            Product product = getProductDetails();
-            Supplier supplier = getSupplierDetails();
             if (mode.equalsIgnoreCase("add")) {
                 int packageId = PackagesDAO.addPackage(packagesData);
 
-                saveProductSupplier(product, supplier, packageId);
+                saveProductSupplier(packageId);
 
                 AlertBox.showAlert("Success", "Package has been saved successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
@@ -113,7 +131,7 @@ public class AddEditPackageController {
                 SimpleIntegerProperty packageID = new SimpleIntegerProperty(Integer.parseInt(tfPackageID.getText()));
                 PackagesDAO.updatePackeDetails(packageID, packagesData);
 
-                updateProductSupplier(product, supplier, packageID.get());
+                updateProductSupplier(packageID.get());
 
                 AlertBox.showAlert("Success", "Supplier Contacts updated successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
@@ -135,69 +153,84 @@ public class AddEditPackageController {
         return new Packages(packageID, pkgName, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission);
     }
 
-    // get details of product and supplier
-    private Product getProductDetails() {
-        Product selectedProduct = cbProduct.getSelectionModel().getSelectedItem();
-        return new Product(
-                selectedProduct.getProductId(),
-                selectedProduct.getProductName()
-        );
+    private void saveProductSupplier(int packageId) {
+        ProductsSuppliers[] selectedProductSuppliers = AddEditProductSupplierController.getSelectedProductSupplierList();
+        for (ProductsSuppliers productSupplier : selectedProductSuppliers) {
+            int productSupplierId = createProductSupplierIfNotExist(productSupplier.getProductId(), productSupplier.getSupplierId());
+            PackagesProductsSuppliersDAO.addPackageProductSupplier(new PackagesProductsSuppliers(packageId, productSupplierId));
+        }
     }
 
-    private Supplier getSupplierDetails() {
-        Supplier selectedSupplier = cbSupplier.getSelectionModel().getSelectedItem();
-        return new Supplier(
-                new SimpleIntegerProperty(selectedSupplier.getSupplierid()),
-                new SimpleStringProperty(selectedSupplier.getSupname())
-        );
+    private void updateProductSupplier(int packageId) {
+        ProductsSuppliers[] previousProductSupplierList = AddEditProductSupplierController.getPreviousProductSupplierList();
+        ProductsSuppliers[] selectedProductSupplierList = AddEditProductSupplierController.getSelectedProductSupplierList();
+        List<ProductsSuppliers> idsToAdd = compareAndUpdateProductSupplierIds(selectedProductSupplierList, previousProductSupplierList);
+
+        // add new product suppliers ids
+        for (ProductsSuppliers productSupplier : idsToAdd) {
+            int productSupplierId = createProductSupplierIfNotExist(productSupplier.getProductId(), productSupplier.getSupplierId());
+            PackagesProductsSuppliersDAO.addPackageProductSupplier(new PackagesProductsSuppliers(packageId, productSupplierId));
+        }
     }
 
-    private void saveProductSupplier(Product selectedProduct, Supplier selectedSupplier, int packageId) {
-        // check product and supplier relation in product_supplier
-        ProductsSuppliers productSupplier = ProductSupplierDAO.getProductSupplierIdByProductIdAndSupplierId(
-                selectedProduct.getProductId(),
-                selectedSupplier.getSupplierid()
-        );
-
-        // if not exist, add it
-        if (productSupplier == null) {
-            ProductsSuppliers productsSuppliers = new ProductsSuppliers(
-                    selectedProduct.getProductId(),
-                    selectedSupplier.getSupplierid()
-            );
-            ProductSupplierDAO.addProductSupplier(productsSuppliers);
+    private int createProductSupplierIfNotExist(int productId, int supplierId) {
+        ProductsSuppliers productsSuppliers = ProductSupplierDAO.getProductSupplierIdByProductIdAndSupplierId(productId, supplierId);
+        // create new product_supplier if not exist
+        if (productsSuppliers == null) {
+            productsSuppliers = new ProductsSuppliers(productId, supplierId);
+            return ProductSupplierDAO.addProductSupplier(productsSuppliers);
         } else {
-            // if existed, get product supplier id then create packages_products_suppliers relation
-            int productSupplierId = productSupplier.getProductSupplierId();
-            PackagesProductsSuppliers packagesProductsSuppliers = new PackagesProductsSuppliers(
-                    packageId,
-                    productSupplierId
-            );
-            PackagesProductsSuppliersDAO.addPackageProductSupplier(packagesProductsSuppliers);
+            // if exist, return the id
+            return productsSuppliers.getProductSupplierId();
         }
-
     }
 
-    private void updateProductSupplier(Product selectedProduct, Supplier selectedSupplier, int packageId) {
-        // Check if the product and supplier are already associated with the package
-        ProductsSuppliers existingProductSupplier = ProductSupplierDAO.getProductSupplierIdByProductIdAndSupplierId(
-                selectedProduct.getProductId(),
-                selectedSupplier.getSupplierid()
-        );
+    private List<ProductsSuppliers> compareAndUpdateProductSupplierIds(ProductsSuppliers[] selectedProductSupplierIds, ProductsSuppliers[] previousProductSupplierIds) {
+        List<ProductsSuppliers> idToAdd = new ArrayList<>();
 
-        if (existingProductSupplier == null) {
-            // Create a new association
-            ProductSupplierDAO.addProductSupplier(new ProductsSuppliers(
-                    selectedProduct.getProductId(),
-                    selectedSupplier.getSupplierid())
-            );
-            // Update the packages_products_suppliers table
-            PackagesProductsSuppliers packagesProductsSuppliers = new PackagesProductsSuppliers(
-                    packageId,
-                    existingProductSupplier.getProductSupplierId()
-            );
-            PackagesProductsSuppliersDAO.updatePackageProductSupplier(packagesProductsSuppliers);
+        // find the minimum size of both lists
+        int selectedSize = findActualSize(selectedProductSupplierIds);
+        int previousSize = findActualSize(previousProductSupplierIds);
+        int minSize = Math.min(selectedSize, previousSize);
+
+        for (int i = 0; i < minSize; i++) {
+            if (i > 2) {
+                break;
+            }
+
+            ProductsSuppliers selected = selectedProductSupplierIds[i];
+            ProductsSuppliers previous = previousProductSupplierIds[i];
+
+            if (selected == null || previous == null) {
+                continue;
+            }
+
+            if (!Objects.equals(previous.getProductId(), selected.getProductId()) ||
+                    !Objects.equals(previous.getSupplierId(), selected.getSupplierId())) {
+                PackagesProductsSuppliersDAO.deletePackageProductSupplierByProductSupplierId(previous.getProductSupplierId());
+                idToAdd.add(selected);
+            }
         }
+
+        if (selectedSize > previousSize) {
+            for (int i = previousSize; i < selectedSize; i++) {
+                if (selectedProductSupplierIds[i] != null) {
+                    idToAdd.add(selectedProductSupplierIds[i]);
+                }
+            }
+        }
+
+        return idToAdd;
+    }
+
+    private int findActualSize(ProductsSuppliers[] productsSuppliers){
+        int actualSize = 0;
+        for (ProductsSuppliers productsSupplier : productsSuppliers) {
+            if (productsSupplier != null) {
+                actualSize++;
+            }
+        }
+        return actualSize;
     }
 
     /**
@@ -255,10 +288,16 @@ public class AddEditPackageController {
         tfDesc.setText(String.valueOf(packages.getPkgdesc()));
         tfBasePrice.setText(String.valueOf(packages.getPkgbaseprice()));
         tfCommission.setText(String.valueOf(packages.getPkgagencycommission()));
+
+        // set current package id
+        currentPackageId = packages.getPackageid();
     }
 
     @FXML
     private void onExit() {
+        AddEditProductSupplierController.clearSelectedProductSuppliers();
+//        AddEditProductSupplierController.clearPreviousProductSupplierIds();
+
         Stage stage = (Stage) btnExit.getScene().getWindow();
         stage.close();
     }

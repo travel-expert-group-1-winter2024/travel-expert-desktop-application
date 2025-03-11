@@ -5,6 +5,9 @@ public class ProductsSuppliers {
     private int productId;
     private int supplierId;
 
+    private Product product;
+    private Supplier supplier;
+
     public ProductsSuppliers(int productId, int supplierId) {
         this.productId = productId;
         this.supplierId = supplierId;
@@ -38,5 +41,30 @@ public class ProductsSuppliers {
 
     public void setSupplierId(int supplierId) {
         this.supplierId = supplierId;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductsSuppliers{" +
+                "productSupplierId=" + productSupplierId +
+                ", productId=" + productId +
+                ", supplierId=" + supplierId +
+                '}';
     }
 }
