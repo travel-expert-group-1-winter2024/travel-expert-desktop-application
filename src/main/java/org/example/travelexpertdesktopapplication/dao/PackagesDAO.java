@@ -44,7 +44,7 @@ public class PackagesDAO {
         return packageList;
     }
 
-    public static int deletePackage(int packageID) {
+    public static int deletePackage(int packageID) throws SQLException {
         String sql = "DELETE FROM packages WHERE packageid = ?";
         Logger.debug("Deleting package with ID: {}", packageID);
         int affectedRows = 0;
@@ -63,21 +63,22 @@ public class PackagesDAO {
             }
         } catch (SQLException e) {
             Logger.error(e, "Error deleting package with ID {}", packageID);
+            throw e;
         }
         return affectedRows;
     }
 
-    public static int addPackage(Packages p){
-        int numAffectedRows =0;
-//        Logger.debug("Adding new package: {}", package);
+    public static int addPackage(Packages p) {
+        int generatedId = -1; // Default value if insertion fails
+        Logger.debug("Adding new package: {}", p);
 
         String sql = "INSERT INTO packages (pkgName, pkgstartdate, pkgenddate, pkgdesc, " +
                 "pkgbaseprice, pkgagencycommission) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setString(1,p.getPkgname());
+            stmt.setString(1, p.getPkgname());
             stmt.setDate(2, java.sql.Date.valueOf(p.getPkgstartdate().get()));
             stmt.setDate(3, java.sql.Date.valueOf(p.getPkgenddate().get()));
             stmt.setString(4, p.getPkgdesc());
@@ -85,20 +86,28 @@ public class PackagesDAO {
             stmt.setInt(6, p.getPkgagencycommission());
 
             Logger.debug("Executing query: {}", sql);
-            numAffectedRows = stmt.executeUpdate();
-            Logger.info("Package added successfully.");
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        generatedId = generatedKeys.getInt(1);
+                        Logger.info("Package added successfully with ID: {}", generatedId);
+                    }
+                }
+            }
         } catch (SQLException e) {
             Logger.error(e, "Error adding Package.");
         }
-        return numAffectedRows;
+        return generatedId;
     }
 
-    public static int updatePackeDetails(SimpleIntegerProperty packageID, Packages p) {
+    public static int updatePackage(Packages p) {
         String sql = "UPDATE packages SET pkgName = ?, pkgstartdate = ?, pkgenddate = ?, " +
                 "pkgdesc = ?, pkgbaseprice = ?, pkgagencycommission = ? " +
                 "WHERE packageid = ?";
 
-        Logger.debug("Updating package. ID={}", packageID);
+        Logger.debug("Updating package. ID={}", p.getPackageid());
         Logger.debug("Executing query: {}", sql);
 
         int numAffectedRows = 0;

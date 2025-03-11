@@ -2,6 +2,7 @@ package org.example.travelexpertdesktopapplication.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -22,6 +23,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.TEDesktopApp;
 import org.example.travelexpertdesktopapplication.dao.PackagesDAO;
+import org.example.travelexpertdesktopapplication.dao.PackagesProductsSuppliersDAO;
 import org.example.travelexpertdesktopapplication.models.Packages;
 import org.example.travelexpertdesktopapplication.utils.AlertBox;
 
@@ -192,13 +194,19 @@ public class PackageController {
     @FXML
     protected void deletePackage() {
         int selectedPackageID = lvPackages.getSelectionModel().getSelectedItems().get(0).getPackageid();
-        int numRows = 0;
-        numRows = PackagesDAO.deletePackage(selectedPackageID);
-        if (numRows == 1) {
+        try {
+            // delete related records in the junction table
+            PackagesProductsSuppliersDAO.deletePackageProductSupplierByPackageId(selectedPackageID);
+            // delete the package
+            PackagesDAO.deletePackage(selectedPackageID);
+
             AlertBox.showAlert("Delete", "The Package has been deleted successfully.", Alert.AlertType.CONFIRMATION);
-        } else {
+            displayPackages();
+        } catch (SQLException e){
             AlertBox.showAlert("Delete", "Delete operation failed. PackageID may not exist.",Alert.AlertType.ERROR);
         }
-        displayPackages();
+        catch (Exception e) {
+            AlertBox.showAlert("Delete", "Delete operation failed.",Alert.AlertType.ERROR);
+        }
     }
 }
