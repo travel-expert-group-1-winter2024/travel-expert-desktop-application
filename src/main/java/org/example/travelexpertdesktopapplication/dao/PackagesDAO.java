@@ -44,7 +44,7 @@ public class PackagesDAO {
         return packageList;
     }
 
-    public static int deletePackage(int packageID) {
+    public static int deletePackage(int packageID) throws SQLException {
         String sql = "DELETE FROM packages WHERE packageid = ?";
         Logger.debug("Deleting package with ID: {}", packageID);
         int affectedRows = 0;
@@ -63,6 +63,7 @@ public class PackagesDAO {
             }
         } catch (SQLException e) {
             Logger.error(e, "Error deleting package with ID {}", packageID);
+            throw e;
         }
         return affectedRows;
     }

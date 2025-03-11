@@ -110,4 +110,23 @@ public class PackagesProductsSuppliersDAO {
             Logger.error(e, "Error deleting package product supplier with ID: {}", id);
         }
     }
+
+    public static void deletePackageProductSupplierByPackageId(Integer id) throws SQLException {
+        String sql = "DELETE FROM packages_products_suppliers WHERE packageid = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            int rowsAffected = stmt.executeUpdate();
+            Logger.debug("Executing SQL query: {}", sql);
+            if (rowsAffected > 0) {
+                Logger.info("Deleted package product supplier with ID: {}", id);
+            } else {
+                Logger.warn("No package product supplier found with ID: {}", id);
+            }
+        } catch (SQLException e) {
+            Logger.error(e, "Error deleting package product supplier with ID: {}", id);
+            throw new SQLException(e);
+        }
+    }
 }
