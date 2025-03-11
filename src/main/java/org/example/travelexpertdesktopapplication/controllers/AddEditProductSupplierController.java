@@ -171,18 +171,13 @@ public class AddEditProductSupplierController {
         // find product_supplier id from product id and supplier id
         if (cboProduct1.getValue() != null || cboSupplier1.getValue() != null) {
             addProductSupplierToList(0, cboProduct1, cboSupplier1);
-            Logger.info("ComboBox 1 has values: " + cboProduct1.getValue() + ", " + cboSupplier1.getValue());
         }
         if (cboProduct2.getValue() != null || cboSupplier2.getValue() != null) {
             addProductSupplierToList(1, cboProduct2, cboSupplier2);
-            Logger.info("ComboBox 2 has values: " + cboProduct2.getValue() + ", " + cboSupplier2.getValue());
         }
         if (cboProduct3.getValue() != null || cboSupplier3.getValue() != null) {
             addProductSupplierToList(2, cboProduct3, cboSupplier3);
-            Logger.info("ComboBox 3 has values: " + cboProduct3.getValue() + ", " + cboSupplier3.getValue());
         }
-
-        Logger.info("Selected Product Supplier List: " + Arrays.toString(selectedProductSupplierList));
 
         // close
         Stage stage = (Stage) btnSave.getScene().getWindow();
