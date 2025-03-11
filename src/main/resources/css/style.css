@@ -1,3 +1,25 @@
+/*Font Declarations*/
+
+@font-face {
+    font-family: 'ArchivoBlack';
+    src: url('../fonts/ArchivoBlack-Regular.ttf')format('truetype');
+}
+
+@font-face {
+    font-family: 'ArchivoNarrow';
+    src: url('../fonts/ArchivoNarrow-VariableFont_wght.ttf')format('truetype');
+}
+
+@font-face {
+    font-family: 'Arimo';;
+    src: url('../fonts/Arimo-VariableFont_wght.ttf')format('truetype');
+}
+
+@font-face {
+    font-family: 'Windsong';
+    src: url('../fonts/WindSong-Medium.ttf')format('truetype');
+}
+
 /* Base TableView styling */
 .table-view {
     -fx-background-color: #ffffff; /* White background for a clean look */
@@ -36,6 +58,7 @@
 
 /* Cell styling */
 .table-cell {
+    -fx-font-family: 'Windsong';
     -fx-padding: 10px;
     -fx-font-size: 13px;
     -fx-text-fill: #424242; /* Dark gray text */

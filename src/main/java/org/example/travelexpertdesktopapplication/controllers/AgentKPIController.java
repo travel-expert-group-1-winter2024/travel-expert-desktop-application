@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -45,7 +46,7 @@ public class AgentKPIController {
     private Label labelTotalCommissions;
 
     @FXML
-    private Text greeting;
+    private Label labelGreeting;
 
     @FXML
     private Label labelTotalCustomers;
@@ -55,6 +56,7 @@ public class AgentKPIController {
 
     @FXML
     private PieChart pieChart;
+
 
     private AgentKPIDAO agentKPIDAO = new AgentKPIDAO();
 
@@ -70,7 +72,6 @@ public class AgentKPIController {
         assert labelTotalCommissions != null : "fx:id=\"labelTotalCommissions\" was not injected: check your FXML file 'agent-kpi-view.fxml'.";
         assert labelTotalCustomers != null : "fx:id=\"labelTotalCustomers\" was not injected: check your FXML file 'agent-kpi-view.fxml'.";
         assert labelTotalSales != null : "fx:id=\"labelTotalSales\" was not injected: check your FXML file 'agent-kpi-view.fxml'.";
-        assert greeting != null: "fx:id=\"greeting\" was not injected: check your FXML file 'agent-kpi-view.fxml'.";
         assert pieChart != null : "fx:id=\"pieChart\" was not injected: check your FXML file 'agent-kpi-view.fxml'.";
 
         int agentId = 1;
@@ -94,7 +95,7 @@ public class AgentKPIController {
 
             NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
             // Set the labels
-            greeting.setText("Hello " + agentName + ", Are you ready to conquer the day?");
+            labelGreeting.setText("Hello " + agentName + ", Are you ready to conquer the day?");
             labelTotalCommissions.setText(currencyFormat.format(totalCommissions));
             labelTotalCustomers.setText(String.valueOf(totalCustomers));
             labelTotalSales.setText(currencyFormat.format(totalSales));
@@ -103,6 +104,7 @@ public class AgentKPIController {
             //Pie Chart
 
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            pieChart.setTitle("Number of Bookings by Destination");
             for (DestinationCount destination : destinationList) {
                 if (destination.destination() != null && !destination.destination().isBlank()) {
                     //Normalize destination name, as DB destinations are inconsistent.
@@ -124,7 +126,10 @@ public class AgentKPIController {
             // Populate the series with data
             for (MonthlyBookingCount monthlyBooking : monthlyBookingList) {
                 series.getData().add(new XYChart.Data<>(monthlyBooking.month(), monthlyBooking.bookingCount()));
+
+
             }
+
 
             //Add the series to the chart
             barChart.getData().clear(); // Clear previous data if any

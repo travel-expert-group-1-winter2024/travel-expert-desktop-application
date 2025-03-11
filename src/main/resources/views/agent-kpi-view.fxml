@@ -9,30 +9,32 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<MFXScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.AgentKPIController">
+<MFXScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.AgentKPIController">
    <content>
       <AnchorPane prefHeight="500.0" prefWidth="800.0">
          <children>
             <AnchorPane prefHeight="130.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <HBox prefHeight="70.0" prefWidth="792.0">
+                  <HBox alignment="CENTER" prefHeight="70.0" prefWidth="792.0">
                      <children>
-                        <Text fx:id="greeting" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back, [Agent Name]! Are you ready to conquer the day?">
+                        <Label fx:id="labelGreeting" alignment="CENTER" contentDisplay="CENTER" text="Label">
                            <font>
-                              <Font size="27.0" />
+                              <Font name="Arimo Regular" size="30.0" />
                            </font>
-                        </Text>
+                        </Label>
                      </children>
                   </HBox>
                </children></AnchorPane>
-            <HBox layoutY="130.0" prefHeight="147.0" prefWidth="800.0" style="-fx-background-color: pink;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <HBox alignment="CENTER" layoutY="130.0" prefHeight="147.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <AnchorPane fx:id="dataPanel1" prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane fx:id="dataPanel1" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-style: solid; -fx-border-image-width: 1 1 0.5 1;">
                      <children>
-                        <Label fx:id="labelTotalCustomers" layoutX="86.0" layoutY="65.0" text="Label" />
-                        <Label contentDisplay="BOTTOM" graphicTextGap="1.0" layoutX="57.0" layoutY="5.0" text="Total Customers">
+                        <Label fx:id="labelTotalCustomers" alignment="CENTER" layoutX="86.0" layoutY="65.0" stylesheets="@../css/style.css" text="Label" underline="true" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+                           <font>
+                              <Font name="Arimo Regular" size="24.0" />
+                           </font></Label>
+                        <Label alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="1.0" layoutX="57.0" layoutY="5.0" stylesheets="@../css/style.css" text="Total Customers" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
                            <graphic>
                               <Label contentDisplay="BOTTOM" text="(To date)">
                                  <font>
@@ -40,12 +42,18 @@
                                  </font>
                               </Label>
                            </graphic>
+                           <font>
+                              <Font name="Arimo Regular" size="12.0" />
+                           </font>
                         </Label>
                      </children></AnchorPane>
-                  <AnchorPane fx:id="dataPanel2" prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane fx:id="dataPanel2" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-style: solid; -fx-border-image-width: 1 0.5 0.5 1;">
                      <children>
-                        <Label fx:id="labelTotalSales" layoutX="86.0" layoutY="65.0" text="Label" />
-                        <Label contentDisplay="BOTTOM" graphicTextGap="1.0" layoutX="72.0" layoutY="5.0" text="Total Sales">
+                        <Label fx:id="labelTotalSales" alignment="CENTER" layoutX="86.0" layoutY="65.0" stylesheets="@../css/style.css" text="Label" underline="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <font>
+                              <Font name="Arimo Regular" size="24.0" />
+                           </font></Label>
+                        <Label alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="1.0" layoutX="72.0" layoutY="5.0" stylesheets="@../css/style.css" text="Total Sales" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
                            <graphic>
                               <Label text="(To date)">
                                  <font>
@@ -53,12 +61,18 @@
                                  </font>
                               </Label>
                            </graphic>
+                           <font>
+                              <Font name="Arimo Regular" size="12.0" />
+                           </font>
                         </Label>
                      </children></AnchorPane>
-                  <AnchorPane fx:id="dataPanel3" prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane fx:id="dataPanel3" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-style: solid; -fx-border-image-width: 1 1 1 0.5;">
                      <children>
-                        <Label fx:id="labelTotalCommissions" layoutX="86.0" layoutY="65.0" text="Label" />
-                        <Label contentDisplay="BOTTOM" graphicTextGap="1.0" layoutX="50.0" layoutY="5.0" text="Total Commissions">
+                        <Label fx:id="labelTotalCommissions" alignment="CENTER" contentDisplay="CENTER" layoutX="86.0" layoutY="65.0" stylesheets="@../css/style.css" text="Label" underline="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <font>
+                              <Font name="Arimo Regular" size="24.0" />
+                           </font></Label>
+                        <Label alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="1.0" layoutX="50.0" layoutY="5.0" stylesheets="@../css/style.css" text="Total Commissions" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
                            <graphic>
                               <Label text="(To date)">
                                  <font>
@@ -66,25 +80,23 @@
                                  </font>
                               </Label>
                            </graphic>
+                           <font>
+                              <Font name="Arimo Regular" size="12.0" />
+                           </font>
                         </Label>
-                     </children></AnchorPane>
-                  <AnchorPane fx:id="dataPanel4" prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="86.0" layoutY="65.0" text="Label" />
-                        <Label layoutX="86.0" layoutY="6.0" text="Label" />
                      </children></AnchorPane>
                </children>
             </HBox>
-            <AnchorPane layoutY="287.0" prefHeight="199.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <AnchorPane layoutY="287.0" prefHeight="229.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0">
                      <children>
-                        <PieChart fx:id="pieChart" layoutX="-132.0" layoutY="-129.0" prefWidth="493.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <PieChart fx:id="pieChart" layoutX="-132.0" layoutY="-129.0" prefHeight="234.0" prefWidth="400.0" AnchorPane.bottomAnchor="-34.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="0.0">
                      <children>
-                        <BarChart fx:id="barChart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <BarChart fx:id="barChart" prefHeight="234.0" prefWidth="400.0" AnchorPane.bottomAnchor="-34.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
