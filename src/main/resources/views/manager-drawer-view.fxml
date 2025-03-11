@@ -8,9 +8,9 @@
 
 <VBox style="-fx-background-color: #6246ea;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.ManagerDrawerController">
    <children>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleDashboardButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Dashboard" textFill="#fffffe">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleDashboardButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" stylesheets="@../css/style.css" text="Dashboard" textFill="#fffffe">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Archivo Black Regular" size="20.0" />
          </font>
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -20,9 +20,9 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleCustomersButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Customers" textFill="#fffffe">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleCustomersButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" stylesheets="@../css/style.css" text="Customers" textFill="#fffffe">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Archivo Black Regular" size="20.0" />
          </font>
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -32,9 +32,9 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handlePackagesButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Packages" textFill="#fffffe">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handlePackagesButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" stylesheets="@../css/style.css" text="Packages" textFill="#fffffe">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Archivo Black Regular" size="20.0" />
          </font>
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -44,9 +44,9 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleSuppliersButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Suppliers" textFill="#fffffe">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleSuppliersButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" stylesheets="@../css/style.css" text="Suppliers" textFill="#fffffe">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Archivo Black Regular" size="20.0" />
          </font>
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -56,9 +56,9 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleProductsButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Product" textFill="#fffffe">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleProductsButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" stylesheets="@../css/style.css" text="Product" textFill="#fffffe">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Archivo Black Regular" size="20.0" />
          </font>
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -68,9 +68,9 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleManagerButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Manager" textFill="#fffffe">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleManagerButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" stylesheets="@../css/style.css" text="Manager" textFill="#fffffe">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Archivo Black Regular" size="20.0" />
          </font>
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -80,9 +80,9 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleChatButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Chat" textFill="#fffffe">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleChatButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" stylesheets="@../css/style.css" text="Chat" textFill="#fffffe">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Archivo Black Regular" size="20.0" />
          </font>
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -92,9 +92,9 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleLogoutButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" text="Logout" textFill="#fffffe">
+      <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleLogoutButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" stylesheets="@../css/style.css" text="Logout" textFill="#fffffe">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Archivo Black Regular" size="20.0" />
          </font>
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">

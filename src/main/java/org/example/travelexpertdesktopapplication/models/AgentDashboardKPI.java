@@ -11,6 +11,10 @@ public class AgentDashboardKPI {
     private SimpleDoubleProperty baseprice;
     private SimpleDoubleProperty agencycommission;
     private SimpleIntegerProperty customerid;
+    private SimpleStringProperty destination;
+    private SimpleDoubleProperty totalprice;
+    private SimpleDoubleProperty totalAgencycommission;
+    private SimpleIntegerProperty totalCustomers;
 
 
 
@@ -23,6 +27,11 @@ public class AgentDashboardKPI {
         this.agencycommission = new SimpleDoubleProperty();
         this.customerid = new SimpleIntegerProperty();
         this.agentFirstName = new SimpleStringProperty();
+        this.destination = new SimpleStringProperty();
+        this.totalprice = new SimpleDoubleProperty();
+        this.totalAgencycommission = new SimpleDoubleProperty();
+        this.totalCustomers = new SimpleIntegerProperty();
+
     }
 
 
@@ -82,18 +91,66 @@ public class AgentDashboardKPI {
     }
 
     public void setAgencycommission(double agencycommission) {
-        this.agencycommission.set(agencycommission);
+        this.agencycommission.set(agencycommission);}
+
+    public String getDestination() {
+        return destination.get();
     }
 
-    @Override
-    public String toString() {
-        return "AgentDashboardKPI{" +
-                "agentFirstName=" + agentFirstName +
-                ", bookingid=" + bookingid +
-                ", baseprice=" + baseprice +
-                ", agencycommission=" + agencycommission +
-                ", customerid=" + customerid +
-                '}';
+    public SimpleStringProperty destinationProperty() {
+        return destination;
     }
+
+    public void setDestination(String destination) {
+        this.destination.set(destination);
+    }
+
+    public double getTotalprice() {
+        return totalprice.get();
+    }
+
+    public SimpleDoubleProperty totalpriceProperty() {
+        return totalprice;
+    }
+
+    public void setTotalprice(double totalprice) {
+        this.totalprice.set(totalprice);
+    }
+
+    public double getTotalAgencycommission() {
+        return totalAgencycommission.get();
+    }
+
+    public SimpleDoubleProperty totalAgencycommissionProperty() {
+        return totalAgencycommission;
+    }
+
+    public void setTotalAgencycommission(double totalAgencycommission) {
+        this.totalAgencycommission.set(totalAgencycommission);
+    }
+//
+//    @Override
+
+    public int getTotalCustomers() {
+        return totalCustomers.get();
+    }
+
+    public SimpleIntegerProperty totalCustomersProperty() {
+        return totalCustomers;
+    }
+
+    public void setTotalCustomers(int totalCustomers) {
+        this.totalCustomers.set(totalCustomers);
+    }
+//    public String toString() {
+//        return "AgentDashboardKPI{" +
+//                "\nagentFirstName=" + agentFirstName +
+//                ", \nbookingid=" + bookingid +
+//                ", \nbaseprice=" + baseprice +
+//                ", \nagencycommission=" + agencycommission +
+//                ", \ncustomerid=" + customerid +
+//                ", \ndestination=" + destination +
+//                '}';
+//    }
 
 }

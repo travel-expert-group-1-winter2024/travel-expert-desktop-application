@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
+import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -62,6 +63,8 @@ public class DashboardController {
                 managerDrawerController.setDashboardController(this); // Inject the DashboardController
                 drawer.setSidePane(box);
                 this.managerDrawerController = managerDrawerController; // Save the instance for reuse
+                //Load Agent KPI Dashboard when launching.
+                loadOverViewView();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -73,9 +76,13 @@ public class DashboardController {
                 agentDrawerController.setDashboardController(this); // Inject the DashboardController
                 drawer.setSidePane(box);
                 this.agentDrawerController = agentDrawerController; // Save the instance for reuse
+                //Load Agent KPI Dashboard when launching.
+                loadOverViewView();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+
         }
 
 
@@ -124,7 +131,17 @@ public class DashboardController {
 
     //Dashboard Hamburger Button --> Dynamic button methods
     public void loadOverViewView(){
-        System.out.println("Loading Overview View");
+        Logger.info("Loading Overview View");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agent-kpi-view.fxml"));
+        try {
+            MFXScrollPane packageListView = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(packageListView);
+            packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+        } catch (IOException e) {
+            System.out.println("Error is being caught in the Catch of Agent-kpi-view.fxml");
+            throw new RuntimeException(e);
+        }
     }
 
     //Customer Hamburger Menu Button --> Dashboard Button methods
@@ -144,6 +161,16 @@ public class DashboardController {
 
     public void loadCustomerPurchasesView(){
         Logger.info("Loading Customer Purchases");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/past-booking-view.fxml"));
+        try {
+            BorderPane packageListView = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(packageListView);
+            packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+        } catch (IOException e) {
+            System.out.println("Error is being caught in the Catch of past-booking-view.fxml");
+            throw new RuntimeException(e);
+        }
     }
 
     //Packages Hamburger Menu Button --> Dashboard Button methods

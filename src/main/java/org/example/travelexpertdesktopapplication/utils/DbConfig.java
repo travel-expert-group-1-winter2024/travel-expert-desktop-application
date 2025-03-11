@@ -23,4 +23,4 @@ public class DbConfig {
     public static String getProperty(String key) {
         return prop.getProperty(key);
     }
-}
+};
