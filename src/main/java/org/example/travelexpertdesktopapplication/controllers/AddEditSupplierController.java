@@ -144,7 +144,6 @@ public class AddEditSupplierController {
     @FXML
     private void onSaveButtonClick() {
         if (validateForm()) {
-
             // Get Supplier Contact details from form
             SupplierContacts supplierContacts = getSupplierDetailsFromForm();
             if (mode.equalsIgnoreCase("add")) {
@@ -156,8 +155,6 @@ public class AddEditSupplierController {
                 AlertBox.showAlert("Success", "Supplier Contacts updated successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
             }
-        } else {
-            AlertBox.showAlert("Validation Error", "Please correct the errors and try again.", Alert.AlertType.ERROR);
         }
     }
 
@@ -167,24 +164,24 @@ public class AddEditSupplierController {
      */
     private SupplierContacts getSupplierDetailsFromForm() {
         SimpleIntegerProperty supplierContactId = new SimpleIntegerProperty(
-                tfSupplierContactID.getText().isEmpty() ? 0 : Integer.parseInt(tfSupplierContactID.getText())
+                tfSupplierContactID.getText().isEmpty() ? 0 : Integer.parseInt(tfSupplierContactID.getText().trim())
         );
 
-        SimpleStringProperty supConFirstName = new SimpleStringProperty(tfFirstName.getText());
-        SimpleStringProperty supConLastName = new SimpleStringProperty(tfLastName.getText());
-        SimpleStringProperty supConCompany = new SimpleStringProperty(tfCompanyName.getText());
-        SimpleStringProperty supConCity = new SimpleStringProperty(tfCity.getText());
+        SimpleStringProperty supConFirstName = new SimpleStringProperty(tfFirstName.getText().trim());
+        SimpleStringProperty supConLastName = new SimpleStringProperty(tfLastName.getText().trim());
+        SimpleStringProperty supConCompany = new SimpleStringProperty(tfCompanyName.getText().trim());
+        SimpleStringProperty supConCity = new SimpleStringProperty(tfCity.getText().trim());
         SimpleStringProperty supConProv = new SimpleStringProperty(cbProvince.getSelectionModel().getSelectedItem().getAbbreviation());
-        SimpleStringProperty supConPostal = new SimpleStringProperty(tfPostalCode.getText());
-        SimpleStringProperty supConBusPhone = new SimpleStringProperty(tfBusinessNumber.getText());
-        SimpleStringProperty supConFax = new SimpleStringProperty(tfFaxNumber.getText());
-        SimpleStringProperty supConCountry = new SimpleStringProperty(tfCountry.getText());
-        SimpleStringProperty supConEmail = new SimpleStringProperty(tfEmailAddress.getText());
-        SimpleStringProperty supConUrl = new SimpleStringProperty(tfWebsiteURL.getText());
+        SimpleStringProperty supConPostal = new SimpleStringProperty(tfPostalCode.getText().trim());
+        SimpleStringProperty supConBusPhone = new SimpleStringProperty(tfBusinessNumber.getText().trim());
+        SimpleStringProperty supConFax = new SimpleStringProperty(tfFaxNumber.getText().trim());
+        SimpleStringProperty supConCountry = new SimpleStringProperty(tfCountry.getText().trim());
+        SimpleStringProperty supConEmail = new SimpleStringProperty(tfEmailAddress.getText().trim());
+        SimpleStringProperty supConUrl = new SimpleStringProperty(tfWebsiteURL.getText().trim());
         SimpleStringProperty affiliationId = new SimpleStringProperty(cbAffiliation.getSelectionModel().getSelectedItem());
 
         SimpleIntegerProperty supplierId = new SimpleIntegerProperty(
-                tfSupplierID.getText().isEmpty() ? 0 : Integer.parseInt(tfSupplierID.getText())
+                tfSupplierID.getText().trim().isEmpty() ? 0 : Integer.parseInt(tfSupplierID.getText().trim())
         );
         SimpleStringProperty supConAddress = new SimpleStringProperty(tfAddress.getText());
 
@@ -248,17 +245,17 @@ public class AddEditSupplierController {
     private boolean validateForm() {
         boolean isValid = true;
         // Validate each field using the Validator class
-        isValid &= validateField(tfFirstName, Validator.validateFirstName(tfFirstName.getText()));
-        isValid &= validateField(tfLastName, Validator.validateLastName(tfLastName.getText()));
-        isValid &= validateField(tfEmailAddress, Validator.validateEmail(tfEmailAddress.getText()));
-        isValid &= validateField(tfBusinessNumber, Validator.validatePhoneNumber(tfBusinessNumber.getText()));
-        isValid &= validateField(tfFaxNumber, Validator.validatePhoneNumber(tfFaxNumber.getText()));
-        isValid &= validateField(tfPostalCode, Validator.validatePostalCode(tfPostalCode.getText()));
-        isValid &= validateField(tfAddress,Validator.checkForEmpty(tfAddress.getText(),"Address"));
-        isValid &= validateField(tfCompanyName,Validator.checkForEmpty(tfCompanyName.getText(),"Company Name"));
-        isValid &= validateField(tfCity,Validator.checkForEmpty(tfCity.getText(),"City"));
-        isValid &= validateField(tfCountry,Validator.checkForEmpty(tfCountry.getText(),"Country"));
-        isValid &= validateField(tfWebsiteURL,Validator.validateURL(tfWebsiteURL.getText()));
+        isValid &= validateField(tfFirstName, Validator.validateFirstName(tfFirstName.getText().trim()));
+        isValid &= validateField(tfLastName, Validator.validateLastName(tfLastName.getText().trim()));
+        isValid &= validateField(tfEmailAddress, Validator.validateEmail(tfEmailAddress.getText().trim()));
+        isValid &= validateField(tfBusinessNumber, Validator.validatePhoneNumber(tfBusinessNumber.getText().trim()));
+        isValid &= validateField(tfFaxNumber, Validator.validatePhoneNumber(tfFaxNumber.getText().trim()));
+        isValid &= validateField(tfPostalCode, Validator.validatePostalCode(tfPostalCode.getText().trim()));
+        isValid &= validateField(tfAddress,Validator.checkForEmpty(tfAddress.getText().trim(),"Address"));
+        isValid &= validateField(tfCompanyName,Validator.checkForEmpty(tfCompanyName.getText().trim(),"Company Name"));
+        isValid &= validateField(tfCity,Validator.checkForEmpty(tfCity.getText().trim(),"City"));
+        isValid &= validateField(tfCountry,Validator.checkForEmpty(tfCountry.getText().trim(),"Country"));
+        isValid &= validateField(tfWebsiteURL,Validator.validateURL(tfWebsiteURL.getText().trim()));
         isValid &= validateField(cbProvince, Validator.checkForEmpty(String.valueOf(cbProvince.getValue()),"Province"));
         isValid &= validateField(cbAffiliation, Validator.checkForEmpty(String.valueOf(cbAffiliation.getValue()),"Affiliation"));
         return isValid;

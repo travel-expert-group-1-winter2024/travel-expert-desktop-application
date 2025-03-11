@@ -7,6 +7,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.dao.ProductDAO;
 import org.example.travelexpertdesktopapplication.models.Product;
+import org.example.travelexpertdesktopapplication.utils.AlertBox;
+import org.example.travelexpertdesktopapplication.utils.Validator;
+
+import static org.example.travelexpertdesktopapplication.utils.ValidateFields.validateField;
 
 public class ProductFormController {
 
@@ -19,8 +23,10 @@ public class ProductFormController {
     private Product selectedProduct;
     private boolean productSaved = false;
 
+
     public void setProductController(ProductController controller) {
         this.productController = controller;
+        txtProductName.textProperty().addListener((obs, oldVal, newVal) -> isFormValid());
     }
 
     public void setProductData(Product product) {
@@ -40,34 +46,26 @@ public class ProductFormController {
     /** Save new or updated product */
     @FXML
     private void onSave() {
-        System.out.println("Save Product Clicked");
-        String name = txtProductName.getText().trim();
-
-        if (name.isEmpty()) {
-            showAlert("Validation Error", "Product Name cannot be empty.");
-            return;
-        }
-
-        if (selectedProduct == null) {
-            boolean success = ProductDAO.addProduct(name);
-            if (success) {
-                System.out.println("Product Added Successfully");
-                productController.loadProducts();
-                productSaved = true; //
-                closeWindow();
+        if (isFormValid()) {
+            if (selectedProduct == null) {
+                boolean success = ProductDAO.addProduct(txtProductName.getText().trim());
+                if (success) {
+                    productController.loadProducts();
+                    productSaved = true; //
+                    closeWindow();
+                } else {
+                    AlertBox.showAlert("Error", "Failed to add product.", Alert.AlertType.ERROR);
+                }
             } else {
-                showAlert("Error", "Failed to add product.");
-            }
-        } else {
-            int productId = selectedProduct.getProductId();
-            boolean success = ProductDAO.updateProduct(productId, name);
-            if (success) {
-                System.out.println("Product Updated Successfully");
-                productController.loadProducts();
-                productSaved = true;
-                closeWindow();
-            } else {
-                showAlert("Error", "Failed to update product.");
+                int productId = selectedProduct.getProductId();
+                boolean success = ProductDAO.updateProduct(productId, txtProductName.getText().trim());
+                if (success) {
+                    productController.loadProducts();
+                    productSaved = true;
+                    closeWindow();
+                } else {
+                    AlertBox.showAlert("Error", "Failed to Update product.", Alert.AlertType.ERROR);
+                }
             }
         }
     }
@@ -75,7 +73,6 @@ public class ProductFormController {
     /** Handle cancel button */
     @FXML
     private void onCancel() {
-        System.out.println("Cancel button clicked.");
         productSaved = false;
         closeWindow();
     }
@@ -85,16 +82,13 @@ public class ProductFormController {
         stage.close();
     }
 
-    public boolean isProductSaved() {
-        return productSaved;
+    private boolean isFormValid(){
+        boolean isValid = true;
+        isValid &= validateField(txtProductName, Validator.checkForEmpty(txtProductName.getText().trim(),"Product"));
+        return isValid;
     }
 
-    /** Show alert messages */
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    public boolean isProductSaved() {
+        return productSaved;
     }
 }

@@ -46,9 +46,6 @@ public class AgencyFormController {
 
     private Agency agency;
 
-//    @FXML
-//    private Label lblErrorAddress, lblErrorCity, lblErrorProvince, lblErrorPostal, lblErrorCountry, lblErrorPhone, lblErrorFax;
-
     @FXML
     public void initialize() {
         if (agency == null) {
@@ -95,13 +92,13 @@ public class AgencyFormController {
      */
     private boolean validateForm() {
         boolean isValid = true; // Tracks if all fields are valid
-        isValid &= validateField(txtAgencyAddress, Validator.checkForEmpty(txtAgencyAddress.getText(),"Address"));
-        isValid &= validateField(txtAgencyCity, Validator.checkForEmpty(txtAgencyCity.getText(),"City"));
-        isValid &= validateField(txtAgencyProv, Validator.checkForEmpty(txtAgencyProv.getText(),"Province"));
-        isValid &= validateField(txtAgencyPostal, Validator.validatePostalCode(txtAgencyPostal.getText())); // Validate Postal Code
-        isValid &= validateField(txtAgencyCountry, Validator.checkForEmpty(txtAgencyCountry.getText(),"Country")); // Validate Country
-        isValid &= validateField(txtAgencyPhone, Validator.validatePhoneNumber(txtAgencyPhone.getText()));  // Validate Phone
-        isValid &= validateField(txtAgencyFax, Validator.validatePhoneNumber(txtAgencyFax.getText()));
+        isValid &= validateField(txtAgencyAddress, Validator.checkForEmpty(txtAgencyAddress.getText().trim(),"Address"));
+        isValid &= validateField(txtAgencyCity, Validator.checkForEmpty(txtAgencyCity.getText().trim(),"City"));
+        isValid &= validateField(txtAgencyProv, Validator.checkForEmpty(txtAgencyProv.getText().trim(),"Province"));
+        isValid &= validateField(txtAgencyPostal, Validator.validatePostalCode(txtAgencyPostal.getText().trim())); // Validate Postal Code
+        isValid &= validateField(txtAgencyCountry, Validator.checkForEmpty(txtAgencyCountry.getText().trim(),"Country")); // Validate Country
+        isValid &= validateField(txtAgencyPhone, Validator.validatePhoneNumber(txtAgencyPhone.getText().trim()));  // Validate Phone
+        isValid &= validateField(txtAgencyFax, Validator.validatePhoneNumber(txtAgencyFax.getText().trim()));
         return isValid;
     }
 
@@ -113,13 +110,13 @@ public class AgencyFormController {
         // Create or update the agency object
         Agency newAgency = new Agency(
                 agency == null ? 0 : agency.getAgencyID(), // Use existing ID if editing, otherwise 0
-                txtAgencyAddress.getText(),
-                txtAgencyCity.getText(),
-                txtAgencyProv.getText(),
-                txtAgencyPostal.getText(),
-                txtAgencyCountry.getText(),
-                txtAgencyPhone.getText(),
-                txtAgencyFax.getText()
+                txtAgencyAddress.getText().trim(),
+                txtAgencyCity.getText().trim(),
+                txtAgencyProv.getText().trim(),
+                txtAgencyPostal.getText().trim(),
+                txtAgencyCountry.getText().trim(),
+                txtAgencyPhone.getText().trim(),
+                txtAgencyFax.getText().trim()
         );
 
         // Save to the database

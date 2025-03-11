@@ -96,23 +96,20 @@ public class AddEditPackageController {
             }else{
                 SimpleIntegerProperty packageID = new SimpleIntegerProperty(Integer.parseInt(tfPackageID.getText()));
                 PackagesDAO.updatePackeDetails(packageID,packagesData);
-                AlertBox.showAlert("Success", "Supplier Contacts updated successfully!", Alert.AlertType.INFORMATION);
+                AlertBox.showAlert("Success", "Package is updated successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
             }
-        } else {
-            AlertBox.showAlert("Validation Error", "Please correct the errors and try again.", Alert.AlertType.ERROR);
         }
-
     }
 
     private Packages getDetailsOfPackageFromForm() {
-        SimpleIntegerProperty packageID = new SimpleIntegerProperty(Integer.parseInt(tfPackageID.getText()));
-        SimpleStringProperty pkgName = new SimpleStringProperty(tfPackageName.getText());
+        SimpleIntegerProperty packageID = new SimpleIntegerProperty(Integer.parseInt(tfPackageID.getText().trim()));
+        SimpleStringProperty pkgName = new SimpleStringProperty(tfPackageName.getText().trim());
         SimpleObjectProperty<LocalDate> pkgstartdate = new SimpleObjectProperty(dpStartDate.getValue());
         SimpleObjectProperty<LocalDate> pkgenddate = new SimpleObjectProperty(dpEndDate.getValue());
-        SimpleStringProperty pkgdesc = new SimpleStringProperty(tfDesc.getText());
-        SimpleIntegerProperty pkgbaseprice = new SimpleIntegerProperty(Integer.parseInt(tfBasePrice.getText()));
-        SimpleIntegerProperty pkgagencycommission = new SimpleIntegerProperty(Integer.parseInt(tfCommission.getText()));
+        SimpleStringProperty pkgdesc = new SimpleStringProperty(tfDesc.getText().trim());
+        SimpleIntegerProperty pkgbaseprice = new SimpleIntegerProperty(Integer.parseInt(tfBasePrice.getText().trim()));
+        SimpleIntegerProperty pkgagencycommission = new SimpleIntegerProperty(Integer.parseInt(tfCommission.getText().trim()));
         return new Packages(packageID,pkgName,pkgstartdate,pkgenddate,pkgdesc,pkgbaseprice,pkgagencycommission);
     }
 
@@ -123,12 +120,12 @@ public class AddEditPackageController {
     private boolean validateForm() {
         boolean isValid = true;
         // Validate each field using the Validator class
-        isValid &= validateField(tfPackageName, Validator.checkForEmpty(tfPackageName.getText(),"Package"));
+        isValid &= validateField(tfPackageName, Validator.checkForEmpty(tfPackageName.getText().trim(),"Package"));
         isValid &= validateField(dpStartDate, dpStartDate.getValue() == null ? "Start date is required" : null);
         isValid &= validateField(dpEndDate, dpEndDate.getValue() == null ? "End date is required" : null);
-        isValid &= validateField(tfDesc, Validator.checkForEmpty(tfDesc.getText(),"Description"));
-        isValid &= validateField(tfBasePrice,Validator.checkForEmpty(tfBasePrice.getText(),"BasePrice"));
-        isValid &= validateField(tfCommission,Validator.checkForEmpty(tfCommission.getText(),"Commission"));
+        isValid &= validateField(tfDesc, Validator.checkForEmpty(tfDesc.getText().trim(),"Description"));
+        isValid &= validateField(tfBasePrice,Validator.checkForEmpty(tfBasePrice.getText().trim(),"BasePrice"));
+        isValid &= validateField(tfCommission,Validator.checkForEmpty(tfCommission.getText().trim(),"Commission"));
         isValid &= validateField(dpStartDate, isStartDateValid());
         isValid &= validateField(tfBasePrice, isAgencyCommissionValid());
         return isValid;
