@@ -1,5 +1,5 @@
 /**
- * Sample Skeleton for 'logic-view.fxml' Controller Class
+ * Sample Skeleton for 'login-view.fxml' Controller Class
  */
 
 package org.example.travelexpertdesktopapplication.controllers;
@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.TEDesktopApp;
 import org.example.travelexpertdesktopapplication.auth.SessionManager;
 import org.example.travelexpertdesktopapplication.auth.User;
+import org.example.travelexpertdesktopapplication.dao.UserDAO;
 import org.example.travelexpertdesktopapplication.services.AuthService;
 import org.tinylog.Logger;
 
@@ -45,16 +46,16 @@ public class LoginController {
     @FXML // fx:id="tfUsername"
     private TextField tfUsername; // Value injected by FXMLLoader
 
-    public LoginController(AuthService authService) {
-        this.authService = authService;
+    public LoginController() {
+        this.authService = new AuthService();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert btnLogin != null : "fx:id=\"btnLogin\" was not injected: check your FXML file 'logic-view.fxml'.";
-        assert lblLoginErrorMessage != null : "fx:id=\"lblLoginErrorMessage\" was not injected: check your FXML file 'logic-view.fxml'.";
-        assert tfPassword != null : "fx:id=\"tfPassword\" was not injected: check your FXML file 'logic-view.fxml'.";
-        assert tfUsername != null : "fx:id=\"tfUsername\" was not injected: check your FXML file 'logic-view.fxml'.";
+        assert btnLogin != null : "fx:id=\"btnLogin\" was not injected: check your FXML file 'login-view.fxml'.";
+        assert lblLoginErrorMessage != null : "fx:id=\"lblLoginErrorMessage\" was not injected: check your FXML file 'login-view.fxml'.";
+        assert tfPassword != null : "fx:id=\"tfPassword\" was not injected: check your FXML file 'login-view.fxml'.";
+        assert tfUsername != null : "fx:id=\"tfUsername\" was not injected: check your FXML file 'login-view.fxml'.";
 
         lblLoginErrorMessage.setText("");
         lblLoginErrorMessage.setStyle("-fx-text-fill: red;");
@@ -75,6 +76,9 @@ public class LoginController {
         }
     }
 
+    /**
+     * Deprecated
+     */
     @FXML
     private void onSignUpButtonClicked() {
         try {

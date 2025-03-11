@@ -69,6 +69,7 @@
          </graphic>
       </JFXButton>
       <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onMouseClicked="#handleLogoutButtonClick" prefHeight="66.0" prefWidth="245.0" style="-fx-background-color: #7829d9;" stylesheets="@../css/style.css" text="Chat" textFill="#fffffe">
+
          <font>
             <Font name="Archivo Black Regular" size="20.0" />
          </font>

@@ -13,11 +13,26 @@ import java.lang.reflect.Type;
 import java.util.function.Consumer;
 
 public class WebSocketService {
+    private static WebSocketService instance;  // Singleton instance
     private StompSession stompSession;
     private Consumer<ChatMessage> onMessageReceived;  // Callback for UI updates
-    private final String userId;
+    private String userId;
 
-    public WebSocketService(String serverUri,  Consumer<ChatMessage> onMessageReceived) {
+    private WebSocketService(){}
+
+    public static WebSocketService getInstance() {
+        if (instance == null) {
+            instance = new WebSocketService();
+        }
+        return instance;
+    }
+
+    public void initialize(String serverUri, Consumer<ChatMessage> onMessageReceived) {
+        if (stompSession != null && stompSession.isConnected()) {
+            Logger.warn("WebSocket is already connected.");
+            return;
+        }
+
         this.userId = SessionManager.getInstance().getUser().getId().toString();
         Logger.info("User ID: " + userId);
         this.onMessageReceived = onMessageReceived;
@@ -79,6 +94,16 @@ public class WebSocketService {
             stompSession.send(destination, chatMessage);
         } else {
             Logger.warn("WebSocket session is not connected. Cannot send message.");
+        }
+    }
+
+    public void disconnect() {
+        if (stompSession != null && stompSession.isConnected()) {
+            Logger.info("Disconnecting WebSocket session: " + stompSession.getSessionId());
+            stompSession.disconnect();
+            stompSession = null;
+        } else {
+            Logger.warn("No active WebSocket session to disconnect.");
         }
     }
 }

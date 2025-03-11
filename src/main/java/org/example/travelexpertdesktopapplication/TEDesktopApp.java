@@ -6,11 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 import org.example.travelexpertdesktopapplication.controllers.LoginController;
 import org.example.travelexpertdesktopapplication.dao.AgentKPIDAO;
 import org.example.travelexpertdesktopapplication.dao.DatabaseManager;
 import org.example.travelexpertdesktopapplication.dao.UserDAO;
 import org.example.travelexpertdesktopapplication.services.AuthService;
+import org.example.travelexpertdesktopapplication.dao.AgentDashboardDAO;
+import org.example.travelexpertdesktopapplication.dao.DatabaseManager;
 import org.tinylog.Logger;
 
 
@@ -25,8 +28,9 @@ public class TEDesktopApp extends Application {
             System.exit(1);
         }
 
-        FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/logic-view.fxml"));
-       fxmlLoader.setControllerFactory(param -> new LoginController(new AuthService(new UserDAO())));
+
+        FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/login-view.fxml"));
+
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Welcome to Travel Expert!");
         //stage.setMaximized(true);

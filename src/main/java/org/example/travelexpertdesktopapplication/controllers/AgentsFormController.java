@@ -4,14 +4,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import org.example.travelexpertdesktopapplication.auth.UserRole;
 import org.example.travelexpertdesktopapplication.dao.AgencyDAO;
 import org.example.travelexpertdesktopapplication.dao.AgentsDAO;
+import org.example.travelexpertdesktopapplication.dao.UserDAO;
 import org.example.travelexpertdesktopapplication.models.Agency;
 import org.example.travelexpertdesktopapplication.models.Agent;
 import org.example.travelexpertdesktopapplication.utils.AlertBox;
 import org.example.travelexpertdesktopapplication.utils.Validator;
+import org.tinylog.Logger;
+
+import static org.example.travelexpertdesktopapplication.utils.ValidateFields.validateField;
 
 public class AgentsFormController {
 
@@ -19,7 +27,7 @@ public class AgentsFormController {
     private TextField txtAgentID, txtAgentFirstName,txtAgentMiddleInitials, txtAgentLastName, txtAgentPhone, txtAgentEmail, txtAgentPosition, txtAgencyID;
 
     @FXML
-    private Label lblAgentID, lblErrorFirstName, lblErrorLastName,lblErrorMiddleInitials, lblErrorPhone, lblErrorEmail, lblErrorPosition, lblErrorAgencyID;
+    private Label lblAgentID;
 
     @FXML
     private Button btnSave;
@@ -29,7 +37,21 @@ public class AgentsFormController {
 
     private Agent agent;
 
+    @FXML private PasswordField txtPassword;
+    @FXML private TextField txtPasswordVisible;
+    @FXML private ImageView eyeIconPassword;
+
+    @FXML private PasswordField txtConfirmPassword;
+    @FXML private TextField txtConfirmPasswordVisible;
+    @FXML private ImageView eyeIconConfirmPassword;
+
+    @FXML private Label lblUppercase, lblLowercase, lblSpecialChar, lblMinLength, lblErrorConfirmPassword, lblErrorPassword;
+
+    private boolean isPasswordVisible = false;
+    private boolean isConfirmPasswordVisible = false;
+
     private ObservableList<Agency> agenciesList = FXCollections.observableArrayList();
+    private UserDAO userDAO = new UserDAO();
 
     @FXML
     public void initialize() {
@@ -57,6 +79,92 @@ public class AgentsFormController {
                         .orElse(null);
             }
         });
+
+        // Set initial visibility for password fields
+        txtPasswordVisible.setVisible(false); // Initially hidden
+        txtPassword.setVisible(true); // Initially visible
+
+        txtConfirmPasswordVisible.setVisible(false); // Initially hidden
+        txtConfirmPassword.setVisible(true); // Initially visible
+
+        // Validate password as user types
+        txtPassword.textProperty().addListener((obs, oldVal, newVal) -> validatePassword(newVal)
+            );
+        txtConfirmPassword.textProperty().addListener((obs, oldVal, newVal) ->
+            checkPasswordMatch());
+
+        txtPasswordVisible.textProperty().addListener((obs, oldVal, newVal) -> {validatePassword(newVal);
+        txtPassword.setText(newVal);});
+        txtConfirmPasswordVisible.textProperty().addListener((obs, oldVal, newVal) -> {txtConfirmPassword.setText(newVal);
+            checkPasswordMatch();
+        });
+
+        txtAgentFirstName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        txtAgentLastName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        txtAgentPhone.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        txtAgentEmail.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        cmbAgency.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        txtPassword.textProperty().addListener((obs,oldVal,newVal)->validateForm());
+
+        // Set default eye icons
+        eyeIconPassword.setImage(new Image(getClass().getResourceAsStream("/images/eye_closed.png")));
+        eyeIconConfirmPassword.setImage(new Image(getClass().getResourceAsStream("/images/eye_closed.png")));
+    }
+
+    private boolean validatePassword(String password) {
+        boolean hasUppercase = password.matches(".*[A-Z].*");
+        boolean hasLowercase = password.matches(".*[a-z].*");
+        boolean hasSpecial = password.matches(".*[!@#$%^&*()_+=-].*");
+        boolean hasMinLength = password.length() >= 8;
+
+        lblUppercase.setStyle("-fx-text-fill: " + (hasUppercase ? "green" : "red") + ";");
+        lblLowercase.setStyle("-fx-text-fill: " + (hasLowercase ? "green" : "red") + ";");
+        lblSpecialChar.setStyle("-fx-text-fill: " + (hasSpecial ? "green" : "red") + ";");
+        lblMinLength.setStyle("-fx-text-fill: " + (hasMinLength ? "green" : "red") + ";");
+        checkPasswordMatch();
+        return hasLowercase && hasSpecial && hasMinLength && hasUppercase;
+    }
+
+    private void checkPasswordMatch() {
+        if (!txtPassword.getText().equals(txtConfirmPassword.getText())) {
+            lblErrorConfirmPassword.setText("Passwords do not match!");
+            lblErrorConfirmPassword.setStyle("-fx-text-fill: red;");
+        } else {
+            lblErrorConfirmPassword.setText("✔ Passwords match");
+            lblErrorConfirmPassword.setStyle("-fx-text-fill: green;");
+        }
+    }
+
+    @FXML
+    private void togglePasswordVisibility(MouseEvent event) {
+        isPasswordVisible = !isPasswordVisible;
+        if (isPasswordVisible) {
+            txtPasswordVisible.setText(txtPassword.getText());
+            txtPasswordVisible.setVisible(true);
+            txtPassword.setVisible(false);
+            eyeIconPassword.setImage(new Image(getClass().getResourceAsStream("/images/eye_open.png")));
+        } else {
+            txtPassword.setText(txtPasswordVisible.getText());
+            txtPassword.setVisible(true);
+            txtPasswordVisible.setVisible(false);
+            eyeIconPassword.setImage(new Image(getClass().getResourceAsStream("/images/eye_closed.png")));
+        }
+    }
+
+    @FXML
+    private void toggleConfirmPasswordVisibility(MouseEvent event) {
+        isConfirmPasswordVisible = !isConfirmPasswordVisible;
+        if (isConfirmPasswordVisible) {
+            txtConfirmPasswordVisible.setText(txtConfirmPassword.getText());
+            txtConfirmPasswordVisible.setVisible(true);
+            txtConfirmPassword.setVisible(false);
+            eyeIconConfirmPassword.setImage(new Image(getClass().getResourceAsStream("/images/eye_open.png")));
+        } else {
+            txtConfirmPassword.setText(txtConfirmPasswordVisible.getText());
+            txtConfirmPassword.setVisible(true);
+            txtConfirmPasswordVisible.setVisible(false);
+            eyeIconConfirmPassword.setImage(new Image(getClass().getResourceAsStream("/images/eye_closed.png")));
+        }
     }
 
     private void loadAgencies() {
@@ -99,85 +207,77 @@ public class AgentsFormController {
     }
 
     private boolean validateForm() {
-        lblErrorFirstName.setText("");
-        lblErrorMiddleInitials.setText("");
-        lblErrorLastName.setText("");
-        lblErrorPhone.setText("");
-        lblErrorEmail.setText("");
-        lblErrorPosition.setText("");
-        lblErrorAgencyID.setText("");
-
         boolean isValid = true;
+        isValid &= validateField(txtAgentFirstName, Validator.validateFirstName(txtAgentFirstName.getText()));
+        isValid &= validateField(txtAgentLastName, Validator.validateLastName(txtAgentLastName.getText()));
+        isValid &= validateField(txtAgentPhone, Validator.validatePhoneNumber(txtAgentPhone.getText()));
+        isValid &= validateField(txtAgentEmail, Validator.validateEmail(txtAgentEmail.getText()));
+        isValid &= validateField(cmbAgency, Validator.checkForEmpty(String.valueOf(cmbAgency.getValue()),"Agency"));
+        Boolean validPass = validatePassword(txtPassword.getText());
+        isValid &= validateField(txtPassword, Validator.checkForEmpty(txtPassword.getText(),"Password"));
 
-        String firstNameError = Validator.validateName(txtAgentFirstName.getText());
-        if (firstNameError != null) {
-            lblErrorFirstName.setText(firstNameError);
+
+//        if (passwordError != null) {
+//            lblErrorPassword.setText(passwordError);
+//            isValid = false;
+//        }
+//        else
+            if(!validPass){
+//            lblErrorPassword.setText("Invalid Password");
             isValid = false;
         }
 
-        String middleNameError = Validator.validateName(txtAgentMiddleInitials.getText());
-        if (middleNameError != null) {
-            lblErrorMiddleInitials.setText(middleNameError);
-            isValid = false;
-        }
-
-        String lastNameError = Validator.validateName(txtAgentLastName.getText());
-        if (lastNameError != null) {
-            lblErrorLastName.setText(lastNameError);
-            isValid = false;
-        }
-
-        String phoneError = Validator.validatePhoneNumber(txtAgentPhone.getText());
-        if (phoneError != null) {
-            lblErrorPhone.setText(phoneError);
-            isValid = false;
-        }
-
-        String emailError = Validator.validateEmail(txtAgentEmail.getText());
-        if (emailError != null) {
-            lblErrorEmail.setText(emailError);
-            isValid = false;
-        }
-
-        String positionError = Validator.checkForEmpty(txtAgentPosition.getText());
-        if (positionError != null) {
-            lblErrorPosition.setText(positionError);
-            isValid = false;
-        }
-
-        int agencyId = getSelectedAgencyId();
-        if (agencyId == -1) {
-            lblErrorAgencyID.setText("Please select an agency.");
-            isValid = false;
-        }
 
         return isValid;
     }
 
     private void saveAgent() {
+        // Create the new agent object
         Agent newAgent = new Agent(
-                agent == null ? 0 : agent.getAgentID(),
+                agent == null ? 0 : agent.getAgentID(), // If agent is null, use 0 as a placeholder
                 txtAgentFirstName.getText(),
-                txtAgentMiddleInitials.getText(),
+                txtAgentMiddleInitials.getText().equals("") ? "" : txtAgentMiddleInitials.getText(),
                 txtAgentLastName.getText(),
                 txtAgentPhone.getText(),
                 txtAgentEmail.getText(),
-                txtAgentPosition.getText(),
+                txtAgentPosition.getText().equals("") ? "" : txtAgentPosition.getText(),
                 getSelectedAgencyId()
         );
 
-        boolean success;
+        boolean agentSuccess;
+        int generatedAgentId = -1; // To store the generated AgentID
+
         if (agent == null) {
-            success = AgentsDAO.addAgent(newAgent);
+            // Add the new agent to the database and retrieve the generated AgentID
+            generatedAgentId = AgentsDAO.addAgentAndGetId(newAgent); // New method to get the generated ID
+            agentSuccess = (generatedAgentId != -1); // Check if the agent was added successfully
         } else {
-            success = AgentsDAO.updateAgent(newAgent);
+            // Update the existing agent in the database
+            agentSuccess = AgentsDAO.updateAgent(newAgent);
         }
 
-        if (success) {
-            closeForm();
+        if (agentSuccess) {
+            // If the agent was added/updated successfully, proceed to add a user
+            if (agent == null) {
+                // Only add a user if this is a new agent
+                String username = txtAgentEmail.getText(); // Use email as the username
+                String password = txtPassword.getText(); // Get the password from the password field
+                UserRole role = UserRole.AGENT; // Default role for new agents
+
+                // Add the user to the users table using the generated AgentID
+                boolean userSuccess = userDAO.addUser(username, password, role, generatedAgentId);
+
+                if (userSuccess) {
+                    Logger.info("New user added for agent: Username={}, AgentID={}", username, generatedAgentId);
+                } else {
+                    Logger.error("Failed to add user for agent: Username={}", username);
+                    AlertBox.showAlert("Error", "Agent was saved, but failed to create a user account.", Alert.AlertType.WARNING);
+                }
+            }
+
+            closeForm(); // Close the form after successful save
         } else {
             AlertBox.showAlert("Error", "Failed to save agent. Please try again.", Alert.AlertType.ERROR);
-
         }
     }
 

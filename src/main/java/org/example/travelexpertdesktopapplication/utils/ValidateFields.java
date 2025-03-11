@@ -33,9 +33,16 @@ public class ValidateFields {
 
             return false;
         } else {
-            field.setStyle("");  // Remove red border if no error
+            field.setStyle("");
+            // Remove tooltip
             field.setTooltip(null);
+            Tooltip.uninstall(field, field.getTooltip());
+            // Also remove event handlers to prevent unnecessary tooltip activation
+            field.setOnMouseEntered(null);
+            field.setOnMouseExited(null);
+
             return true;
+
         }
     }
 }

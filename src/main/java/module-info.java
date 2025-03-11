@@ -8,6 +8,10 @@ module org.example.travelexpertdesktopapplication {
     requires org.postgresql.jdbc;
     requires spring.context;
     requires MaterialFX;
+    requires java.desktop;
+    requires eu.hansolo.tilesfx;
+    requires javafx.controls;
+
 
     opens org.example.travelexpertdesktopapplication.models to
             com.fasterxml.jackson.databind,
