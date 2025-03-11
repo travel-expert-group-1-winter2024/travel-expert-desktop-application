@@ -142,11 +142,9 @@ public class AddEditPackageController {
 
                 updateProductSupplier(packageID);
 
-                AlertBox.showAlert("Success", "Supplier Contacts updated successfully!", Alert.AlertType.INFORMATION);
+                AlertBox.showAlert("Success", "Package has been updated successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
             }
-        } else {
-            AlertBox.showAlert("Validation Error", "Please correct the errors and try again.", Alert.AlertType.ERROR);
         }
 
     }

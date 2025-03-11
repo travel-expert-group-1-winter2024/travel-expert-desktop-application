@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import eu.hansolo.fx.countries.Country;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -83,6 +84,20 @@ public class EditCustomerController {
         assert tfPostalCode != null : "fx:id=\"tfPostalCode\" was not injected: check your FXML file 'edit-customer-view.fxml'.";
         assert tfProvince != null : "fx:id=\"tfProvince\" was not injected: check your FXML file 'edit-customer-view.fxml'.";
 
+        tfCustomerID.setDisable(true);
+        tfAgentID.setDisable(true);
+        tfCustomerID.textProperty().addListener((obs, oldVal, newVal) -> validateCustomerForm());
+        tfFirstName.textProperty().addListener((obs, oldVal, newVal) -> validateCustomerForm());
+        tfLastName.textProperty().addListener((obs, oldVal, newVal) -> validateCustomerForm());
+        tfAddress.textProperty().addListener((obs, oldVal, newVal) -> validateCustomerForm());
+        tfCity.textProperty().addListener((obs, oldVal, newVal) -> validateCustomerForm());
+        tfProvince.textProperty().addListener((obs, oldVal, newVal) -> validateCustomerForm());
+        tfPostalCode.textProperty().addListener((obs, oldVal, newVal) -> validateCustomerForm());
+        tfHomeNumber.textProperty().addListener((obs, oldVal, newVal) -> validateCustomerForm());
+        tfBusinessNumber.textProperty().addListener((obs, oldVal, newVal) -> validateCustomerForm());
+        tfEmail.textProperty().addListener((obs, oldVal, newVal) -> validateCustomerForm());
+        tfAgentID.textProperty().addListener((obs, oldVal, newVal) -> validateCustomerForm());
+
     }
 
     @FXML
@@ -104,18 +119,18 @@ public class EditCustomerController {
     private boolean validateCustomerForm() {
         boolean isValid = true;
 
-        isValid &= validateField(tfCustomerID, Validator.checkForEmpty(tfCustomerID.getText()));
-        isValid &= validateField(tfFirstName, Validator.checkForEmpty(tfFirstName.getText()));
-        isValid &= validateField(tfLastName, Validator.checkForEmpty(tfLastName.getText()));
-        isValid &= validateField(tfAddress, Validator.checkForEmpty(tfAddress.getText()));
-        isValid &= validateField(tfCity, Validator.checkForEmpty(tfCity.getText()));
-        isValid &= validateField(tfProvince, Validator.checkForEmpty(tfProvince.getText()));
-        isValid &= validateField(tfPostalCode, Validator.checkForEmpty(tfPostalCode.getText()));
-        isValid &= validateField(tfCountry, Validator.checkForEmpty(tfCountry.getText()));
-        isValid &= validateField(tfHomeNumber, Validator.checkForEmpty(tfHomeNumber.getText()));
-        isValid &= validateField(tfBusinessNumber, Validator.checkForEmpty(tfBusinessNumber.getText()));
-        isValid &= validateField(tfEmail, Validator.validateEmail(tfEmail.getText()));
-        isValid &= validateField(tfAgentID, Validator.checkForEmpty(tfAgentID.getText()));
+        isValid &= validateField(tfCustomerID, Validator.checkForEmpty(tfCustomerID.getText().trim(),"Customer ID"));
+        isValid &= validateField(tfFirstName, Validator.validateFirstName(tfFirstName.getText().trim()));
+        isValid &= validateField(tfLastName, Validator.validateLastName(tfLastName.getText().trim()));
+        isValid &= validateField(tfAddress, Validator.checkForEmpty(tfAddress.getText().trim(),"Address"));
+        isValid &= validateField(tfCity, Validator.checkForEmpty(tfCity.getText().trim(),"City"));
+        isValid &= validateField(tfProvince, Validator.checkForEmpty(tfProvince.getText().trim(),"Province"));
+        isValid &= validateField(tfPostalCode, Validator.checkForEmpty(tfPostalCode.getText().trim(),"Postal COde"));
+        isValid &= validateField(tfCountry, Validator.checkForEmpty(tfCountry.getText().trim(), "Country"));
+        isValid &= validateField(tfHomeNumber, Validator.checkForEmpty(tfHomeNumber.getText().trim(),"Home Phone Number"));
+        isValid &= validateField(tfBusinessNumber, Validator.checkForEmpty(tfBusinessNumber.getText().trim(),"Business Phone Number"));
+        isValid &= validateField(tfEmail, Validator.validateEmail(tfEmail.getText().trim()));
+        isValid &= validateField(tfAgentID, Validator.checkForEmpty(tfAgentID.getText().trim(),"Agent ID"));
 
         return isValid;
     }
@@ -142,18 +157,18 @@ public class EditCustomerController {
     }
 
     private Customer getDetailsOfCustomerFromForm() {
-        SimpleIntegerProperty customerid = new SimpleIntegerProperty(Integer.parseInt(tfCustomerID.getText()));
-        SimpleStringProperty custfirstname = new SimpleStringProperty(tfFirstName.getText());
-        SimpleStringProperty custlastname = new SimpleStringProperty(tfLastName.getText());
-        SimpleStringProperty custaddress = new SimpleStringProperty(tfAddress.getText());
-        SimpleStringProperty custcity = new SimpleStringProperty(tfCity.getText());
-        SimpleStringProperty custprov = new SimpleStringProperty(tfProvince.getText());
-        SimpleStringProperty custpostal = new SimpleStringProperty(tfPostalCode.getText());
-        SimpleStringProperty custcountry = new SimpleStringProperty(tfCountry.getText());
-        SimpleStringProperty custhomephone = new SimpleStringProperty(tfHomeNumber.getText());
-        SimpleStringProperty custbusphone = new SimpleStringProperty(tfBusinessNumber.getText());
-        SimpleStringProperty custemail = new SimpleStringProperty(tfEmail.getText());
-        SimpleIntegerProperty agentid = new SimpleIntegerProperty(Integer.parseInt(tfAgentID.getText()));
+        SimpleIntegerProperty customerid = new SimpleIntegerProperty(Integer.parseInt(tfCustomerID.getText().trim()));
+        SimpleStringProperty custfirstname = new SimpleStringProperty(tfFirstName.getText().trim());
+        SimpleStringProperty custlastname = new SimpleStringProperty(tfLastName.getText().trim());
+        SimpleStringProperty custaddress = new SimpleStringProperty(tfAddress.getText().trim());
+        SimpleStringProperty custcity = new SimpleStringProperty(tfCity.getText().trim());
+        SimpleStringProperty custprov = new SimpleStringProperty(tfProvince.getText().trim());
+        SimpleStringProperty custpostal = new SimpleStringProperty(tfPostalCode.getText().trim());
+        SimpleStringProperty custcountry = new SimpleStringProperty(tfCountry.getText().trim());
+        SimpleStringProperty custhomephone = new SimpleStringProperty(tfHomeNumber.getText().trim());
+        SimpleStringProperty custbusphone = new SimpleStringProperty(tfBusinessNumber.getText().trim());
+        SimpleStringProperty custemail = new SimpleStringProperty(tfEmail.getText().trim());
+        SimpleIntegerProperty agentid = new SimpleIntegerProperty(Integer.parseInt(tfAgentID.getText().trim()));
         return new Customer(customerid, custfirstname,custlastname,custaddress,custcity,custprov,
                 custpostal,custcountry,custhomephone,custbusphone,custemail,agentid);
     }

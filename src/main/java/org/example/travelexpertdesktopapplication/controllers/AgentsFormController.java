@@ -235,12 +235,12 @@ public class AgentsFormController {
         // Create the new agent object
         Agent newAgent = new Agent(
                 agent == null ? 0 : agent.getAgentID(), // If agent is null, use 0 as a placeholder
-                txtAgentFirstName.getText(),
-                txtAgentMiddleInitials.getText().equals("") ? "" : txtAgentMiddleInitials.getText(),
-                txtAgentLastName.getText(),
-                txtAgentPhone.getText(),
-                txtAgentEmail.getText(),
-                txtAgentPosition.getText().equals("") ? "" : txtAgentPosition.getText(),
+                txtAgentFirstName.getText().trim(),
+                txtAgentMiddleInitials.getText().trim().equals("") ? "" : txtAgentMiddleInitials.getText().trim(),
+                txtAgentLastName.getText().trim(),
+                txtAgentPhone.getText().trim(),
+                txtAgentEmail.getText().trim(),
+                txtAgentPosition.getText().trim().equals("") ? "" : txtAgentPosition.getText().trim(),
                 getSelectedAgencyId()
         );
 
