@@ -97,11 +97,13 @@ public class AddEditProductSupplierController {
 
     public void loadProductsAndSuppliersForEdit() {
 
-        if (selectedProductSupplierList[0] != null || selectedProductSupplierList[1] != null || selectedProductSupplierList[2] != null) {
-            // set value to combo boxes
-            Logger.info("Load Products and Suppliers from selectedProductSupplierList");
-            loadProductsAndSuppliersFromList(selectedProductSupplierList);
-            return;
+        if (selectedProductSupplierList != null){
+            if (selectedProductSupplierList[0] != null || selectedProductSupplierList[1] != null || selectedProductSupplierList[2] != null) {
+                // set value to combo boxes
+                Logger.info("Load Products and Suppliers from selectedProductSupplierList");
+                loadProductsAndSuppliersFromList(selectedProductSupplierList);
+                return;
+            }
         }
 
         // find all products_suppliers id from package id
@@ -212,7 +214,7 @@ public class AddEditProductSupplierController {
     }
 
     public static void clearSelectedProductSuppliers() {
-        selectedProductSupplierList = null;
+        selectedProductSupplierList = new ProductsSuppliers[3]; // fixed length
     }
 
     public static ProductsSuppliers[] getPreviousProductSupplierList() {
@@ -220,7 +222,7 @@ public class AddEditProductSupplierController {
     }
 
     public static void clearPreviousProductSupplierIds() {
-        previousProductSupplierList = null;
+        previousProductSupplierList = new ProductsSuppliers[3]; // fixed length
     }
 
 }
