@@ -106,6 +106,8 @@ public class AddEditSupplierController {
         assert tfSupplierID != null : "fx:id=\"tfSupplierID\" was not injected: check your FXML file 'add-edit-supplier-view.fxml'.";
         assert tfWebsiteURL != null : "fx:id=\"tfWebsiteURL\" was not injected: check your FXML file 'add-edit-supplier-view.fxml'.";
 
+        tfSupplierID.setDisable(true);
+        tfSupplierContactID.setDisable(true);
         //Setting Data for ComboBox
         cbAffiliation.setItems(SupplierDAO.getAffiliations());
         cbProvince.setItems(FXCollections.observableArrayList(Province.values()));
@@ -236,12 +238,15 @@ public class AddEditSupplierController {
         isValid &= validateField(tfLastName, Validator.validateName(tfLastName.getText()));
         isValid &= validateField(tfEmailAddress, Validator.validateEmail(tfEmailAddress.getText()));
         isValid &= validateField(tfBusinessNumber, Validator.validatePhoneNumber(tfBusinessNumber.getText()));
+        isValid &= validateField(tfFaxNumber, Validator.validatePhoneNumber(tfFaxNumber.getText()));
         isValid &= validateField(tfPostalCode, Validator.validatePostalCode(tfPostalCode.getText()));
-        isValid &= validateField(tfAddress,Validator.checkForEmpty(tfAddress.getText()));
-        isValid &= validateField(tfCompanyName,Validator.checkForEmpty(tfCompanyName.getText()));
-        isValid &= validateField(tfCity,Validator.checkForEmpty(tfCity.getText()));
-        isValid &= validateField(tfCountry,Validator.checkForEmpty(tfCountry.getText()));
+        isValid &= validateField(tfAddress,Validator.checkForEmpty(tfAddress.getText(),"Address"));
+        isValid &= validateField(tfCompanyName,Validator.checkForEmpty(tfCompanyName.getText(),"Company Name"));
+        isValid &= validateField(tfCity,Validator.checkForEmpty(tfCity.getText(),"City"));
+        isValid &= validateField(tfCountry,Validator.checkForEmpty(tfCountry.getText(),"Country"));
         isValid &= validateField(tfWebsiteURL,Validator.validateURL(tfWebsiteURL.getText()));
+        isValid &= validateField(cbProvince, Validator.checkForEmpty(String.valueOf(cbProvince.getValue()),"Province"));
+        isValid &= validateField(cbAffiliation, Validator.checkForEmpty(String.valueOf(cbAffiliation.getValue()),"Affiliation"));
         return isValid;
     }
 
