@@ -5,14 +5,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.dao.AgencyDAO;
 import org.example.travelexpertdesktopapplication.models.Agency;
 import org.example.travelexpertdesktopapplication.utils.Validator;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.example.travelexpertdesktopapplication.utils.ValidateFields.validateField;
 
 public class AgencyFormController {
 
@@ -48,8 +46,8 @@ public class AgencyFormController {
 
     private Agency agency;
 
-    @FXML
-    private Label lblErrorAddress, lblErrorCity, lblErrorProvince, lblErrorPostal, lblErrorCountry, lblErrorPhone, lblErrorFax;
+//    @FXML
+//    private Label lblErrorAddress, lblErrorCity, lblErrorProvince, lblErrorPostal, lblErrorCountry, lblErrorPhone, lblErrorFax;
 
     @FXML
     public void initialize() {
@@ -96,69 +94,14 @@ public class AgencyFormController {
      * @return true if valid, false otherwise
      */
     private boolean validateForm() {
-        // Clear previous error messages
-        lblErrorAddress.setText("");
-        lblErrorCity.setText("");
-        lblErrorProvince.setText("");
-        lblErrorPostal.setText("");
-        lblErrorCountry.setText("");
-        lblErrorPhone.setText("");
-        lblErrorFax.setText("");
-
         boolean isValid = true; // Tracks if all fields are valid
-
-        // Validate Address
-        String addressError = Validator.checkForEmpty(txtAgencyAddress.getText());
-        if (addressError != null) {
-            lblErrorAddress.setText(addressError);
-            isValid = false;
-        }
-
-        // Validate City
-        String cityError = Validator.checkForEmpty(txtAgencyCity.getText());
-        if (cityError != null) {
-            lblErrorCity.setText(cityError);
-            isValid = false;
-        }
-
-        // Validate Province
-        String provError = Validator.checkForEmpty(txtAgencyProv.getText());
-        if (provError != null) {
-            lblErrorProvince.setText(provError);
-            isValid = false;
-        }
-
-        // Validate Postal Code
-        String postalError = Validator.validatePostalCode(txtAgencyPostal.getText());
-        if (postalError != null) {
-            lblErrorPostal.setText(postalError);
-            isValid = false;
-        }
-
-        // Validate Country
-        String countryError = Validator.checkForEmpty(txtAgencyCountry.getText());
-        if (countryError != null) {
-            lblErrorCountry.setText(countryError);
-            isValid = false;
-        }
-
-        // Validate Phone
-        String phoneError = Validator.validatePhoneNumber(txtAgencyPhone.getText());
-        if (phoneError != null) {
-            lblErrorPhone.setText(phoneError);
-            isValid = false;
-        }
-
-        // Validate Fax (Optional: Only show error if not empty)
-        String faxText = txtAgencyFax.getText().trim();
-        if (!faxText.isEmpty()) {
-            String faxError = Validator.validatePhoneNumber(faxText);
-            if (faxError != null) {
-                lblErrorFax.setText(faxError);
-                isValid = false;
-            }
-        }
-
+        isValid &= validateField(txtAgencyAddress, Validator.checkForEmpty(txtAgencyAddress.getText(),"Address"));
+        isValid &= validateField(txtAgencyCity, Validator.checkForEmpty(txtAgencyCity.getText(),"City"));
+        isValid &= validateField(txtAgencyProv, Validator.checkForEmpty(txtAgencyProv.getText(),"Province"));
+        isValid &= validateField(txtAgencyPostal, Validator.validatePostalCode(txtAgencyPostal.getText())); // Validate Postal Code
+        isValid &= validateField(txtAgencyCountry, Validator.checkForEmpty(txtAgencyCountry.getText(),"Country")); // Validate Country
+        isValid &= validateField(txtAgencyPhone, Validator.validatePhoneNumber(txtAgencyPhone.getText()));  // Validate Phone
+        isValid &= validateField(txtAgencyFax, Validator.validatePhoneNumber(txtAgencyFax.getText()));
         return isValid;
     }
 

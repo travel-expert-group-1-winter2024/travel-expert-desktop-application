@@ -69,6 +69,13 @@ public class AddEditPackageController {
         assert tfPackageName != null : "fx:id=\"tfPackageName\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
 
         tfPackageID.setDisable(true);
+
+        tfPackageName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfDesc.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfCommission.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfBasePrice.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        dpStartDate.valueProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        dpEndDate.valueProperty().addListener((obs, oldVal, newVal) -> validateForm());
     }
 
     public void setMode(String mode) {

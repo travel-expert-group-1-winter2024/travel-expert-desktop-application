@@ -111,6 +111,20 @@ public class AddEditSupplierController {
         //Setting Data for ComboBox
         cbAffiliation.setItems(SupplierDAO.getAffiliations());
         cbProvince.setItems(FXCollections.observableArrayList(Province.values()));
+
+        tfFirstName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfLastName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfCompanyName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfCity.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfPostalCode.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfBusinessNumber.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfFaxNumber.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfCountry.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfEmailAddress.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfWebsiteURL.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfEmailAddress.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        cbProvince.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        cbAffiliation.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> validateForm());
     }
 
     /**
@@ -234,8 +248,8 @@ public class AddEditSupplierController {
     private boolean validateForm() {
         boolean isValid = true;
         // Validate each field using the Validator class
-        isValid &= validateField(tfFirstName, Validator.validateName(tfFirstName.getText()));
-        isValid &= validateField(tfLastName, Validator.validateName(tfLastName.getText()));
+        isValid &= validateField(tfFirstName, Validator.validateFirstName(tfFirstName.getText()));
+        isValid &= validateField(tfLastName, Validator.validateLastName(tfLastName.getText()));
         isValid &= validateField(tfEmailAddress, Validator.validateEmail(tfEmailAddress.getText()));
         isValid &= validateField(tfBusinessNumber, Validator.validatePhoneNumber(tfBusinessNumber.getText()));
         isValid &= validateField(tfFaxNumber, Validator.validatePhoneNumber(tfFaxNumber.getText()));

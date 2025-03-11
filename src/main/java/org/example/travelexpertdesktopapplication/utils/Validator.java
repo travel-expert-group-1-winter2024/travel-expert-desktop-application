@@ -38,13 +38,30 @@ public class Validator {
      * @param name - The name to validate
      * @return - An error message if invalid, null if valid.
      */
-    public static String validateName(String name){
+    public static String validateFirstName(String name){
         String errorMessage = "";
         if (checkForEmpty(name) != null){
-            return errorMessage+= "First and/or Last name fields cannot be empty";
+            return errorMessage+= "First name fields cannot be empty";
         }
         if (!NAME_PATTERN.matcher(name).matches()) {
-            return errorMessage+= "First and/or Last name fields can only contain letters, spaces, hyphens and apostrophes. ";
+            return errorMessage+= "First name fields can only contain letters, spaces, hyphens and apostrophes. ";
+        }
+        // If Valid, return null
+        return null;
+    }
+
+    /**
+     * First checks for empty, and gives error message specific to name fields, then checks to match regex pattern
+     * @param name - The name to validate
+     * @return - An error message if invalid, null if valid.
+     */
+    public static String validateLastName(String name){
+        String errorMessage = "";
+        if (checkForEmpty(name) != null){
+            return errorMessage+= "Last name fields cannot be empty";
+        }
+        if (!NAME_PATTERN.matcher(name).matches()) {
+            return errorMessage+= "Last name fields can only contain letters, spaces, hyphens and apostrophes. ";
         }
         // If Valid, return null
         return null;

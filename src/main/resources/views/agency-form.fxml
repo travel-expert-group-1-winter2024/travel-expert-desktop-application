@@ -32,50 +32,42 @@
         <Label text="Address:" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="TOP" />
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <TextField fx:id="txtAgencyAddress" />
-            <Label fx:id="lblErrorAddress" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" GridPane.hgrow="ALWAYS">
-            </Label>
         </VBox>
 
         <!-- City -->
         <Label text="City:" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.valignment="TOP" />
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <TextField fx:id="txtAgencyCity" />
-            <Label fx:id="lblErrorCity" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" GridPane.hgrow="ALWAYS" />
         </VBox>
 
         <!-- Province -->
         <Label text="Province:" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.valignment="TOP" />
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
             <TextField fx:id="txtAgencyProv" />
-            <Label fx:id="lblErrorProvince" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" GridPane.hgrow="ALWAYS" />
         </VBox>
 
         <!-- Postal Code -->
         <Label text="Postal Code:" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.valignment="TOP" />
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4">
             <TextField fx:id="txtAgencyPostal" />
-            <Label fx:id="lblErrorPostal" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" GridPane.hgrow="ALWAYS" />
         </VBox>
 
         <!-- Country -->
         <Label text="Country:" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.valignment="TOP" />
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="5">
             <TextField fx:id="txtAgencyCountry" />
-            <Label fx:id="lblErrorCountry" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" GridPane.hgrow="ALWAYS" />
         </VBox>
 
         <!-- Phone -->
         <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.valignment="TOP" />
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="6">
             <TextField fx:id="txtAgencyPhone" />
-            <Label fx:id="lblErrorPhone" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" GridPane.hgrow="ALWAYS" />
         </VBox>
 
         <!-- Fax -->
         <Label text="Fax:" GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.valignment="TOP" />
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="7">
             <TextField fx:id="txtAgencyFax" />
-            <Label fx:id="lblErrorFax" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" GridPane.hgrow="ALWAYS" />
         </VBox>
       <rowConstraints>
          <RowConstraints />
