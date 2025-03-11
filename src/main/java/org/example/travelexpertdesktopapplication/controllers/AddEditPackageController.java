@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -21,7 +20,6 @@ import org.example.travelexpertdesktopapplication.dao.*;
 import org.example.travelexpertdesktopapplication.models.*;
 import org.example.travelexpertdesktopapplication.utils.AlertBox;
 import org.example.travelexpertdesktopapplication.utils.Validator;
-import org.tinylog.Logger;
 
 import static org.example.travelexpertdesktopapplication.utils.ValidateFields.validateField;
 
@@ -130,7 +128,7 @@ public class AddEditPackageController {
             } else {
                 Integer packageID = Integer.parseInt(tfPackageID.getText());
                 packagesData.setPackageid(packageID);
-                PackagesDAO.updatePackeDetails( packagesData);
+                PackagesDAO.updatePackage( packagesData);
 
                 updateProductSupplier(packageID);
 

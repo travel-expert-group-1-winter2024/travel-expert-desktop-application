@@ -101,7 +101,7 @@ public class PackagesDAO {
         return generatedId;
     }
 
-    public static int updatePackeDetails(Packages p) {
+    public static int updatePackage(Packages p) {
         String sql = "UPDATE packages SET pkgName = ?, pkgstartdate = ?, pkgenddate = ?, " +
                 "pkgdesc = ?, pkgbaseprice = ?, pkgagencycommission = ? " +
                 "WHERE packageid = ?";
