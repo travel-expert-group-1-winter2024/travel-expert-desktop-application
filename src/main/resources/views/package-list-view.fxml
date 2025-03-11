@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.PackageController">
    <children>
       <TableView fx:id="lvPackages" layoutX="40.0" layoutY="90.0" prefHeight="364.0" prefWidth="719.0">
@@ -49,7 +48,7 @@
                   </AnchorPane>
                   <AnchorPane layoutX="533.0" layoutY="5.0" prefHeight="52.0" prefWidth="266.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <JFXButton fx:id="btnDelete" buttonType="RAISED" layoutX="107.0" layoutY="14.0" style="-fx-background-color: #fbdd74;" text="Delete Package" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
+                        <JFXButton fx:id="btnDelete" buttonType="RAISED" layoutX="107.0" layoutY="14.0" onMouseClicked="#deletePackage" style="-fx-background-color: #fbdd74;" text="Delete Package" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
                            <font>
                               <Font name="Calibri Bold Italic" size="16.0" />
                            </font>
