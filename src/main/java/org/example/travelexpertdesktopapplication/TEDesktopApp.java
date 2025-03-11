@@ -7,12 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-import org.example.travelexpertdesktopapplication.controllers.LoginController;
+
 import org.example.travelexpertdesktopapplication.dao.AgentKPIDAO;
-import org.example.travelexpertdesktopapplication.dao.DatabaseManager;
-import org.example.travelexpertdesktopapplication.dao.UserDAO;
-import org.example.travelexpertdesktopapplication.services.AuthService;
-import org.example.travelexpertdesktopapplication.dao.AgentDashboardDAO;
 import org.example.travelexpertdesktopapplication.dao.DatabaseManager;
 import org.tinylog.Logger;
 
