@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="1127.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.PastBookingController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.PastBookingController">
    <center>
       <TableView fx:id="lvPastBooking" prefHeight="611.0" prefWidth="769.0" BorderPane.alignment="CENTER">
         <columns>
@@ -33,7 +33,7 @@
       </TableView>
    </center>
    <top>
-      <HBox prefHeight="58.0" prefWidth="1127.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="58.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Past Trips">
                <HBox.margin>
@@ -48,7 +48,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="btnReset" onMouseClicked="#onResetClick" mnemonicParsing="false" text="Reset">
+            <Button fx:id="btnReset" mnemonicParsing="false" onMouseClicked="#onResetClick" text="Reset">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>

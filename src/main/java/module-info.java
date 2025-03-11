@@ -1,5 +1,4 @@
 module org.example.travelexpertdesktopapplication {
-    requires javafx.fxml;
     requires java.sql;
     requires com.jfoenix;
     requires org.tinylog.api;
@@ -7,9 +6,12 @@ module org.example.travelexpertdesktopapplication {
     requires spring.websocket;
     requires com.fasterxml.jackson.annotation;
     requires org.postgresql.jdbc;
+    requires spring.context;
+    requires MaterialFX;
     requires java.desktop;
     requires eu.hansolo.tilesfx;
     requires javafx.controls;
+
 
     opens org.example.travelexpertdesktopapplication.models to
             com.fasterxml.jackson.databind,
