@@ -106,9 +106,25 @@ public class AddEditSupplierController {
         assert tfSupplierID != null : "fx:id=\"tfSupplierID\" was not injected: check your FXML file 'add-edit-supplier-view.fxml'.";
         assert tfWebsiteURL != null : "fx:id=\"tfWebsiteURL\" was not injected: check your FXML file 'add-edit-supplier-view.fxml'.";
 
+        tfSupplierID.setDisable(true);
+        tfSupplierContactID.setDisable(true);
         //Setting Data for ComboBox
         cbAffiliation.setItems(SupplierDAO.getAffiliations());
         cbProvince.setItems(FXCollections.observableArrayList(Province.values()));
+
+        tfFirstName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfLastName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfCompanyName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfCity.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfPostalCode.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfBusinessNumber.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfFaxNumber.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfCountry.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfEmailAddress.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfWebsiteURL.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfEmailAddress.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        cbProvince.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        cbAffiliation.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> validateForm());
     }
 
     /**
@@ -232,16 +248,19 @@ public class AddEditSupplierController {
     private boolean validateForm() {
         boolean isValid = true;
         // Validate each field using the Validator class
-        isValid &= validateField(tfFirstName, Validator.validateName(tfFirstName.getText()));
-        isValid &= validateField(tfLastName, Validator.validateName(tfLastName.getText()));
+        isValid &= validateField(tfFirstName, Validator.validateFirstName(tfFirstName.getText()));
+        isValid &= validateField(tfLastName, Validator.validateLastName(tfLastName.getText()));
         isValid &= validateField(tfEmailAddress, Validator.validateEmail(tfEmailAddress.getText()));
         isValid &= validateField(tfBusinessNumber, Validator.validatePhoneNumber(tfBusinessNumber.getText()));
+        isValid &= validateField(tfFaxNumber, Validator.validatePhoneNumber(tfFaxNumber.getText()));
         isValid &= validateField(tfPostalCode, Validator.validatePostalCode(tfPostalCode.getText()));
-        isValid &= validateField(tfAddress,Validator.checkForEmpty(tfAddress.getText()));
-        isValid &= validateField(tfCompanyName,Validator.checkForEmpty(tfCompanyName.getText()));
-        isValid &= validateField(tfCity,Validator.checkForEmpty(tfCity.getText()));
-        isValid &= validateField(tfCountry,Validator.checkForEmpty(tfCountry.getText()));
+        isValid &= validateField(tfAddress,Validator.checkForEmpty(tfAddress.getText(),"Address"));
+        isValid &= validateField(tfCompanyName,Validator.checkForEmpty(tfCompanyName.getText(),"Company Name"));
+        isValid &= validateField(tfCity,Validator.checkForEmpty(tfCity.getText(),"City"));
+        isValid &= validateField(tfCountry,Validator.checkForEmpty(tfCountry.getText(),"Country"));
         isValid &= validateField(tfWebsiteURL,Validator.validateURL(tfWebsiteURL.getText()));
+        isValid &= validateField(cbProvince, Validator.checkForEmpty(String.valueOf(cbProvince.getValue()),"Province"));
+        isValid &= validateField(cbAffiliation, Validator.checkForEmpty(String.valueOf(cbAffiliation.getValue()),"Affiliation"));
         return isValid;
     }
 

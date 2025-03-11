@@ -3,6 +3,7 @@ package org.example.travelexpertdesktopapplication.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 import java.util.*;
 
 import javafx.beans.property.SimpleIntegerProperty;
@@ -15,6 +16,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.example.travelexpertdesktopapplication.dao.PackagesDAO;
+import org.example.travelexpertdesktopapplication.models.Packages;
 import org.example.travelexpertdesktopapplication.TEDesktopApp;
 import org.example.travelexpertdesktopapplication.dao.*;
 import org.example.travelexpertdesktopapplication.models.*;
@@ -83,6 +86,13 @@ public class AddEditPackageController {
         assert btnProductsSuppliersAddEdit != null : "fx:id=\"btnProductsSuppliersAddEdit\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
 
         tfPackageID.setDisable(true);
+
+        tfPackageName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfDesc.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfCommission.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfBasePrice.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        dpStartDate.valueProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        dpEndDate.valueProperty().addListener((obs, oldVal, newVal) -> validateForm());
     }
 
     public void setMode(String mode) {
@@ -242,8 +252,12 @@ public class AddEditPackageController {
     private boolean validateForm() {
         boolean isValid = true;
         // Validate each field using the Validator class
-        isValid &= validateField(tfPackageName, Validator.validateName(tfPackageName.getText()));
+        isValid &= validateField(tfPackageName, Validator.checkForEmpty(tfPackageName.getText(),"Package"));
         isValid &= validateField(dpStartDate, dpStartDate.getValue() == null ? "Start date is required" : null);
+        isValid &= validateField(dpEndDate, dpEndDate.getValue() == null ? "End date is required" : null);
+        isValid &= validateField(tfDesc, Validator.checkForEmpty(tfDesc.getText(),"Description"));
+        isValid &= validateField(tfBasePrice,Validator.checkForEmpty(tfBasePrice.getText(),"BasePrice"));
+        isValid &= validateField(tfCommission,Validator.checkForEmpty(tfCommission.getText(),"Commission"));
         isValid &= validateField(dpStartDate, dpStartDate.getValue() == null ? "End date is required" : null);
         isValid &= validateField(tfDesc, Validator.checkForEmpty(tfDesc.getText()));
         isValid &= validateField(tfBasePrice, Validator.checkForEmpty(tfBasePrice.getText()));

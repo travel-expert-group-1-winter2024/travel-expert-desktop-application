@@ -19,13 +19,15 @@ import org.example.travelexpertdesktopapplication.utils.AlertBox;
 import org.example.travelexpertdesktopapplication.utils.Validator;
 import org.tinylog.Logger;
 
+import static org.example.travelexpertdesktopapplication.utils.ValidateFields.validateField;
+
 public class AgentsFormController {
 
     @FXML
     private TextField txtAgentID, txtAgentFirstName,txtAgentMiddleInitials, txtAgentLastName, txtAgentPhone, txtAgentEmail, txtAgentPosition, txtAgencyID;
 
     @FXML
-    private Label lblAgentID, lblErrorFirstName, lblErrorLastName,lblErrorMiddleInitials, lblErrorPhone, lblErrorEmail, lblErrorPosition, lblErrorAgencyID;
+    private Label lblAgentID;
 
     @FXML
     private Button btnSave;
@@ -97,7 +99,12 @@ public class AgentsFormController {
             checkPasswordMatch();
         });
 
-
+        txtAgentFirstName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        txtAgentLastName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        txtAgentPhone.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        txtAgentEmail.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        cmbAgency.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        txtPassword.textProperty().addListener((obs,oldVal,newVal)->validateForm());
 
         // Set default eye icons
         eyeIconPassword.setImage(new Image(getClass().getResourceAsStream("/images/eye_closed.png")));
@@ -200,57 +207,23 @@ public class AgentsFormController {
     }
 
     private boolean validateForm() {
-        lblErrorFirstName.setText("");
-        lblErrorMiddleInitials.setText("");
-        lblErrorLastName.setText("");
-        lblErrorPhone.setText("");
-        lblErrorEmail.setText("");
-        lblErrorPosition.setText("");
-        lblErrorAgencyID.setText("");
-
         boolean isValid = true;
-
-        String firstNameError = Validator.validateName(txtAgentFirstName.getText());
-        if (firstNameError != null) {
-            lblErrorFirstName.setText(firstNameError);
-            isValid = false;
-        }
-
-        String lastNameError = Validator.validateName(txtAgentLastName.getText());
-        if (lastNameError != null) {
-            lblErrorLastName.setText(lastNameError);
-            isValid = false;
-        }
-
-        String phoneError = Validator.validatePhoneNumber(txtAgentPhone.getText());
-        if (phoneError != null) {
-            lblErrorPhone.setText(phoneError);
-            isValid = false;
-        }
-
-        String emailError = Validator.validateEmail(txtAgentEmail.getText());
-        if (emailError != null) {
-            lblErrorEmail.setText(emailError);
-            isValid = false;
-        }
+        isValid &= validateField(txtAgentFirstName, Validator.validateFirstName(txtAgentFirstName.getText()));
+        isValid &= validateField(txtAgentLastName, Validator.validateLastName(txtAgentLastName.getText()));
+        isValid &= validateField(txtAgentPhone, Validator.validatePhoneNumber(txtAgentPhone.getText()));
+        isValid &= validateField(txtAgentEmail, Validator.validateEmail(txtAgentEmail.getText()));
+        isValid &= validateField(cmbAgency, Validator.checkForEmpty(String.valueOf(cmbAgency.getValue()),"Agency"));
+        Boolean validPass = validatePassword(txtPassword.getText());
+        isValid &= validateField(txtPassword, Validator.checkForEmpty(txtPassword.getText(),"Password"));
 
 
-        int agencyId = getSelectedAgencyId();
-        if (agencyId == -1) {
-            lblErrorAgencyID.setText("Please select an agency.");
-            isValid = false;
-        }
-
-        String password = txtPassword.getText();
-        String passwordError = Validator.checkForEmpty(password);
-        Boolean validPass = validatePassword(password);
-
-        if (passwordError != null) {
-            lblErrorPassword.setText(passwordError);
-            isValid = false;
-        }
-        else if(!validPass){
-            lblErrorPassword.setText("Invalid Password");
+//        if (passwordError != null) {
+//            lblErrorPassword.setText(passwordError);
+//            isValid = false;
+//        }
+//        else
+            if(!validPass){
+//            lblErrorPassword.setText("Invalid Password");
             isValid = false;
         }
 
