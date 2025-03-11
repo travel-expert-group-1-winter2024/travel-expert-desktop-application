@@ -17,6 +17,14 @@ public class Packages {
     private SimpleIntegerProperty pkgbaseprice;
     private SimpleIntegerProperty pkgagencycommission;
 
+    public Packages(SimpleStringProperty pkgname, SimpleObjectProperty<LocalDate> pkgstartdate, SimpleObjectProperty<LocalDate> pkgenddate, SimpleStringProperty pkgdesc, SimpleIntegerProperty pkgbaseprice, SimpleIntegerProperty pkgagencycommission) {
+        this.pkgname = pkgname;
+        this.pkgstartdate = pkgstartdate;
+        this.pkgenddate = pkgenddate;
+        this.pkgdesc = pkgdesc;
+        this.pkgbaseprice = pkgbaseprice;
+        this.pkgagencycommission = pkgagencycommission;
+    }
 
     public Packages(SimpleIntegerProperty packageid, SimpleStringProperty pkgname, SimpleObjectProperty<LocalDate>  pkgstartdate,
                     SimpleObjectProperty<LocalDate>  pkgenddate, SimpleStringProperty pkgdesc, SimpleIntegerProperty pkgbaseprice,
@@ -33,6 +41,10 @@ public class Packages {
 
     public int getPackageid() {
         return packageid.get();
+    }
+
+    public void setPackageid(int packageid) {
+        this.packageid = new SimpleIntegerProperty(packageid);
     }
 
     public SimpleIntegerProperty packageidProperty() {

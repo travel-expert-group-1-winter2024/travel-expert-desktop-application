@@ -68,14 +68,14 @@ public class PackagesDAO {
     }
 
     public static int addPackage(Packages p) {
-        int generatedId = -1;
-//        Logger.debug("Adding new package: {}", package);
+        int generatedId = -1; // Default value if insertion fails
+        Logger.debug("Adding new package: {}", p);
 
         String sql = "INSERT INTO packages (pkgName, pkgstartdate, pkgenddate, pkgdesc, " +
                 "pkgbaseprice, pkgagencycommission) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, p.getPkgname());
             stmt.setDate(2, java.sql.Date.valueOf(p.getPkgstartdate().get()));
@@ -85,12 +85,14 @@ public class PackagesDAO {
             stmt.setInt(6, p.getPkgagencycommission());
 
             Logger.debug("Executing query: {}", sql);
-            stmt.executeUpdate();
-            // Retrieve the generated key
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    generatedId = generatedKeys.getInt(1);
-                    Logger.info("Package added successfully with ID: {}", generatedId);
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        generatedId = generatedKeys.getInt(1);
+                        Logger.info("Package added successfully with ID: {}", generatedId);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -99,12 +101,12 @@ public class PackagesDAO {
         return generatedId;
     }
 
-    public static int updatePackeDetails(SimpleIntegerProperty packageID, Packages p) {
+    public static int updatePackeDetails(Packages p) {
         String sql = "UPDATE packages SET pkgName = ?, pkgstartdate = ?, pkgenddate = ?, " +
                 "pkgdesc = ?, pkgbaseprice = ?, pkgagencycommission = ? " +
                 "WHERE packageid = ?";
 
-        Logger.debug("Updating package. ID={}", packageID);
+        Logger.debug("Updating package. ID={}", p.getPackageid());
         Logger.debug("Executing query: {}", sql);
 
         int numAffectedRows = 0;
