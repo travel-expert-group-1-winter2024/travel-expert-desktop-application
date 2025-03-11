@@ -18,13 +18,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.TEDesktopApp;
 import org.example.travelexpertdesktopapplication.dao.PackagesDAO;
 import org.example.travelexpertdesktopapplication.models.Packages;
-import org.example.travelexpertdesktopapplication.models.SupplierContacts;
 import org.example.travelexpertdesktopapplication.utils.AlertBox;
 
 public class PackageController {

@@ -22,12 +22,31 @@ public class Validator {
      * @param input - User input via Text field, general use.
      * @return An error message if invalid, or null if it is valid.
      */
-    public static String checkForEmpty(String input){
-        String errorMessage = "";
-        if (input == null || input.trim().isEmpty()){
-            return errorMessage += input + " " + "field cannot be empty";
+    public static String checkForEmpty(String input) {
+        return checkForEmpty(input, "Field"); // Default field name
+    }
+
+    public static String checkForEmpty(String input, String fieldName) {
+        if (input == null || input == "null" || input.trim().isEmpty()) {
+            return fieldName + " cannot be empty";
         }
-        // If valid, return null.
+        return null; // Valid input
+    }
+
+    /**
+     * First checks for empty, and gives error message specific to name fields, then checks to match regex pattern
+     * @param name - The name to validate
+     * @return - An error message if invalid, null if valid.
+     */
+    public static String validateFirstName(String name){
+        String errorMessage = "";
+        if (checkForEmpty(name) != null){
+            return errorMessage+= "First name fields cannot be empty";
+        }
+        if (!NAME_PATTERN.matcher(name).matches()) {
+            return errorMessage+= "First name fields can only contain letters, spaces, hyphens and apostrophes. ";
+        }
+        // If Valid, return null
         return null;
     }
 
@@ -36,13 +55,13 @@ public class Validator {
      * @param name - The name to validate
      * @return - An error message if invalid, null if valid.
      */
-    public static String validateName(String name){
+    public static String validateLastName(String name){
         String errorMessage = "";
         if (checkForEmpty(name) != null){
-            return errorMessage+= "First and/or Last name fields cannot be empty";
+            return errorMessage+= "Last name fields cannot be empty";
         }
         if (!NAME_PATTERN.matcher(name).matches()) {
-            return errorMessage+= "First and/or Last name fields can only contain letters, spaces, hyphens and apostrophes. ";
+            return errorMessage+= "Last name fields can only contain letters, spaces, hyphens and apostrophes. ";
         }
         // If Valid, return null
         return null;
@@ -88,7 +107,7 @@ public class Validator {
     public static String validatePostalCode(String postalCode){
         String errorMessage = "";
         if (checkForEmpty(postalCode) != null){
-            errorMessage+= "Postal Code field cannot be null";
+            errorMessage+= "Postal Code field cannot be null. \n";
         }
         if (!POSTAL_CODE_PATTERN.matcher(postalCode).matches()){
             return errorMessage+= "Invalid postal code format, Please use A1A 1A1 format.";

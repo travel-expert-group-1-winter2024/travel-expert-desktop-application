@@ -36,12 +36,11 @@
         <Label text="First Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="TOP" />
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <TextField fx:id="txtAgentFirstName" />
-            <Label fx:id="lblErrorFirstName" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" />
         </VBox>
 
         <!-- Middle Name -->
         <Label text="Middle Initials:" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-        <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <VBox alignment="TOP_LEFT" prefHeight="21.0" prefWidth="383.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <TextField fx:id="txtAgentMiddleInitials" />
             <Label fx:id="lblErrorMiddleInitials" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" />
         </VBox>
@@ -50,14 +49,12 @@
         <Label text="Last Name:" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.valignment="TOP" />
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
             <TextField fx:id="txtAgentLastName" />
-            <Label fx:id="lblErrorLastName" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" />
         </VBox>
 
         <!-- Phone Number -->
         <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.valignment="TOP" />
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4">
             <TextField fx:id="txtAgentPhone" />
-            <Label fx:id="lblErrorPhone" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" />
         </VBox>
 
         <!-- Email -->
@@ -78,7 +75,6 @@
         <Label text="Agency:" GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.valignment="TOP" />
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="7">
             <ComboBox fx:id="cmbAgency" prefHeight="25.0" prefWidth="385.0" />
-            <Label fx:id="lblErrorAgencyID" maxWidth="Infinity" style="-fx-text-fill: red;" text="" wrapText="true" />
         </VBox>
 
         <!-- Password -->
