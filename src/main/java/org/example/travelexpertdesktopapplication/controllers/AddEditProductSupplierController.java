@@ -2,10 +2,7 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -73,14 +70,20 @@ public class AddEditProductSupplierController {
         assert cboSupplier2 != null : "fx:id=\"cboSupplier2\" was not injected: check your FXML file 'add-edit-products-suppliers-view.fxml'.";
         assert cboSupplier3 != null : "fx:id=\"cboSupplier3\" was not injected: check your FXML file 'add-edit-products-suppliers-view.fxml'.";
 
-        loadProductsAndSuppliers();
+        loadAllProductAndSupplier();
+        if (selectedProductSupplierList != null) {
+            if (selectedProductSupplierList[0] != null || selectedProductSupplierList[1] != null || selectedProductSupplierList[2] != null) {
+                loadProductsAndSuppliersFromList(selectedProductSupplierList);
+            }
+        }
+
     }
 
     public void setCurrentPackageId(int currentPackageId) {
         this.currentPackageId = currentPackageId;
     }
 
-    private void loadProductsAndSuppliers() {
+    private void loadAllProductAndSupplier() {
         // get product and supplier data from database
         List<Product> productList = ProductDAO.getAllProducts();
         cboProduct1.setItems(FXCollections.observableArrayList(productList));
@@ -94,8 +97,9 @@ public class AddEditProductSupplierController {
 
     public void loadProductsAndSuppliersForEdit() {
 
-        if (selectedProductSupplierList != null && selectedProductSupplierList.length > 0 && selectedProductSupplierList[0] != null) {
+        if (selectedProductSupplierList[0] != null || selectedProductSupplierList[1] != null || selectedProductSupplierList[2] != null) {
             // set value to combo boxes
+            Logger.info("Load Products and Suppliers from selectedProductSupplierList");
             loadProductsAndSuppliersFromList(selectedProductSupplierList);
             return;
         }
@@ -147,13 +151,13 @@ public class AddEditProductSupplierController {
 
     private void loadProductsAndSuppliersFromList(ProductsSuppliers[] productsSuppliers) {
         for (int i = 0; i < productsSuppliers.length; i++) {
-            if (i == 0) {
+            if (i == 0 && productsSuppliers[i] != null) {
                 cboProduct1.setValue(productsSuppliers[i].getProduct());
                 cboSupplier1.setValue(productsSuppliers[i].getSupplier());
-            } else if (i == 1) {
+            } else if (i == 1 && productsSuppliers[i] != null) {
                 cboProduct2.setValue(productsSuppliers[i].getProduct());
                 cboSupplier2.setValue(productsSuppliers[i].getSupplier());
-            } else if (i == 2) {
+            } else if (i == 2 && productsSuppliers[i] != null) {
                 cboProduct3.setValue(productsSuppliers[i].getProduct());
                 cboSupplier3.setValue(productsSuppliers[i].getSupplier());
             }
@@ -163,9 +167,20 @@ public class AddEditProductSupplierController {
     @FXML
     void onSaveClicked(MouseEvent event) {
         // find product_supplier id from product id and supplier id
-        addProductSupplierToList(0, cboProduct1, cboSupplier1);
-        addProductSupplierToList(1, cboProduct2, cboSupplier2);
-        addProductSupplierToList(2, cboProduct3, cboSupplier3);
+        if (cboProduct1.getValue() != null || cboSupplier1.getValue() != null) {
+            addProductSupplierToList(0, cboProduct1, cboSupplier1);
+            Logger.info("ComboBox 1 has values: " + cboProduct1.getValue() + ", " + cboSupplier1.getValue());
+        }
+        if (cboProduct2.getValue() != null || cboSupplier2.getValue() != null) {
+            addProductSupplierToList(1, cboProduct2, cboSupplier2);
+            Logger.info("ComboBox 2 has values: " + cboProduct2.getValue() + ", " + cboSupplier2.getValue());
+        }
+        if (cboProduct3.getValue() != null || cboSupplier3.getValue() != null) {
+            addProductSupplierToList(2, cboProduct3, cboSupplier3);
+            Logger.info("ComboBox 3 has values: " + cboProduct3.getValue() + ", " + cboSupplier3.getValue());
+        }
+
+        Logger.info("Selected Product Supplier List: " + Arrays.toString(selectedProductSupplierList));
 
         // close
         Stage stage = (Stage) btnSave.getScene().getWindow();

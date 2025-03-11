@@ -128,10 +128,11 @@ public class AddEditPackageController {
                 AlertBox.showAlert("Success", "Package has been saved successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
             } else {
-                SimpleIntegerProperty packageID = new SimpleIntegerProperty(Integer.parseInt(tfPackageID.getText()));
-                PackagesDAO.updatePackeDetails(packageID, packagesData);
+                Integer packageID = Integer.parseInt(tfPackageID.getText());
+                packagesData.setPackageid(packageID);
+                PackagesDAO.updatePackeDetails( packagesData);
 
-                updateProductSupplier(packageID.get());
+                updateProductSupplier(packageID);
 
                 AlertBox.showAlert("Success", "Supplier Contacts updated successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
@@ -143,19 +144,21 @@ public class AddEditPackageController {
     }
 
     private Packages getDetailsOfPackageFromForm() {
-        SimpleIntegerProperty packageID = new SimpleIntegerProperty(Integer.parseInt(tfPackageID.getText()));
         SimpleStringProperty pkgName = new SimpleStringProperty(tfPackageName.getText());
         SimpleObjectProperty<LocalDate> pkgstartdate = new SimpleObjectProperty(dpStartDate.getValue());
         SimpleObjectProperty<LocalDate> pkgenddate = new SimpleObjectProperty(dpEndDate.getValue());
         SimpleStringProperty pkgdesc = new SimpleStringProperty(tfDesc.getText());
         SimpleIntegerProperty pkgbaseprice = new SimpleIntegerProperty(Integer.parseInt(tfBasePrice.getText()));
         SimpleIntegerProperty pkgagencycommission = new SimpleIntegerProperty(Integer.parseInt(tfCommission.getText()));
-        return new Packages(packageID, pkgName, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission);
+        return new Packages(pkgName, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission);
     }
 
     private void saveProductSupplier(int packageId) {
         ProductsSuppliers[] selectedProductSuppliers = AddEditProductSupplierController.getSelectedProductSupplierList();
         for (ProductsSuppliers productSupplier : selectedProductSuppliers) {
+            if (productSupplier == null) {
+                continue;
+            }
             int productSupplierId = createProductSupplierIfNotExist(productSupplier.getProductId(), productSupplier.getSupplierId());
             PackagesProductsSuppliersDAO.addPackageProductSupplier(new PackagesProductsSuppliers(packageId, productSupplierId));
         }
@@ -205,9 +208,9 @@ public class AddEditPackageController {
                 continue;
             }
 
-            if (!Objects.equals(previous.getProductId(), selected.getProductId()) ||
-                    !Objects.equals(previous.getSupplierId(), selected.getSupplierId())) {
-                PackagesProductsSuppliersDAO.deletePackageProductSupplierByProductSupplierId(previous.getProductSupplierId());
+            if (!Objects.equals(Optional.of(previous.getProductId()), Optional.of(selected.getProductId())) ||
+                    !Objects.equals(Optional.of(previous.getSupplierId()), Optional.of(selected.getSupplierId()))) {
+                PackagesProductsSuppliersDAO.deletePackageProductSupplierByProductSupplierId(Integer.valueOf(previous.getProductSupplierId()));
                 idToAdd.add(selected);
             }
         }
@@ -223,7 +226,7 @@ public class AddEditPackageController {
         return idToAdd;
     }
 
-    private int findActualSize(ProductsSuppliers[] productsSuppliers){
+    private int findActualSize(ProductsSuppliers[] productsSuppliers) {
         int actualSize = 0;
         for (ProductsSuppliers productsSupplier : productsSuppliers) {
             if (productsSupplier != null) {
@@ -296,7 +299,7 @@ public class AddEditPackageController {
     @FXML
     private void onExit() {
         AddEditProductSupplierController.clearSelectedProductSuppliers();
-//        AddEditProductSupplierController.clearPreviousProductSupplierIds();
+        AddEditProductSupplierController.clearPreviousProductSupplierIds();
 
         Stage stage = (Stage) btnExit.getScene().getWindow();
         stage.close();

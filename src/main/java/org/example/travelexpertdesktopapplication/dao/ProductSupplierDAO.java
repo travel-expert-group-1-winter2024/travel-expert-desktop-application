@@ -4,10 +4,7 @@ import org.example.travelexpertdesktopapplication.models.Product;
 import org.example.travelexpertdesktopapplication.models.ProductsSuppliers;
 import org.tinylog.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ProductSupplierDAO {
     public static ProductsSuppliers getProductsSuppliersById(int id) {
@@ -63,7 +60,7 @@ public class ProductSupplierDAO {
         int newId = -1;
         String query = "INSERT INTO products_suppliers (productid, supplierid) VALUES (?, ?)";
         try (Connection connection = DatabaseManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setInt(1, productSupplier.getProductId());
             preparedStatement.setInt(2, productSupplier.getSupplierId());
