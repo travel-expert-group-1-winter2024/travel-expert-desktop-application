@@ -14,6 +14,7 @@ import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import org.example.travelexpertdesktopapplication.auth.SessionManager;
 import org.example.travelexpertdesktopapplication.dao.AgentKPIDAO;
 import org.example.travelexpertdesktopapplication.models.AgentDashboardKPI;
 import org.example.travelexpertdesktopapplication.models.DestinationCount;
@@ -74,7 +75,7 @@ public class AgentKPIController {
         assert labelTotalSales != null : "fx:id=\"labelTotalSales\" was not injected: check your FXML file 'agent-kpi-view.fxml'.";
         assert pieChart != null : "fx:id=\"pieChart\" was not injected: check your FXML file 'agent-kpi-view.fxml'.";
 
-        int agentId = 1;
+        int agentId = SessionManager.getInstance().getUser().getAgentId();
         List<AgentDashboardKPI> kpiList = agentKPIDAO.getAgentKPIs(agentId);
         List<DestinationCount> destinationList = agentKPIDAO.getDestinationCount(agentId);
         List<MonthlyBookingCount> monthlyBookingList = agentKPIDAO.getMonthlyBookingCount(agentId);
