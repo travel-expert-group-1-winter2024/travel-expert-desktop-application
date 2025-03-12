@@ -11,7 +11,7 @@ import static org.example.travelexpertdesktopapplication.dao.DatabaseManager.get
 
 public class AgentsDAO {
     // Retrieve all agents from the database
-    public static ObservableList<Agent> getAllAgents() {
+    public static ObservableList<Agent> getAllAgents() throws SQLException{
         ObservableList<Agent> agentList = FXCollections.observableArrayList();
         String query = "SELECT * FROM agents";
         Logger.debug("Fetching all agents from the database.");
@@ -34,44 +34,12 @@ public class AgentsDAO {
                 agentList.add(agent);
             }
         } catch (SQLException e) {
-            Logger.error(e, "Error fetching agents from the database.");
+            Logger.debug(e, "Error fetching agents from the database.");
         }
         return agentList;
     }
 
-    // Add a new agent to the database
-    public static boolean addAgent(Agent agent) {
-        String query = "INSERT INTO agents (agtfirstname, agtmiddleinitial, agtlastname, agtbusphone, agtemail, agtposition, agencyid) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        Logger.debug("Adding new agent: {} {}", agent.getAgtFirstName(), agent.getAgtLastName());
-        Logger.debug("Executing query: {}", query);
-
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setString(1, agent.getAgtFirstName());
-            statement.setString(2, agent.getAgtMiddleInitial());
-            statement.setString(3, agent.getAgtLastName());
-            statement.setString(4, agent.getAgtBusPhone());
-            statement.setString(5, agent.getAgtEmail());
-            statement.setString(6, agent.getAgtPosition());
-            statement.setInt(7, agent.getAgencyId());
-
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                Logger.info("Agent added successfully. Name={} {}", agent.getAgtFirstName(), agent.getAgtLastName());
-                return true;
-            } else {
-                Logger.warn("Failed to add agent: {} {}", agent.getAgtFirstName(), agent.getAgtLastName());
-                return false;
-            }
-        } catch (SQLException e) {
-            Logger.error(e, "Error adding agent: {} {}", agent.getAgtFirstName(), agent.getAgtLastName());
-            return false;
-        }
-    }
-
-    public static int addAgentAndGetId(Agent agent) {
+    public static int addAgentAndGetId(Agent agent) throws SQLException{
         String sql = "INSERT INTO agents (agtfirstname, agtmiddleinitial, agtlastname, agtbusphone, agtemail, agtposition, agencyid) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -96,14 +64,14 @@ public class AgentsDAO {
                 }
             }
         } catch (SQLException e) {
-            Logger.error(e, "Error while adding new agent: {}", agent.getAgtEmail());
+            Logger.debug(e, "Error while adding new agent: {}", agent.getAgtEmail());
         }
 
         return -1; // Return -1 if the insertion failed
     }
 
     // Update an existing agent in the database
-    public static boolean updateAgent(Agent agent) {
+    public static boolean updateAgent(Agent agent) throws SQLException {
         String query = "UPDATE agents SET agtfirstname = ?, agtmiddleinitial = ?, agtlastname = ?, agtbusphone = ?, agtemail = ?, agtposition = ?, agencyid = ? " +
                 "WHERE agentid = ?";
         Logger.debug("Updating agent. ID={}", agent.getAgentID());
@@ -129,13 +97,13 @@ public class AgentsDAO {
                 return false;
             }
         } catch (SQLException e) {
-            Logger.error(e, "Error updating agent. ID={}", agent.getAgentID());
+            Logger.debug(e, "Error updating agent. ID={}", agent.getAgentID());
             return false;
         }
     }
 
     // Delete an agent from the database
-    public static boolean deleteAgent(int agentID) {
+    public static boolean deleteAgent(int agentID) throws SQLException{
         String query = "DELETE FROM agents WHERE agentid = ?";
 
         Logger.debug("Deleting agent. ID={}", agentID);
@@ -155,7 +123,7 @@ public class AgentsDAO {
                 return false;
             }
         } catch (SQLException e) {
-            Logger.error(e, "Error deleting agent. ID={}", agentID);
+            Logger.debug(e, "Error deleting agent. ID={}", agentID);
             return false;
         }
     }

@@ -17,8 +17,10 @@ import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.auth.Agent;
 import org.example.travelexpertdesktopapplication.dao.AgencyDAO;
 import org.example.travelexpertdesktopapplication.models.Agency;
+import org.example.travelexpertdesktopapplication.utils.AlertBox;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class AgencyListController {
     @FXML
@@ -61,9 +63,12 @@ public class AgencyListController {
         colAgencyPhone.setCellValueFactory(new PropertyValueFactory<Agency, String>("agncyPhone"));
         colAgencyProv.setCellValueFactory(new PropertyValueFactory<Agency, String>("agncyProv"));
         colAgencyPostal.setCellValueFactory(new PropertyValueFactory<Agency, String>("agncyPostal"));
-
-        // Load agencies into the list
-        agencyList.setAll(AgencyDAO.getAllAgencies());
+        try {
+            // Load agencies into the list
+            agencyList.setAll(AgencyDAO.getAllAgencies());
+        }catch (SQLException e){
+            AlertBox.showAlert("Error", "Error fetching agencies", Alert.AlertType.ERROR);
+        }
 
         // Set up filtered list
         filteredAgencies = new FilteredList<>(agencyList, p -> true);
@@ -139,9 +144,13 @@ public class AgencyListController {
             alert.setContentText("This action cannot be undone.");
 
             alert.showAndWait().ifPresent(response -> {
-                if (response == javafx.scene.control.ButtonType.OK) {
-                    AgencyDAO.deleteAgency(selectedAgency.getAgencyID());
-                    refreshTable();
+                try {
+                    if (response == javafx.scene.control.ButtonType.OK) {
+                        AgencyDAO.deleteAgency(selectedAgency.getAgencyID());
+                        refreshTable();
+                    }
+                }catch (SQLException e){
+                    AlertBox.showAlert("Error", "Error deleting Agency", Alert.AlertType.ERROR);
                 }
             });
         }

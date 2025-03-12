@@ -9,7 +9,7 @@ import java.sql.*;
 import static org.example.travelexpertdesktopapplication.dao.DatabaseManager.getConnection;
 public class AgencyDAO {
     // Retrieve all agencies from the database
-    public static ObservableList<Agency> getAllAgencies() {
+    public static ObservableList<Agency> getAllAgencies() throws SQLException {
         ObservableList<Agency> agencyList = FXCollections.observableArrayList();
         String query = "SELECT * FROM agencies";
 
@@ -35,13 +35,13 @@ public class AgencyDAO {
             }
             Logger.info("Retrieved {} agencies.", agencyList.size());
         } catch (SQLException e) {
-            Logger.error(e, "Error fetching agencies from the database.");
+            Logger.debug(e, "Error fetching agencies from the database.");
         }
         return agencyList;
     }
 
     // Add a new agency to the database
-    public static boolean addAgency(Agency agency) {
+    public static boolean addAgency(Agency agency) throws SQLException {
         String query = "INSERT INTO agencies (agncyaddress, agncycity, agncyprov, agncypostal, agncycountry, agncyphone, agncyfax) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -68,13 +68,13 @@ public class AgencyDAO {
                 return false;
             }
         } catch (SQLException e) {
-            Logger.error(e, "Error adding agency.");
+            Logger.debug(e, "Error adding agency.");
             return false;
         }
     }
 
     // Update an existing agency in the database
-    public static boolean updateAgency(Agency agency) {
+    public static boolean updateAgency(Agency agency) throws SQLException {
         // SQL query to update an agency
         String query = "UPDATE agencies SET agncyaddress = ?, agncycity = ?, agncyprov = ?, agncypostal = ?, agncycountry = ?, agncyphone = ?, agncyfax = ? " +
                 "WHERE agencyid = ?";
@@ -104,13 +104,13 @@ public class AgencyDAO {
                 return false;
             }
         } catch (SQLException e) {
-            Logger.error(e, "Error updating agency with ID {}", agency.getAgencyID());
+            Logger.debug(e, "Error updating agency with ID {}", agency.getAgencyID());
             return false;
         }
     }
 
     // Delete an agency from the database
-    public static boolean deleteAgency(int agencyID) {
+    public static boolean deleteAgency(int agencyID) throws SQLException {
         String query = "DELETE FROM agencies WHERE agencyid = ?";
 
         Logger.debug("Attempting to delete agency with ID: {}", agencyID);
@@ -130,13 +130,13 @@ public class AgencyDAO {
                 return false;
             }
         } catch (SQLException e) {
-            Logger.error(e, "Error deleting agency with ID {}", agencyID);
+            Logger.debug(e, "Error deleting agency with ID {}", agencyID);
             return false;
         }
     }
 
     // Method to get agency by ID
-    public static String getAgencyCityById(int agencyId) {
+    public static String getAgencyCityById(int agencyId) throws SQLException {
         String agencyCity = null;
         String query = "SELECT agncycity FROM agencies WHERE agencyid = ?";
 
@@ -150,7 +150,7 @@ public class AgencyDAO {
                 agencyCity = rs.getString("agncycity");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.debug(e, "Error fetching Agency City associated with ID {}", agencyId);
         }
 
         return agencyCity;

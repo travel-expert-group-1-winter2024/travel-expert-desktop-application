@@ -8,7 +8,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.dao.AgencyDAO;
 import org.example.travelexpertdesktopapplication.models.Agency;
+import org.example.travelexpertdesktopapplication.utils.AlertBox;
 import org.example.travelexpertdesktopapplication.utils.Validator;
+
+import java.sql.SQLException;
 
 import static org.example.travelexpertdesktopapplication.utils.ValidateFields.validateField;
 
@@ -118,23 +121,22 @@ public class AgencyFormController {
                 txtAgencyPhone.getText().trim(),
                 txtAgencyFax.getText().trim()
         );
-
-        // Save to the database
-        boolean success;
-        if (agency == null) {
-            // Add new agency
-            success = AgencyDAO.addAgency(newAgency);
-        } else {
-            // Update existing agency
-            success = AgencyDAO.updateAgency(newAgency);
-        }
-
-        if (success) {
-            // Close the form
-            closeForm();
-        } else {
-            // Show error message
-            showError("Failed to save agency. Please try again.");
+        try {
+            if (agency == null) {
+                // Add new agency
+                if (AgencyDAO.addAgency(newAgency)) {
+                    closeForm();
+                    return;
+                }
+            } else {
+                // Update existing agency
+                if (AgencyDAO.updateAgency(newAgency)) {
+                    closeForm();
+                    return;
+                }
+            }
+        } catch (SQLException e) {
+            AlertBox.showAlert("Error", "Database error occurred while saving the agency.", Alert.AlertType.ERROR);
         }
     }
 

@@ -19,6 +19,8 @@ import org.example.travelexpertdesktopapplication.utils.AlertBox;
 import org.example.travelexpertdesktopapplication.utils.Validator;
 import org.tinylog.Logger;
 
+import java.sql.SQLException;
+
 import static org.example.travelexpertdesktopapplication.utils.ValidateFields.validateField;
 
 public class AgentsFormController {
@@ -168,9 +170,13 @@ public class AgentsFormController {
     }
 
     private void loadAgencies() {
-        agenciesList.clear();
-        agenciesList.addAll(AgencyDAO.getAllAgencies());
-        cmbAgency.setItems(agenciesList);
+        try {
+            agenciesList.clear();
+            agenciesList.addAll(AgencyDAO.getAllAgencies());
+            cmbAgency.setItems(agenciesList);
+        }catch (SQLException e) {
+            AlertBox.showAlert("Error", "Error fetching Agencies", Alert.AlertType.ERROR);
+        }
     }
 
     public void setAgentData(Agent agent) {
@@ -232,54 +238,66 @@ public class AgentsFormController {
     }
 
     private void saveAgent() {
-        // Create the new agent object
-        Agent newAgent = new Agent(
-                agent == null ? 0 : agent.getAgentID(), // If agent is null, use 0 as a placeholder
-                txtAgentFirstName.getText().trim(),
-                txtAgentMiddleInitials.getText().trim().equals("") ? "" : txtAgentMiddleInitials.getText().trim(),
-                txtAgentLastName.getText().trim(),
-                txtAgentPhone.getText().trim(),
-                txtAgentEmail.getText().trim(),
-                txtAgentPosition.getText().trim().equals("") ? "" : txtAgentPosition.getText().trim(),
-                getSelectedAgencyId()
-        );
+        try {
+            // Create the new agent object
+            Agent newAgent = new Agent(
+                    (agent == null) ? 0 : agent.getAgentID(), // If agent is null, use 0
+                    txtAgentFirstName.getText().trim(),
+                    txtAgentMiddleInitials.getText().trim(), // No need for explicit empty check
+                    txtAgentLastName.getText().trim(),
+                    txtAgentPhone.getText().trim(),
+                    txtAgentEmail.getText().trim(),
+                    txtAgentPosition.getText().trim(),
+                    getSelectedAgencyId()
+            );
 
-        boolean agentSuccess;
-        int generatedAgentId = -1; // To store the generated AgentID
+            boolean agentSuccess;
+            int generatedAgentId = -1;
 
-        if (agent == null) {
-            // Add the new agent to the database and retrieve the generated AgentID
-            generatedAgentId = AgentsDAO.addAgentAndGetId(newAgent); // New method to get the generated ID
-            agentSuccess = (generatedAgentId != -1); // Check if the agent was added successfully
-        } else {
-            // Update the existing agent in the database
-            agentSuccess = AgentsDAO.updateAgent(newAgent);
-        }
-
-        if (agentSuccess) {
-            // If the agent was added/updated successfully, proceed to add a user
             if (agent == null) {
-                // Only add a user if this is a new agent
-                String username = txtAgentEmail.getText(); // Use email as the username
-                String password = txtPassword.getText(); // Get the password from the password field
-                UserRole role = UserRole.AGENT; // Default role for new agents
-
-                // Add the user to the users table using the generated AgentID
-                boolean userSuccess = userDAO.addUser(username, password, role, generatedAgentId);
-
-                if (userSuccess) {
-                    Logger.info("New user added for agent: Username={}, AgentID={}", username, generatedAgentId);
-                } else {
-                    Logger.error("Failed to add user for agent: Username={}", username);
-                    AlertBox.showAlert("Error", "Agent was saved, but failed to create a user account.", Alert.AlertType.WARNING);
-                }
+                generatedAgentId = AgentsDAO.addAgentAndGetId(newAgent);
+                agentSuccess = (generatedAgentId > 0); // Checking if the agent was successfully added
+            } else {
+                agentSuccess = AgentsDAO.updateAgent(newAgent);
             }
 
-            closeForm(); // Close the form after successful save
-        } else {
-            AlertBox.showAlert("Error", "Failed to save agent. Please try again.", Alert.AlertType.ERROR);
+            if (!agentSuccess) {
+                AlertBox.showAlert("Error", "Failed to save agent. Please try again.", Alert.AlertType.ERROR);
+                return; // Stop further execution
+            }
+
+            // If new agent, create user
+            if (agent == null) {
+                createUserForAgent(txtAgentEmail.getText(), txtPassword.getText(), generatedAgentId);
+            }
+
+            closeForm(); // Close form after successful save
+
+        } catch (SQLException e) {
+            Logger.error(e, "Error while saving agent.");
+            AlertBox.showAlert("Error", "Database error while saving agent. Please try again.", Alert.AlertType.ERROR);
         }
     }
+
+    /**
+     * Creates a user for the given agent ID.
+     */
+    private void createUserForAgent(String username, String password, int agentId) {
+        if (agentId <= 0) {
+            Logger.error("Invalid agent ID. Cannot create user.");
+            return;
+        }
+
+        boolean userSuccess = userDAO.addUser(username, password, UserRole.AGENT, agentId);
+
+        if (userSuccess) {
+            Logger.info("New user added for agent: Username={}, AgentID={}", username, agentId);
+        } else {
+            Logger.error("Failed to add user for agent: Username={}", username);
+            AlertBox.showAlert("Warning", "Agent was saved, but failed to create a user account.", Alert.AlertType.WARNING);
+        }
+    }
+
 
     private void closeForm() {
         Stage stage = (Stage) btnSave.getScene().getWindow();

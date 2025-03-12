@@ -8,11 +8,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.util.StringConverter;
 import org.example.travelexpertdesktopapplication.dao.AgencyDAO;
 import org.example.travelexpertdesktopapplication.dao.SalesDashboardDAO;
 import org.example.travelexpertdesktopapplication.models.Agency;
+import org.example.travelexpertdesktopapplication.utils.AlertBox;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -43,18 +45,22 @@ public class SalesAgencyDashboard implements Initializable {
     }
 
     private void setupAgencyComboBox() {
-        agencyComboBox.setItems(AgencyDAO.getAllAgencies());
-        agencyComboBox.setConverter(new StringConverter<Agency>() {
-            @Override
-            public String toString(Agency agency) {
-                return agency.getAgncyCity() + " Branch";
-            }
+        try {
+            agencyComboBox.setItems(AgencyDAO.getAllAgencies());
+            agencyComboBox.setConverter(new StringConverter<Agency>() {
+                @Override
+                public String toString(Agency agency) {
+                    return agency.getAgncyCity() + " Branch";
+                }
 
-            @Override
-            public Agency fromString(String string) {
-                return null;
-            }
-        });
+                @Override
+                public Agency fromString(String string) {
+                    return null;
+                }
+            });
+        }catch (SQLException e) {
+            AlertBox.showAlert("Error", "Error fetching Agencies", Alert.AlertType.ERROR);
+        }
     }
 
     private void configureChartProperties() {
