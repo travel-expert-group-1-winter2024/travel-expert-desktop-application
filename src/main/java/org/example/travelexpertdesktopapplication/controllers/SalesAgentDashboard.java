@@ -1,17 +1,17 @@
 package org.example.travelexpertdesktopapplication.controllers;
-
 import eu.hansolo.tilesfx.chart.ChartData;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.util.StringConverter;
 import org.example.travelexpertdesktopapplication.dao.AgentsDAO;
 import org.example.travelexpertdesktopapplication.dao.SalesDashboardDAO;
 import org.example.travelexpertdesktopapplication.models.Agent;
+import org.example.travelexpertdesktopapplication.utils.AlertBox;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -38,6 +38,7 @@ public class SalesAgentDashboard implements Initializable {
     }
 
     private void setupAgentComboBox() {
+        try{
         agentComboBox.setItems(AgentsDAO.getAllAgents());
         agentComboBox.setConverter(new StringConverter<Agent>() {
             @Override
@@ -49,7 +50,10 @@ public class SalesAgentDashboard implements Initializable {
             public Agent fromString(String string) {
                 return null; // Not needed for display
             }
-        });
+        });}
+        catch (SQLException e){
+            AlertBox.showAlert("Error", "Error fetching Agents", Alert.AlertType.ERROR);
+        }
     }
 
     private void configureChartProperties() {
