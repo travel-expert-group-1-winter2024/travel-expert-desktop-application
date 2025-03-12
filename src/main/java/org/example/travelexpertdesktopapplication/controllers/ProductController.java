@@ -25,8 +25,7 @@ public class ProductController {
     @FXML private TableColumn<Product, String> productNameColumn;
 
     @FXML private JFXButton btnAdd, btnDelete, btnUpdate, btnReset;
-    @FXML
-    private ImageView btnSearch;
+    @FXML private ImageView btnSearch;
 
     private ObservableList<Product> productList = FXCollections.observableArrayList();
 
@@ -41,16 +40,27 @@ public class ProductController {
         loadProducts();
 
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> searchProducts(newValue.trim().toLowerCase()));
+
+        // Disable buttons initially
+        btnUpdate.setDisable(true);
+        btnDelete.setDisable(true);
+
+        // Listen for table selection and update button states
+        tableProducts.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            boolean productSelected = newSelection != null;
+            btnUpdate.setDisable(!productSelected);
+            btnDelete.setDisable(!productSelected);
+        });
     }
 
-    /**  Load all products from the database */
+    /** Load all products from the database */
     @FXML
     public void loadProducts() {
         productList.setAll(ProductDAO.getAllProducts());
         tableProducts.setItems(productList);
     }
 
-    /**  Search for products dynamically */
+    /** Search for products dynamically */
     @FXML
     private void searchProducts(final String searchText) {
         if (searchText.isEmpty()) {
@@ -66,20 +76,20 @@ public class ProductController {
         tableProducts.setItems(FXCollections.observableArrayList(filteredProducts));
     }
 
-    /**  Reset the search field and reload products */
+    /** Reset the search field and reload products */
     @FXML
     private void resetSearch() {
         txtSearch.clear();
         loadProducts();
     }
 
-    /**  Open the product form to add a new product */
+    /** Open the product form to add a new product */
     @FXML
     private void onAddProduct() {
         openProductForm(null);
     }
 
-    /**  Open the product form to update a selected product */
+    /** Open the product form to update a selected product */
     @FXML
     private void onUpdateProduct() {
         Product selected = tableProducts.getSelectionModel().getSelectedItem();
@@ -90,7 +100,7 @@ public class ProductController {
         }
     }
 
-    /**  Delete a selected product with confirmation */
+    /** Delete a selected product with confirmation */
     @FXML
     private void onDeleteProduct() {
         Product selected = tableProducts.getSelectionModel().getSelectedItem();
@@ -150,8 +160,7 @@ public class ProductController {
         }
     }
 
-
-    /**  Show a success message */
+    /** Show a success message */
     private void showSuccess(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -160,7 +169,7 @@ public class ProductController {
         alert.showAndWait();
     }
 
-    /**  Show an error or warning message */
+    /** Show an error or warning message */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
