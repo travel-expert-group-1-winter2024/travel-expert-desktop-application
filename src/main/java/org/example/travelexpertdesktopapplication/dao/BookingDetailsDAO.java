@@ -12,7 +12,7 @@ import java.sql.Statement;
 import static org.example.travelexpertdesktopapplication.dao.DatabaseManager.getConnection;
 
 public class BookingDetailsDAO {
-    public static ObservableList<BookingDetails> getBookingDetailsList() {
+    public static ObservableList<BookingDetails> getBookingDetailsList() throws SQLException{
         ObservableList<BookingDetails> bookingList = FXCollections.observableArrayList();
 
         String query = "SELECT * FROM BookingDetailsView";
@@ -41,7 +41,7 @@ public class BookingDetailsDAO {
                 ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
 
         return bookingList;

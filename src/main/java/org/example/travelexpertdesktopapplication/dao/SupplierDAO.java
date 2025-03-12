@@ -16,7 +16,7 @@ public class SupplierDAO {
      * Get the supplier data from the database
      * @return - whole supplier contact list
      */
-    public static ObservableList<SupplierContacts> getSupplierList() {
+    public static ObservableList<SupplierContacts> getSupplierList() throws SQLException {
         ObservableList<SupplierContacts> supplierContactsList = FXCollections.observableArrayList();
         String query = "SELECT * FROM suppliercontacts;";
         Logger.debug("Fetching supplier contacts from the database.");
@@ -49,6 +49,7 @@ public class SupplierDAO {
             Logger.info("Retrieved {} supplier contacts.", supplierContactsList.size());
         } catch (SQLException e) {
             Logger.error(e, "Error retrieving supplier contacts.");
+            throw e;
         }
         return supplierContactsList;
     }
@@ -57,7 +58,7 @@ public class SupplierDAO {
      * Get affiliations from the database
      * @return - affiliations list
      */
-    public static ObservableList<String> getAffiliations() {
+    public static ObservableList<String> getAffiliations() throws SQLException{
         ObservableList<String> affiliations = FXCollections.observableArrayList();
         String query = "SELECT affilitationid FROM affiliations ";
         Logger.debug("Fetching affiliations from the database.");
@@ -72,7 +73,8 @@ public class SupplierDAO {
             }
             Logger.info("Retrieved {} affiliations.", affiliations.size());
         } catch (SQLException e) {
-            Logger.error(e, "Error retrieving affiliations.");
+            Logger.debug(e, "Error retrieving affiliations.");
+            throw e;
         }
         return affiliations;
     }
@@ -82,7 +84,7 @@ public class SupplierDAO {
      * @param contactSupplierID - passed for deleting the data
      * @return affected rows
      */
-    public static int deleteSelectedSupplierContact(int contactSupplierID) {
+    public static int deleteSelectedSupplierContact(int contactSupplierID) throws SQLException {
         String sql = "DELETE FROM suppliercontacts WHERE suppliercontactid = ?";
         Logger.debug("Deleting supplier contact with ID: {}", contactSupplierID);
         int affectedRows = 0;
@@ -101,6 +103,7 @@ public class SupplierDAO {
             }
         } catch (SQLException e) {
             Logger.error(e, "Error deleting supplier contact with ID {}", contactSupplierID);
+            throw e;
         }
         return affectedRows;
     }
@@ -110,7 +113,7 @@ public class SupplierDAO {
      * @param supplierContacts - Object of data
      * @return-  affected rows
      */
-    public static int updateSupplierContact(SupplierContacts supplierContacts) {
+    public static int updateSupplierContact(SupplierContacts supplierContacts) throws SQLException {
         String sql = "UPDATE suppliercontacts SET supconfirstname = ?, supconlastname = ?, supconcompany = ?, " +
                 "supconaddress = ?, supconcity = ?, supconprov = ?, supconpostal = ?, supconcountry = ?, " +
                 "supconbusphone = ?, supconfax = ?, supconemail = ?, supconurl = ?, affiliationid = ?, supplierid = ? " +
@@ -150,6 +153,7 @@ public class SupplierDAO {
 
         } catch (SQLException e) {
             Logger.error(e, "Error updating supplier contact. ID={}", supplierContacts.getSuppliercontactid());
+            throw e;
         }
 
         return numAffectedRows;
@@ -160,7 +164,7 @@ public class SupplierDAO {
      * @param supplierContacts - Object of data
      * @return affected rows
      */
-    public static int addSupplierContact(SupplierContacts supplierContacts) {
+    public static int addSupplierContact(SupplierContacts supplierContacts) throws SQLException{
         int numAffectedRows = 0;
         int addSupplierID = addSupplier(supplierContacts);
 
@@ -197,6 +201,7 @@ public class SupplierDAO {
             Logger.info("Supplier contact added successfully.");
         } catch (SQLException e) {
             Logger.error(e, "Error adding supplier contact.");
+            throw e;
         }
         return numAffectedRows;
     }
@@ -206,8 +211,8 @@ public class SupplierDAO {
      * @param supplier - data of supplier
      * @return generated supplier ID
      */
-    public static int addSupplier(SupplierContacts supplier) {
-        int generatedId = 0;
+    public static int addSupplier(SupplierContacts supplier) throws SQLException {
+        int numAffectedRows = 0;
         String sql = "INSERT INTO suppliers (supname) VALUES (?) RETURNING supplierid;";
         Logger.debug("Adding new supplier: {}", supplier.getSupconcompany());
 
@@ -219,17 +224,18 @@ public class SupplierDAO {
             Logger.debug("Executing query: {}", sql);
 
             if (generatedKeys.next()) {
-                generatedId = generatedKeys.getInt(1);
-                supplier.setSupplierid(generatedId);
-                Logger.info("Generated Supplier ID: {}", generatedId);
+                numAffectedRows = generatedKeys.getInt(1);
+                supplier.setSupplierid(numAffectedRows);
+                Logger.info("Generated Supplier ID: {}", numAffectedRows);
             }
         } catch (SQLException e) {
             Logger.error(e, "Error adding supplier.");
+            throw e;
         }
-        return generatedId;
+        return numAffectedRows;
     }
 
-    public static ObservableList<Supplier> getAllSuppliers() {
+    public static ObservableList<Supplier> getAllSuppliers() throws SQLException {
         ObservableList<Supplier> suppliers = FXCollections.observableArrayList();
         String query = "SELECT * FROM suppliers";
         Logger.debug("Fetching all suppliers from the database.");
@@ -249,11 +255,12 @@ public class SupplierDAO {
             Logger.info("Retrieved {} suppliers.", suppliers.size());
         } catch (SQLException e) {
             Logger.error(e, "Error retrieving suppliers.");
+            throw e;
         }
         return suppliers;
     }
 
-    public static Supplier getSupplierById(int supplierId) {
+    public static Supplier getSupplierById(int supplierId) throws SQLException {
         String sql = "SELECT supplierid, supname FROM suppliers WHERE supplierid = ?";
 
         try (Connection conn = DatabaseManager.getConnection();
@@ -272,6 +279,7 @@ public class SupplierDAO {
             }
         } catch (SQLException e) {
             Logger.error(e, "Error fetching supplier with ID: {}", supplierId);
+            throw e;
         }
         return null; // Return null if no supplier is found
     }
