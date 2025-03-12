@@ -24,20 +24,17 @@ public class TEDesktopApp extends Application {
             System.exit(1);
         }
 
-
         FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/login-view.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Welcome to Travel Expert!");
-        //stage.setMaximized(true);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
         Logger.info("Application started successfully!");
-        AgentKPIDAO kpi = new AgentKPIDAO();
-        kpi.getAgentKPIs(1);
 
-
+//        AgentKPIDAO kpi = new AgentKPIDAO();
+//        kpi.getAgentKPIs(1);
     }
 
     public static void main(String[] args) {
