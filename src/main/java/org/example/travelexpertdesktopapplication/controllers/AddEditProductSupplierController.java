@@ -2,6 +2,7 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 
 import javafx.collections.FXCollections;
@@ -85,69 +86,73 @@ public class AddEditProductSupplierController {
 
     private void loadAllProductAndSupplier() {
         // get product and supplier data from database
-        List<Product> productList = ProductDAO.getAllProducts();
-        cboProduct1.setItems(FXCollections.observableArrayList(productList));
-        cboProduct2.setItems(FXCollections.observableArrayList(productList));
-        cboProduct3.setItems(FXCollections.observableArrayList(productList));
-        List<Supplier> supplierList = SupplierDAO.getAllSuppliers();
-        cboSupplier1.setItems(FXCollections.observableArrayList(supplierList));
-        cboSupplier2.setItems(FXCollections.observableArrayList(supplierList));
-        cboSupplier3.setItems(FXCollections.observableArrayList(supplierList));
+        try {
+            List<Product> productList = ProductDAO.getAllProducts();
+            cboProduct1.setItems(FXCollections.observableArrayList(productList));
+            cboProduct2.setItems(FXCollections.observableArrayList(productList));
+            cboProduct3.setItems(FXCollections.observableArrayList(productList));
+            List<Supplier> supplierList = SupplierDAO.getAllSuppliers();
+            cboSupplier1.setItems(FXCollections.observableArrayList(supplierList));
+            cboSupplier2.setItems(FXCollections.observableArrayList(supplierList));
+            cboSupplier3.setItems(FXCollections.observableArrayList(supplierList));
+        } catch(SQLException e){
+            AlertBox.showAlert("Error","Error displaying products/suppliers", Alert.AlertType.ERROR);
+        }
     }
 
     public void loadProductsAndSuppliersForEdit() {
-
-        if (selectedProductSupplierList != null){
-            if (selectedProductSupplierList[0] != null || selectedProductSupplierList[1] != null || selectedProductSupplierList[2] != null) {
-                // set value to combo boxes
-                Logger.info("Load Products and Suppliers from selectedProductSupplierList");
-                loadProductsAndSuppliersFromList(selectedProductSupplierList);
-                return;
-            }
-        }
-
-        // find all products_suppliers id from package id
-        List<PackagesProductsSuppliers> packagesProductsSuppliers = PackagesProductsSuppliersDAO.findPackagesProductsSuppliersByPackageId(currentPackageId);
-        // get product and supplier data from packagesProductsSuppliers
-        for (int i = 0; i < packagesProductsSuppliers.size(); i++) {
-            if (i > 2) {
-                break;
+        try {
+            if (selectedProductSupplierList != null){
+                if (selectedProductSupplierList[0] != null || selectedProductSupplierList[1] != null || selectedProductSupplierList[2] != null) {
+                    // set value to combo boxes
+                    Logger.info("Load Products and Suppliers from selectedProductSupplierList");
+                    loadProductsAndSuppliersFromList(selectedProductSupplierList);
+                    return;
+                }
             }
 
-            PackagesProductsSuppliers pps = packagesProductsSuppliers.get(i);
+            // find all products_suppliers id from package id
+            List<PackagesProductsSuppliers> packagesProductsSuppliers = PackagesProductsSuppliersDAO.findPackagesProductsSuppliersByPackageId(currentPackageId);
+            // get product and supplier data from packagesProductsSuppliers
+            for (int i = 0; i < packagesProductsSuppliers.size(); i++) {
+                if (i > 2) {
+                    break;
+                }
 
-            ProductsSuppliers productsSuppliers = ProductSupplierDAO.getProductsSuppliersById(pps.getProductSupplierId());
-            if (productsSuppliers == null) {
-                Logger.error("ProductsSuppliers not found for ID: " + pps.getProductSupplierId());
-                AlertBox.showAlert("Error", "ProductsSuppliers not found for ID: " + pps.getProductSupplierId(), Alert.AlertType.ERROR);
-                return;
-            }
-            previousProductSupplierList[i] = productsSuppliers;
-
-            Product product = ProductDAO.getProductById(productsSuppliers.getProductId());
-            if (product == null) {
-                Logger.error("Product not found for ID: " + productsSuppliers.getProductId() + " in products_suppliers id: " + productsSuppliers.getProductSupplierId());
-                AlertBox.showAlert("Error", "Product not found for ID: " + productsSuppliers.getProductId(), Alert.AlertType.ERROR);
-                return;
-            }
-            Supplier supplier = SupplierDAO.getSupplierById(productsSuppliers.getSupplierId());
-            if (supplier == null) {
-                Logger.error("Supplier not found for ID: " + productsSuppliers.getSupplierId());
-                AlertBox.showAlert("Error", "Supplier not found for ID: " + productsSuppliers.getSupplierId(), Alert.AlertType.ERROR);
-                return;
-            }
-
-            // set the product and supplier to the combo boxes
-            if (i == 0) {
-                cboProduct1.setValue(product);
-                cboSupplier1.setValue(supplier);
-            } else if (i == 1) {
-                cboProduct2.setValue(product);
-                cboSupplier2.setValue(supplier);
-            } else {
-                cboProduct3.setValue(product);
-                cboSupplier3.setValue(supplier);
-            }
+                PackagesProductsSuppliers pps = packagesProductsSuppliers.get(i);
+                ProductsSuppliers productsSuppliers = ProductSupplierDAO.getProductsSuppliersById(pps.getProductSupplierId());
+                if (productsSuppliers == null) {
+                    Logger.error("ProductsSuppliers not found for ID: " + pps.getProductSupplierId());
+                    AlertBox.showAlert("Error", "ProductsSuppliers not found for ID: " + pps.getProductSupplierId(), Alert.AlertType.ERROR);
+                    return;
+                }
+                previousProductSupplierList[i] = productsSuppliers;
+                    Product product = ProductDAO.getProductById(productsSuppliers.getProductId());
+                    if (product == null) {
+                        Logger.error("Product not found for ID: " + productsSuppliers.getProductId() + " in products_suppliers id: " + productsSuppliers.getProductSupplierId());
+                        AlertBox.showAlert("Error", "Product not found for ID: " + productsSuppliers.getProductId(), Alert.AlertType.ERROR);
+                        return;
+                    }
+                    Supplier supplier = SupplierDAO.getSupplierById(productsSuppliers.getSupplierId());
+                    if (supplier == null) {
+                        Logger.error("Supplier not found for ID: " + productsSuppliers.getSupplierId());
+                        AlertBox.showAlert("Error", "Supplier not found for ID: " + productsSuppliers.getSupplierId(), Alert.AlertType.ERROR);
+                        return;
+                    }
+                    // set the product and supplier to the combo boxes
+                    if (i == 0) {
+                        cboProduct1.setValue(product);
+                        cboSupplier1.setValue(supplier);
+                    } else if (i == 1) {
+                        cboProduct2.setValue(product);
+                        cboSupplier2.setValue(supplier);
+                    } else {
+                        cboProduct3.setValue(product);
+                        cboSupplier3.setValue(supplier);
+                    }
+                }
+        } catch (SQLException e){
+            AlertBox.showAlert("Error","Error loading supplier and Products", Alert.AlertType.ERROR);
         }
     }
 

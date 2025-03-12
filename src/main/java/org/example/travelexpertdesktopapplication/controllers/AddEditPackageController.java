@@ -2,6 +2,7 @@ package org.example.travelexpertdesktopapplication.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.*;
@@ -126,25 +127,32 @@ public class AddEditPackageController {
     @FXML
     private void onClickSave() {
         if (validateForm()) {
-
             Packages packagesData = getDetailsOfPackageFromForm();
-            if (mode.equalsIgnoreCase("add")) {
-                int packageId = PackagesDAO.addPackage(packagesData);
+                if (mode.equalsIgnoreCase("add")) {
+                    try {
+                        int packageId = PackagesDAO.addPackage(packagesData);
+                        saveProductSupplier(packageId);
+                        AlertBox.showAlert("Success", "Package has been saved successfully!", Alert.AlertType.INFORMATION);
+                        this.onExit();
+                    }
+                    catch (SQLException e){
+                        AlertBox.showAlert("Error","Error adding Package", Alert.AlertType.ERROR);
+                    }
+                } else {
+                    try {
+                        Integer packageID = Integer.parseInt(tfPackageID.getText());
+                        packagesData.setPackageid(packageID);
+                        PackagesDAO.updatePackage(packagesData);
 
-                saveProductSupplier(packageId);
+                        updateProductSupplier(packageID);
 
-                AlertBox.showAlert("Success", "Package has been saved successfully!", Alert.AlertType.INFORMATION);
-                this.onExit();
-            } else {
-                Integer packageID = Integer.parseInt(tfPackageID.getText());
-                packagesData.setPackageid(packageID);
-                PackagesDAO.updatePackage( packagesData);
-
-                updateProductSupplier(packageID);
-
-                AlertBox.showAlert("Success", "Package has been updated successfully!", Alert.AlertType.INFORMATION);
-                this.onExit();
-            }
+                        AlertBox.showAlert("Success", "Package has been updated successfully!", Alert.AlertType.INFORMATION);
+                        this.onExit();
+                    }
+                    catch (SQLException e){
+                        AlertBox.showAlert("Error","Error Updating Package", Alert.AlertType.ERROR);
+                    }
+                }
         }
 
     }

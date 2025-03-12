@@ -1,5 +1,7 @@
 package org.example.travelexpertdesktopapplication.dao;
 
+import javafx.scene.control.Alert;
+import org.example.travelexpertdesktopapplication.utils.AlertBox;
 import org.example.travelexpertdesktopapplication.utils.DbConfig;
 import org.tinylog.Logger;
 
@@ -22,6 +24,7 @@ public class DatabaseManager {
                 return connection;
             }
         } catch (SQLException e) {
+            AlertBox.showAlert("SQL Error","Error establishing a database connection.", Alert.AlertType.ERROR);
             Logger.error(e, "Error establishing a database connection.");
         }
         return null;

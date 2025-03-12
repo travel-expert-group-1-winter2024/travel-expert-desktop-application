@@ -158,10 +158,17 @@ public class PackageController {
     }
 
     private void displayPackages() {
-        packagesList.clear();
-        packagesList.addAll(PackagesDAO.getPackagesList());
-        lvPackages.setItems(packagesList);
-        lvPackages.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        try {
+            packagesList.clear();
+            packagesList.addAll(PackagesDAO.getPackagesList());
+            lvPackages.setItems(packagesList);
+            lvPackages.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        } catch (SQLException e){
+            AlertBox.showAlert("Error", "Unable to Display packages.",Alert.AlertType.ERROR);
+        }
+        catch (Exception e) {
+            AlertBox.showAlert("Error", "Error Displaying packages",Alert.AlertType.ERROR);
+        }
     }
 
     protected void openAddEditWindow(Packages packages, String mode){

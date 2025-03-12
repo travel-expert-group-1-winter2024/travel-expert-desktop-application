@@ -2,6 +2,7 @@ package org.example.travelexpertdesktopapplication.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.value.ChangeListener;
@@ -195,9 +196,8 @@ public class SupplierController {
         data.clear();
         try {
             data.setAll(SupplierDAO.getSupplierList());
-        } catch (Exception e) { // Catching general Exception instead of SQLException
-            System.err.println("Failed to load fees table: " + e.getMessage());
-            e.printStackTrace();
+        } catch (SQLException e){
+            AlertBox.showAlert("Error", "Error displaying Supplier Contacts.",Alert.AlertType.ERROR);
         }
         // Populate table view
         tvSuppliers.setItems(data);
@@ -238,15 +238,22 @@ public class SupplierController {
      */
     @FXML
     protected void deleteSupplier(){
-        int selectedSupplierContactID = tvSuppliers.getSelectionModel().getSelectedItems().get(0).getSuppliercontactid();
-        int numRows = 0;
-        numRows = SupplierDAO.deleteSelectedSupplierContact(selectedSupplierContactID);
-        if (numRows == 1) {
-            AlertBox.showAlert("Delete", "The Supplier Contact has been deleted successfully.",Alert.AlertType.CONFIRMATION);
-        } else {
-            AlertBox.showAlert("Delete", "Delete operation failed. Supplier Contacts ID may not exist.",Alert.AlertType.ERROR);
+        try {
+            int selectedSupplierContactID = tvSuppliers.getSelectionModel().getSelectedItems().get(0).getSuppliercontactid();
+            int numRows = 0;
+            numRows = SupplierDAO.deleteSelectedSupplierContact(selectedSupplierContactID);
+            if (numRows == 1) {
+                AlertBox.showAlert("Delete", "The Supplier Contact has been deleted successfully.", Alert.AlertType.CONFIRMATION);
+            } else {
+                AlertBox.showAlert("Delete", "Delete operation failed. Supplier Contacts ID may not exist.", Alert.AlertType.ERROR);
+            }
+            displayAllSupplierData();
+        } catch (RuntimeException e) {
+            AlertBox.showAlert("Error","Run time Error", Alert.AlertType.ERROR);
+            throw new RuntimeException(e);
+        } catch (SQLException e){
+            AlertBox.showAlert("Error","Error Deleting Suplier Contact", Alert.AlertType.ERROR);
         }
-        displayAllSupplierData();
     }
 
     @FXML

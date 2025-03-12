@@ -2,6 +2,7 @@ package org.example.travelexpertdesktopapplication.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import eu.hansolo.fx.countries.Country;
@@ -102,13 +103,15 @@ public class EditCustomerController {
 
     @FXML
     private void onClickSave(){
-        if (validateCustomerForm()) {
-            Customer customerData = getDetailsOfCustomerFromForm();
+        try {
+            if (validateCustomerForm()) {
+                Customer customerData = getDetailsOfCustomerFromForm();
                 CustomerDAO.updateCustomer(customerData);
                 AlertBox.showAlert("Success", "Customer updated successfully!", Alert.AlertType.INFORMATION);
                 this.onExit();
-        } else {
-            AlertBox.showAlert("Validation Error", "Please correct the errors and try again.", Alert.AlertType.ERROR);
+            }
+        } catch (SQLException e) {
+            AlertBox.showAlert("Error","Error Updating customer", Alert.AlertType.ERROR);
         }
     }
 
