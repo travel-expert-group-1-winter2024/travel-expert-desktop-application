@@ -83,6 +83,8 @@ public class CustomerListController {
     private FilteredList<Customer> filteredData;
     String mode;
 
+    private final SessionManager sessionManager = SessionManager.getInstance();
+    private int agentId;
 
     @FXML
     void initialize() {
@@ -102,8 +104,10 @@ public class CustomerListController {
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'customer-view.fxml'.";
         assert btnEditCustomer != null : "fx:id=\"btnEditCustomer\" was not injected: check your FXML file 'customer-view.fxml'.";
 
+        agentId = sessionManager.getUser().getAgentId();
+
         setupCustomerTable();
-        displayAllCustomerData();
+        displayAllAgentsCustomerData(agentId);
         btnEditCustomer.setDisable(true);
 
         filteredData = new FilteredList<>(customerData, p -> true);
@@ -216,7 +220,7 @@ public class CustomerListController {
         stage.setTitle("Edit Customer");
         stage.setScene(scene);
         stage.showAndWait();
-        displayAllCustomerData();
+        displayAllAgentsCustomerData(agentId);
     }
 
 

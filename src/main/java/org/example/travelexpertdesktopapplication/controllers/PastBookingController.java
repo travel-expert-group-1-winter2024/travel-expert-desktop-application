@@ -4,6 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.example.travelexpertdesktopapplication.auth.SessionManager;
 import org.example.travelexpertdesktopapplication.dao.BookingDetailsDAO;
 import org.example.travelexpertdesktopapplication.dao.SupplierDAO;
 import org.example.travelexpertdesktopapplication.models.BookingDetails;
@@ -28,7 +30,7 @@ public class PastBookingController {
     private URL location;
 
     @FXML
-    private TableColumn<BookingDetails,Number> colAgencyCommission;
+    private TableColumn<BookingDetails, Number> colAgencyCommission;
 
     @FXML
     private TableColumn<BookingDetails, Integer> colAgentID;
@@ -80,8 +82,8 @@ public class PastBookingController {
 
     private ObservableList<BookingDetails> pastBookingsList = FXCollections.observableArrayList();
     private FilteredList<BookingDetails> filteredData;
-
-
+    private final SessionManager sessionManager = SessionManager.getInstance();
+    private int agentId;
 
     @FXML
     void initialize() {
@@ -102,6 +104,8 @@ public class PastBookingController {
         assert lvPastBooking != null : "fx:id=\"lvPastBooking\" was not injected: check your FXML file 'past-booking-view.fxml'.";
         assert txtSearch != null : "fx:id=\"txtSearch\" was not injected: check your FXML file 'past-booking-view.fxml'.";
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'past-booking-view.fxml'.";
+
+        agentId = sessionManager.getUser().getAgentId();
 
         setupBookingTable();
         displayAllPastBookings();
@@ -148,9 +152,14 @@ public class PastBookingController {
         // Clear the list for new data
         pastBookingsList.clear();
         try {
-            pastBookingsList.setAll(BookingDetailsDAO.getBookingDetailsList());
+            pastBookingsList.setAll(
+                    BookingDetailsDAO.getBookingDetailsList()
+                            .stream()
+                            .filter(bookingDetails -> bookingDetails.agentIdProperty().get() == agentId)
+                            .collect(Collectors.toCollection(FXCollections::observableArrayList))
+            );
         } catch (SQLException e) { // Catching general Exception instead of SQLException
-            AlertBox.showAlert("Error","Error displaying past bookings.", Alert.AlertType.ERROR);
+            AlertBox.showAlert("Error", "Error displaying past bookings.", Alert.AlertType.ERROR);
         }
         // Populate table view
         lvPastBooking.setItems(pastBookingsList);
@@ -158,7 +167,7 @@ public class PastBookingController {
 
 
     @FXML
-    private void onResetClick(){
+    private void onResetClick() {
         txtSearch.clear();
     }
 }
