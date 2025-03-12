@@ -1,6 +1,7 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -16,8 +17,13 @@ import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.dao.AgencyDAO;
 import org.example.travelexpertdesktopapplication.dao.AgentsDAO;
 import org.example.travelexpertdesktopapplication.models.Agent;
+import org.example.travelexpertdesktopapplication.utils.AlertBox;
+import org.tinylog.Logger;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AgentsListController {
     @FXML
@@ -50,6 +56,16 @@ public class AgentsListController {
 
     @FXML
     private void initialize() {
+        setupTableColumns();
+        setupAgencyColumn();
+        loadAgents();
+        setupSearchFilter();
+        setupSelectionListener();
+        disableActionButtons();
+    }
+
+    // Setup column bindings for agent attributes
+    private void setupTableColumns() {
         colAgentID.setCellValueFactory(new PropertyValueFactory<>("agentID"));
         colFirstName.setCellValueFactory(new PropertyValueFactory<>("agtFirstName"));
         colMiddleInitial.setCellValueFactory(new PropertyValueFactory<>("agtMiddleInitial"));
@@ -57,71 +73,81 @@ public class AgentsListController {
         colEmail.setCellValueFactory(new PropertyValueFactory<>("agtEmail"));
         colBusPhone.setCellValueFactory(new PropertyValueFactory<>("agtBusPhone"));
         colPosition.setCellValueFactory(new PropertyValueFactory<>("agtPosition"));
+    }
 
-        // Custom cell value factory for the agency column
+    // Setup the agency column with caching to avoid repeated DB calls
+    private void setupAgencyColumn() {
+        Map<Integer, String> agencyCache = new HashMap<>();
+
         colAgencyID.setCellValueFactory(cellData -> {
             int agencyId = cellData.getValue().getAgencyId();
-            String agencyCity = AgencyDAO.getAgencyCityById(agencyId);
-            return new javafx.beans.property.SimpleStringProperty(agencyCity);
+
+            // Use cached value if available
+            if (!agencyCache.containsKey(agencyId)) {
+                try {
+                    agencyCache.put(agencyId, AgencyDAO.getAgencyCityById(agencyId));
+                } catch (SQLException e) {
+                    Logger.error(e, "Error fetching Agency City");
+                    AlertBox.showAlert("Error", "Error fetching Agency City", Alert.AlertType.ERROR);
+                }
+            }
+            return new SimpleStringProperty(agencyCache.getOrDefault(agencyId, "Unknown"));
         });
+    }
 
-        // Load data into the table
-        loadAgents();
-
-        // Set up filtered list
+    // Setup search filtering functionality
+    private void setupSearchFilter() {
         filteredAgents = new FilteredList<>(agentList, p -> true);
 
-        // Bind the search text to the filtered list
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredAgents.setPredicate(agent -> {
-                // If search text is empty, display all agents
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
+            String lowerCaseFilter = (newValue == null) ? "" : newValue.toLowerCase();
 
-                // Convert search text to lowercase for case-insensitive search
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                // Check if any field matches the search text
-                if (agent.getAgtFirstName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (agent.getAgtLastName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (agent.getAgtEmail().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (agent.getAgtBusPhone().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (agent.getAgtPosition().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }else if (agent.getAgtPosition().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false; // No match
-            });
+            filteredAgents.setPredicate(agent ->
+                    agent.getAgtFirstName().toLowerCase().contains(lowerCaseFilter) ||
+                            agent.getAgtLastName().toLowerCase().contains(lowerCaseFilter) ||
+                            agent.getAgtEmail().toLowerCase().contains(lowerCaseFilter) ||
+                            agent.getAgtBusPhone().toLowerCase().contains(lowerCaseFilter) ||
+                            agent.getAgtPosition().toLowerCase().contains(lowerCaseFilter)
+            );
         });
 
-        // Bind the filtered list to the table
         agentTable.setItems(filteredAgents);
+    }
 
-        // Disable buttons by default
-        btnEdit.setDisable(true);
-        btnDelete.setDisable(true);
-
-        // Enable buttons when an agent is selected
+    // Setup listener for enabling/disabling edit and delete buttons
+    private void setupSelectionListener() {
         agentTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            boolean isAgentSelected = newSelection != null;
+            boolean isAgentSelected = (newSelection != null);
             btnEdit.setDisable(!isAgentSelected);
             btnDelete.setDisable(!isAgentSelected);
         });
     }
 
-    private void loadAgents() {
-        // Fetch agents from the database
-        agentList.clear();
-        agentList.addAll(AgentsDAO.getAllAgents());
-        agentTable.setItems(agentList);
-        agentTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    // Disable buttons by default
+    private void disableActionButtons() {
+        btnEdit.setDisable(true);
+        btnDelete.setDisable(true);
     }
+
+
+    private void loadAgents() {
+        try {
+            // Fetch agents from the database
+            ObservableList<Agent> agents = FXCollections.observableArrayList(AgentsDAO.getAllAgents());
+
+            if (agents.isEmpty()) {
+                Logger.warn("No agents found in the database.");
+            }
+
+            agentList.setAll(agents); // Efficiently updates the list
+            agentTable.setItems(agentList);
+            agentTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        } catch (SQLException e) {
+            AlertBox.showAlert("Error", "Failed to fetch agents. Please try again.", Alert.AlertType.ERROR);
+        }
+    }
+
 
     @FXML
     private void handleAddAgent(ActionEvent event) {
@@ -150,8 +176,12 @@ public class AgentsListController {
 
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
+                    try{
                     AgentsDAO.deleteAgent(selectedAgent.getAgentID());
                     refreshTable();
+                    }catch (SQLException e) {
+                        AlertBox.showAlert("Error", "Error in deleting Agent", Alert.AlertType.ERROR);
+                    }
                 }
             });
         }
