@@ -14,7 +14,7 @@ import static org.example.travelexpertdesktopapplication.dao.DatabaseManager.get
 
 public class PackagesDAO {
 
-    public static ObservableList<Packages> getPackagesList() {
+    public static ObservableList<Packages> getPackagesList() throws SQLException{
         ObservableList<Packages> packageList = FXCollections.observableArrayList();
         String query = "SELECT * FROM packages";
         Logger.debug("Fetching all packages from the database.");
@@ -29,9 +29,9 @@ public class PackagesDAO {
                         new SimpleIntegerProperty(resultSet.getInt("packageid")),
                         new SimpleStringProperty(resultSet.getString("pkgname")),
                         new SimpleObjectProperty<>(resultSet.getDate("pkgstartdate") != null ?
-                                resultSet.getDate("pkgstartdate").toLocalDate() : null), // FIXED
+                                resultSet.getDate("pkgstartdate").toLocalDate() : null),
                         new SimpleObjectProperty<>(resultSet.getDate("pkgenddate") != null ?
-                                resultSet.getDate("pkgenddate").toLocalDate() : null),   // FIXED
+                                resultSet.getDate("pkgenddate").toLocalDate() : null),
                         new SimpleStringProperty(resultSet.getString("pkgdesc")),
                         new SimpleIntegerProperty(resultSet.getInt("pkgbaseprice")),
                         new SimpleIntegerProperty(resultSet.getInt("pkgagencycommission"))
@@ -39,7 +39,8 @@ public class PackagesDAO {
                 packageList.add(packages);
             }
         } catch (SQLException e) {
-            Logger.error(e, "Error fetching Packages from the database.");
+            Logger.debug("Database error: {}", e);
+            throw e;
         }
         return packageList;
     }
@@ -68,7 +69,7 @@ public class PackagesDAO {
         return affectedRows;
     }
 
-    public static int addPackage(Packages p) {
+    public static int addPackage(Packages p) throws SQLException {
         int generatedId = -1; // Default value if insertion fails
         Logger.debug("Adding new package: {}", p);
 
@@ -98,11 +99,12 @@ public class PackagesDAO {
             }
         } catch (SQLException e) {
             Logger.error(e, "Error adding Package.");
+            throw e;
         }
         return generatedId;
     }
 
-    public static int updatePackage(Packages p) {
+    public static int updatePackage(Packages p) throws SQLException {
         String sql = "UPDATE packages SET pkgName = ?, pkgstartdate = ?, pkgenddate = ?, " +
                 "pkgdesc = ?, pkgbaseprice = ?, pkgagencycommission = ? " +
                 "WHERE packageid = ?";
@@ -132,6 +134,7 @@ public class PackagesDAO {
             }
         } catch (SQLException e) {
             Logger.error(e, "Error updating Package. ID={}", p.getPackageid());
+            throw e;
         }
         return numAffectedRows;
     }

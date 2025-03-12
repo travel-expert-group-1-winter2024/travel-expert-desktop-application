@@ -1,6 +1,7 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -10,15 +11,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.travelexpertdesktopapplication.dao.BookingDetailsDAO;
 import org.example.travelexpertdesktopapplication.dao.SupplierDAO;
 import org.example.travelexpertdesktopapplication.models.BookingDetails;
 import org.example.travelexpertdesktopapplication.models.SupplierContacts;
+import org.example.travelexpertdesktopapplication.utils.AlertBox;
 
 public class PastBookingController {
 
@@ -150,9 +149,8 @@ public class PastBookingController {
         pastBookingsList.clear();
         try {
             pastBookingsList.setAll(BookingDetailsDAO.getBookingDetailsList());
-        } catch (Exception e) { // Catching general Exception instead of SQLException
-            System.err.println("Failed to load fees table: " + e.getMessage());
-            e.printStackTrace();
+        } catch (SQLException e) { // Catching general Exception instead of SQLException
+            AlertBox.showAlert("Error","Error displaying past bookings.", Alert.AlertType.ERROR);
         }
         // Populate table view
         lvPastBooking.setItems(pastBookingsList);

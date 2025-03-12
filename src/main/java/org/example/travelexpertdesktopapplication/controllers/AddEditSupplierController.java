@@ -1,6 +1,7 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -109,7 +110,11 @@ public class AddEditSupplierController {
         tfSupplierID.setDisable(true);
         tfSupplierContactID.setDisable(true);
         //Setting Data for ComboBox
-        cbAffiliation.setItems(SupplierDAO.getAffiliations());
+        try{
+            cbAffiliation.setItems(SupplierDAO.getAffiliations());
+        }catch (SQLException e){
+            AlertBox.showAlert("Error", "Error displaying Affiliations.",Alert.AlertType.ERROR);
+        }
         cbProvince.setItems(FXCollections.observableArrayList(Province.values()));
 
         tfFirstName.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
@@ -147,13 +152,22 @@ public class AddEditSupplierController {
             // Get Supplier Contact details from form
             SupplierContacts supplierContacts = getSupplierDetailsFromForm();
             if (mode.equalsIgnoreCase("add")) {
-                SupplierDAO.addSupplierContact(supplierContacts);
-                AlertBox.showAlert("Success", "Supplier Contacts saved successfully!", Alert.AlertType.INFORMATION);
-                this.onExit();
-            }else{
-                SupplierDAO.updateSupplierContact(supplierContacts);
-                AlertBox.showAlert("Success", "Supplier Contacts updated successfully!", Alert.AlertType.INFORMATION);
-                this.onExit();
+                try{
+                    SupplierDAO.addSupplierContact(supplierContacts);
+                    AlertBox.showAlert("Success", "Supplier Contacts saved successfully!", Alert.AlertType.INFORMATION);
+                    this.onExit();
+                } catch (SQLException e) {
+                    AlertBox.showAlert("Error","Error Adding Supplier Conatct", Alert.AlertType.ERROR);
+                }
+
+            } else{
+                try {
+                    SupplierDAO.updateSupplierContact(supplierContacts);
+                    AlertBox.showAlert("Success", "Supplier Contacts updated successfully!", Alert.AlertType.INFORMATION);
+                    this.onExit();
+                } catch (SQLException e) {
+                    AlertBox.showAlert("Error","Error Updating Supplier Conatct", Alert.AlertType.ERROR);
+                }
             }
         }
     }
@@ -218,10 +232,13 @@ public class AddEditSupplierController {
         tfEmailAddress.setText(supplierContacts.getSupconemail());
         tfWebsiteURL.setText(supplierContacts.getSupconurl());
         tfSupplierID.setText(String.valueOf(supplierContacts.getSupplierid()));
-
-        List<String> affiliations = SupplierDAO.getAffiliations();
-        cbAffiliation.setItems(FXCollections.observableArrayList(affiliations));
-        cbAffiliation.getSelectionModel().select(supplierContacts.getAffiliationid());
+        try {
+            List<String> affiliations = SupplierDAO.getAffiliations();
+            cbAffiliation.setItems(FXCollections.observableArrayList(affiliations));
+            cbAffiliation.getSelectionModel().select(supplierContacts.getAffiliationid());
+        } catch (SQLException e) {
+            AlertBox.showAlert("Error","Error displaying Affiliations", Alert.AlertType.ERROR);
+        }
     }
 
     /**

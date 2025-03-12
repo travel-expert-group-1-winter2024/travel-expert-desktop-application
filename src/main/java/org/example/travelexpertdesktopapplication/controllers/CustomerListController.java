@@ -2,6 +2,7 @@ package org.example.travelexpertdesktopapplication.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -14,10 +15,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -28,6 +26,7 @@ import org.example.travelexpertdesktopapplication.dao.SupplierDAO;
 import org.example.travelexpertdesktopapplication.models.Customer;
 import org.example.travelexpertdesktopapplication.models.Customer;
 import org.example.travelexpertdesktopapplication.models.SupplierContacts;
+import org.example.travelexpertdesktopapplication.utils.AlertBox;
 
 public class CustomerListController {
 
@@ -176,9 +175,8 @@ public class CustomerListController {
         customerData.clear();
         try {
             customerData.setAll(CustomerDAO.getCustomerList());
-        } catch (Exception e) { // Catching general Exception instead of SQLException
-            System.err.println("Failed to load fees table: " + e.getMessage());
-            e.printStackTrace();
+        } catch (SQLException e) {
+            AlertBox.showAlert("Error","Error displaying customers", Alert.AlertType.ERROR);
         }
         // Populate table view
         lvCustomers.setItems(customerData);
@@ -189,7 +187,7 @@ public class CustomerListController {
         customerData.clear();
         try {
             customerData.setAll(CustomerDAO.getAgentCustomers(AgentID));
-        } catch (Exception e) { // Catching general Exception instead of SQLException
+        } catch (Exception e) {
             System.err.println("Failed to load fees table: " + e.getMessage());
             e.printStackTrace();
         }

@@ -17,7 +17,7 @@ public class CustomerDAO {
      * get customer list from database
      * @return array of customer
      */
-    public static ObservableList<Customer> getCustomerList() {
+    public static ObservableList<Customer> getCustomerList() throws SQLException {
         ObservableList<Customer> customersList = FXCollections.observableArrayList();
         String query = "SELECT * FROM customers;";
         Logger.debug("Fetching customers from the database.");
@@ -47,6 +47,7 @@ public class CustomerDAO {
             Logger.info("Retrieved {} customers.", customersList.size());
         } catch (SQLException e) {
             Logger.error(e, "Error retrieving customers.");
+            throw e;
         }
         return customersList;
     }
@@ -85,7 +86,7 @@ public class CustomerDAO {
         return agentCustomersList;
     }
 
-    public static int updateCustomer(Customer customer) {
+    public static int updateCustomer(Customer customer) throws SQLException{
         String sql = "UPDATE customers SET custfirstname = ?, custlastname = ?, custaddress = ?, custcity = ?, " +
                 "custprov = ?, custpostal = ?, custcountry = ?, custhomephone = ?, custbusphone = ?, " +
                 "custemail = ?, agentid = ? WHERE customerid = ?";
@@ -121,6 +122,7 @@ public class CustomerDAO {
 
         } catch (SQLException e) {
             Logger.error(e, "Error updating customer. ID={}", customer.getCustomerid());
+            throw e;
         }
 
         return numAffectedRows;
