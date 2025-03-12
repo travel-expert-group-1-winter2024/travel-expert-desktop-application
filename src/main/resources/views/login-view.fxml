@@ -45,9 +45,9 @@
 
             <Button fx:id="btnLogin" mnemonicParsing="false" onMouseClicked="#onLoginButtonClicked" text="Login" />
 
-            <Label text="Don't have an account?" style="-fx-text-fill: #333333;" />
-            <Button fx:id="btnSignUp" text="Sign Up" onMouseClicked="#onSignUpButtonClicked"
-                    style="-fx-background-color: transparent; -fx-text-fill: #0078D7; -fx-underline: true; -fx-font-size: 12px;" />
+<!--            <Label text="Don't have an account?" style="-fx-text-fill: #333333;" />-->
+<!--            <Button fx:id="btnSignUp" text="Sign Up" onMouseClicked="#onSignUpButtonClicked"-->
+<!--                    style="-fx-background-color: transparent; -fx-text-fill: #0078D7; -fx-underline: true; -fx-font-size: 12px;" />-->
 
          </children>
          <HBox.margin>
