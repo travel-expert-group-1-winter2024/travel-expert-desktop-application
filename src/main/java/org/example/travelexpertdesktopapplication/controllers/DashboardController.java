@@ -287,6 +287,8 @@ public class DashboardController {
         }
     }
 
+    //Manager Dashboard controls
+
     public void loadSalesDashboardView() {
         System.out.println("loadSalesDashboardView is also working");
         // Load the FXML file for the Sales Dashboard view
@@ -302,6 +304,39 @@ public class DashboardController {
         } catch (IOException e) {
             Logger.error(e, "Error loading SalesDashboardView");
             throw new RuntimeException(e);
+        }
+    }
+
+    public void loadSalesAgentsView() {
+        Logger.info("Loading SalesAgents View");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sales-agent-view.fxml"));
+        try {
+            AnchorPane agentSalesDashboard = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(agentSalesDashboard);
+
+            agentSalesDashboard.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+        } catch (IOException e) {
+            Logger.error(e, "Error loading SalesAgentsView");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadSalesAgenciesView() {
+        Logger.info("Loading SalesAgencies View");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sales-agency-view.fxml"));
+
+        try {
+            AnchorPane agencySalesDashboard = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(agencySalesDashboard);
+
+            agencySalesDashboard.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+
+        } catch (IOException e) {
+            Logger.error(e, "Error loading SalesAgenciesView");
+            throw new RuntimeException(e);
+
         }
     }
 
