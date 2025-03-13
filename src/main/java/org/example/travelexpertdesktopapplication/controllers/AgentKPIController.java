@@ -115,9 +115,6 @@ public class AgentKPIController {
             }
             pieChart.setData(pieChartData);
 
-            // Check if monthlyBookingList has data
-            System.out.println("Monthly Booking List Size: " + monthlyBookingList.size());
-
             //Bar Chart
             barChart.setTitle("Monthly Booking Trends");
             XYChart.Series<String, Number> series = new XYChart.Series<>();

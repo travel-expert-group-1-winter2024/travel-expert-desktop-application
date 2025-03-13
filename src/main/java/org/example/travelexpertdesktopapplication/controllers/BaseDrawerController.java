@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.auth.SessionManager;
+import org.example.travelexpertdesktopapplication.auth.UserRole;
 import org.example.travelexpertdesktopapplication.services.WebSocketService;
 import org.tinylog.Logger;
 
@@ -21,6 +22,7 @@ public abstract class BaseDrawerController {
         this.dashboardController = dashboardController;
 
     }
+    UserRole userRole = SessionManager.getInstance().getUserRole();
 
     //Methods handling button clicks
 
@@ -99,36 +101,30 @@ public abstract class BaseDrawerController {
     public void handleDashboardButtonClick() {
         if (dashboardController != null) {
             System.out.println("Delegating button population to DashboardController...");
-            dashboardController.loadDashboardButtons(
-                    new String[]{"Overview"},
-                    new Runnable[]{
-                            dashboardController::loadOverViewView,
-                            //dashboardController::loadAgenciesView,
-
-                    }
-            );
-            dashboardController.loadOverViewView();
+            System.out.println(userRole);
+            if (UserRole.MANAGER.equals(userRole)) {
+                dashboardController.loadDashboardButtons(
+                        new String[]{"Overview"},
+                        new Runnable[]{
+                                () -> dashboardController.loadOverViewView(UserRole.MANAGER)
+                                //dashboardController::loadAgenciesView,
+                        }
+                );
+                dashboardController.loadOverViewView(UserRole.MANAGER);
+            } else if (UserRole.AGENT.equals(userRole)) {
+                dashboardController.loadDashboardButtons(
+                        new String[]{"Overview"},
+                        new Runnable[]{
+                                () -> dashboardController.loadOverViewView(UserRole.AGENT)
+                        }
+                );
+                dashboardController.loadOverViewView(UserRole.AGENT);
+            }
         } else {
             System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
         }
     }
 
-//    @FXML
-//    public void handleProfileButtonClick() {
-//        if (dashboardController != null){
-//            System.out.println("Delegating button population to DashboardController...");
-//            dashboardController.loadDashboardButtons(
-//                    new String[]{"Profile"},
-//                    new Runnable[]{
-//                            dashboardController::loadAgentsView,
-//
-//
-//                    }
-//            );
-//        } else {
-//            System.err.println("Error: DashboardController is null in BaseDrawerController" + this);
-//        }
-//    }
 
     public void handleChatButtonClick() {
         if (dashboardController != null) {

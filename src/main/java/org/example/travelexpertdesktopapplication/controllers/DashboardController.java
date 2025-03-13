@@ -55,6 +55,7 @@ public class DashboardController {
         assert mainContentWindow != null : "fx:id=\"mainContentWindow\" was not injected: check your FXML file 'dashboard-view.fxml'.";
 
         UserRole userRole = SessionManager.getInstance().getUserRole();
+
         if (userRole == UserRole.MANAGER) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/manager-drawer-view.fxml"));
@@ -64,7 +65,7 @@ public class DashboardController {
                 drawer.setSidePane(box);
                 this.managerDrawerController = managerDrawerController; // Save the instance for reuse
                 //Load Agent KPI Dashboard when launching.
-                loadOverViewView();
+                loadOverViewView(UserRole.MANAGER);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -77,12 +78,10 @@ public class DashboardController {
                 drawer.setSidePane(box);
                 this.agentDrawerController = agentDrawerController; // Save the instance for reuse
                 //Load Agent KPI Dashboard when launching.
-                loadOverViewView();
+                loadOverViewView(UserRole.AGENT);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-
         }
 
 
@@ -130,17 +129,31 @@ public class DashboardController {
      */
 
     //Dashboard Hamburger Button --> Dynamic button methods
-    public void loadOverViewView(){
-        Logger.info("Loading Overview View");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agent-kpi-view.fxml"));
-        try {
-            MFXScrollPane packageListView = loader.load();
-            mainContentWindow.getChildren().clear();
-            mainContentWindow.getChildren().add(packageListView);
-            packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
-        } catch (IOException e) {
-            System.out.println("Error is being caught in the Catch of Agent-kpi-view.fxml");
-            throw new RuntimeException(e);
+    public void loadOverViewView(UserRole userRole){
+        if (userRole == UserRole.MANAGER) {
+            Logger.info("Loading Manager Over View");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sales-dashboard.fxml"));
+            try {
+                AnchorPane packageListView = loader.load();
+                mainContentWindow.getChildren().clear();
+                mainContentWindow.getChildren().add(packageListView);
+                packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+            } catch (IOException e) {
+                System.out.println("Error is being caught in the Catch of Agent-kpi-view.fxml");
+                throw new RuntimeException(e);
+            }
+        } else{
+            Logger.info("Loading Agent Over View");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agent-kpi-view.fxml"));
+            try {
+                MFXScrollPane packageListView = loader.load();
+                mainContentWindow.getChildren().clear();
+                mainContentWindow.getChildren().add(packageListView);
+                packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+            } catch (IOException e) {
+                System.out.println("Error is being caught in the Catch of Agent-kpi-view.fxml");
+                throw new RuntimeException(e);
+            }
         }
     }
 

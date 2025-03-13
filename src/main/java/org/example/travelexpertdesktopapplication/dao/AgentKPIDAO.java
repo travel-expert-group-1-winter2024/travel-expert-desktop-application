@@ -51,10 +51,6 @@ public class AgentKPIDAO {
                 totalAgencyCommission += kpi.getAgencycommission();
 
             }
-            System.out.println("Total Base Price: " + totalBasePrice);
-            System.out.println("Total Agency Commission: " + totalAgencyCommission);
-            System.out.println("Total Customer Count: " + totalCustomerCount);
-
 
         } catch (SQLException e) {
             e.printStackTrace();
