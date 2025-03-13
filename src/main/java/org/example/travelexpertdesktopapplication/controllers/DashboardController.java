@@ -65,10 +65,11 @@ public class DashboardController {
                 drawer.setSidePane(box);
                 this.managerDrawerController = managerDrawerController; // Save the instance for reuse
                 //Load Agent KPI Dashboard when launching.
-                loadOverViewView(UserRole.MANAGER);
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            //loadOverViewView(UserRole.MANAGER);
         } else {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agent-drawer-view.fxml"));
@@ -78,10 +79,11 @@ public class DashboardController {
                 drawer.setSidePane(box);
                 this.agentDrawerController = agentDrawerController; // Save the instance for reuse
                 //Load Agent KPI Dashboard when launching.
-                loadOverViewView(UserRole.AGENT);
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+           // loadOverViewView(UserRole.AGENT);
         }
 
 
@@ -162,7 +164,7 @@ public class DashboardController {
         Logger.info("Loading Customer Details");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/customer-view.fxml"));
         try {
-            BorderPane packageListView = loader.load();
+            AnchorPane packageListView = loader.load();
             mainContentWindow.getChildren().clear();
             mainContentWindow.getChildren().add(packageListView);
             packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
