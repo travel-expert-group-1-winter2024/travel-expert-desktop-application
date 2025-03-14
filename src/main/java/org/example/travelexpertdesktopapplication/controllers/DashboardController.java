@@ -214,7 +214,7 @@ public class DashboardController {
         System.out.println("Loading Suppliers View");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/supplier-list-view.fxml"));
         try {
-            BorderPane supplierListView = loader.load();
+            AnchorPane supplierListView = loader.load();
             mainContentWindow.getChildren().clear();
             mainContentWindow.getChildren().add(supplierListView);
             supplierListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());

@@ -50,6 +50,9 @@ public class AgentsListController {
     @FXML
     private JFXButton btnEdit;
 
+    @FXML
+    private Button btnReset;
+
 
     private ObservableList<Agent> agentList = FXCollections.observableArrayList();
     private FilteredList<Agent> filteredAgents;
@@ -62,6 +65,12 @@ public class AgentsListController {
         setupSearchFilter();
         setupSelectionListener();
         disableActionButtons();
+    }
+
+    @FXML
+    private void resetSearch() {
+        txtSearch.clear();
+        initialize();
     }
 
     // Setup column bindings for agent attributes

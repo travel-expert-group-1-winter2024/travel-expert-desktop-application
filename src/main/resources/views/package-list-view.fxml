@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.PackageController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #fffffe;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.PackageController">
    <children>
       <TableView fx:id="lvPackages" layoutX="40.0" layoutY="90.0" prefHeight="364.0" prefWidth="719.0" stylesheets="@../css/style.css" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
         <columns>
@@ -23,16 +23,6 @@
             <TableColumn fx:id="colpkgCommission" prefWidth="109.5999755859375" text="Commission" />
         </columns>
       </TableView>
-      <StackPane alignment="CENTER_RIGHT" layoutX="173.0" layoutY="40.0" prefHeight="51.0" prefWidth="454.0">
-         <children>
-            <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Search for Agents..." />
-            <ImageView fx:id="btnSearch" fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/magnifying-glass.png" />
-               </image>
-            </ImageView>
-         </children>
-      </StackPane>
       <AnchorPane layoutX="283.0" layoutY="10.0" prefHeight="39.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-style: dotted; -fx-border-width: 0 0 1 0;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="52.0" prefWidth="266.0" style="-fx-background-color: 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -64,5 +54,20 @@
             </AnchorPane>
          </children>
       </AnchorPane>
+      <StackPane alignment="CENTER_RIGHT" layoutX="159.0" layoutY="50.0" prefHeight="51.0" prefWidth="454.0" AnchorPane.bottomAnchor="430.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Seach for Package" />
+            <ImageView fx:id="btnSearch" fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/magnifying-glass.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="btnReset" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: #994ff3;" text="Reset" textFill="#fffffe">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>

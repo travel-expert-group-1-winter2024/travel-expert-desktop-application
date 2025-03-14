@@ -27,16 +27,6 @@
             <TableColumn fx:id="colAgencyID" prefWidth="75.0" text="Agency ID" />
         </columns>
       </TableView>
-      <StackPane alignment="CENTER_RIGHT" layoutX="183.0" layoutY="50.0" prefHeight="51.0" prefWidth="454.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
-         <children>
-            <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Search for Agents..." />
-            <ImageView fx:id="btnSearch" fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/magnifying-glass.png" />
-               </image>
-            </ImageView>
-         </children>
-      </StackPane>
       <AnchorPane layoutX="14.0" prefHeight="39.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-style: dotted; -fx-border-width: 0 0 1 0;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="52.0" prefWidth="266.0" style="-fx-background-color: 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -52,5 +42,20 @@
             <AnchorPane layoutX="533.0" layoutY="5.0" prefHeight="52.0" prefWidth="266.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
+      <StackPane alignment="CENTER_RIGHT" layoutX="159.0" layoutY="50.0" prefHeight="51.0" prefWidth="454.0" AnchorPane.bottomAnchor="430.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Seach for Customer" />
+            <ImageView fx:id="btnSearch" fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/magnifying-glass.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="btnReset" buttonType="RAISED" onAction="#onResetClick" prefWidth="100.0" style="-fx-background-color: #994ff3;" text="Reset" textFill="#fffffe">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>

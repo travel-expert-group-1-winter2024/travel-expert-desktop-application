@@ -202,6 +202,7 @@ public class CustomerListController {
     @FXML
     private void onResetClick(){
         txtSearch.clear();
+        initialize();
     }
 
     protected void openEditWindow(Customer Customer){

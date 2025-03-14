@@ -48,8 +48,8 @@ public class PackageController {
     @FXML
     private ImageView btnSearch;
 
-//    @FXML
-//    private Button btnReset;
+    @FXML
+    private Button btnReset;
 
     @FXML
     private TableColumn<Packages,Integer> colpkgBasePrice;
@@ -104,10 +104,12 @@ public class PackageController {
         displayPackages();
         filteredData = new FilteredList<>(packagesList, p -> true);
 
-//        btnReset.setOnAction(e->{
-//        txtSearch.clear();
-//        displayPackages();
-//        });
+        btnReset.setOnAction(e->{
+        txtSearch.clear();
+        initialize();
+        });
+
+
 
         btnAdd.setOnAction(e->{
             mode="Add";

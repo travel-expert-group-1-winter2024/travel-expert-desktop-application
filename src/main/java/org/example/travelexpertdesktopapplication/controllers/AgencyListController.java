@@ -34,7 +34,7 @@ public class AgencyListController {
     private TableColumn<Agency, Integer> colAgencyID;
 
     @FXML
-    private JFXButton btnAdd;
+    private JFXButton btnAdd, btnReset;
 
     @FXML
     private JFXButton btnDelete;
@@ -72,6 +72,7 @@ public class AgencyListController {
 
         // Set up filtered list
         filteredAgencies = new FilteredList<>(agencyList, p -> true);
+
 
         // Bind the search text to the filtered list
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -120,6 +121,11 @@ public class AgencyListController {
         });
     }
 
+    @FXML
+    private void resetSearch() {
+        txtSearch.clear();
+        initialize();
+    }
 
     @FXML
     private void handleAddAgency(ActionEvent event) {
