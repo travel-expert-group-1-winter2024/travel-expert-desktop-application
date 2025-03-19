@@ -62,7 +62,7 @@ public class DashboardButtonController {
             dashboardBtn2.setVisible(false);
         }
         // Same for Button 3, if the length is above 2.
-        if (buttonTexts.length > 3){
+        if (buttonTexts.length > 2){
             dashboardBtn3.setVisible(true);
             dashboardBtn3.setText(buttonTexts[2]);
             dashboardBtn3.setOnAction(event -> buttonActions[2].run());

@@ -72,10 +72,10 @@ public class CustomerListController {
     @FXML
     private TableView<Customer> lvCustomers;
     @FXML
-    private Button btnReset;
+    private JFXButton btnReset;
 
     @FXML
-    private Button btnEditCustomer;
+    private JFXButton btnEditCustomer;
     @FXML
     private TextField txtSearch;
 
@@ -202,6 +202,7 @@ public class CustomerListController {
     @FXML
     private void onResetClick(){
         txtSearch.clear();
+        initialize();
     }
 
     protected void openEditWindow(Customer Customer){

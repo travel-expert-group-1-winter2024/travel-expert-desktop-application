@@ -31,9 +31,12 @@ public class ManagerDrawerController extends BaseDrawerController {
         if (dashboardController != null){
             System.out.println("Delegating button population to DashboardController...");
             dashboardController.loadDashboardButtons(
-                    new String[]{"Stats", "Agencies", "Agents"},
+                    new String[]{"Stats", "Agents", "Agencies"},
                     new Runnable[]{
                             dashboardController::loadSalesDashboardView,
+                            dashboardController::loadSalesAgentsView,
+                            dashboardController::loadSalesAgenciesView
+
 
                     }
             );

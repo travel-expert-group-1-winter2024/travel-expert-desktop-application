@@ -6,32 +6,45 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="456.0" prefWidth="946.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.SalesAgentDashboard">
-
-    <HBox layoutX="20" layoutY="20" spacing="20">
-        <ComboBox fx:id="agentComboBox" prefWidth="300" promptText="Select an Agent" />
-    </HBox>
-
-    <!-- Monthly Sales Trend Chart -->
-    <LineChart fx:id="monthlySalesChart" layoutX="20" layoutY="80" prefHeight="308.0" prefWidth="462.0" title="Monthly Sales Trend">
-        <xAxis>
-            <CategoryAxis label="Month" />
-        </xAxis>
-        <yAxis>
-            <NumberAxis label="Sales ($)" />
-        </yAxis>
-    </LineChart>
-
-    <!-- Revenue by Region Chart -->
-    <BarChart fx:id="regionRevenueChart" layoutX="482.0" layoutY="80.0" prefHeight="308.0" prefWidth="409.0" title="Revenue by Region">
-        <xAxis>
-            <CategoryAxis label="Region" />
-        </xAxis>
-        <yAxis>
-            <NumberAxis label="Revenue ($)" />
-        </yAxis>
-    </BarChart>
+<AnchorPane prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.SalesAgentDashboard">
+   <AnchorPane layoutY="165.0" prefHeight="274.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="165.0">
+      <children>
+      
+          <!-- Monthly Sales Trend Chart -->
+          <LineChart fx:id="monthlySalesChart" prefHeight="300.0" prefWidth="400.0" stylesheets="@../css/style.css" title="Monthly Sales Trend" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="0.0">
+              <xAxis>
+                  <CategoryAxis label="Month" stylesheets="@../css/style.css">
+                  <tickLabelFont>
+                     <Font name="Arimo Regular" size="8.0" />
+                  </tickLabelFont></CategoryAxis>
+              </xAxis>
+              <yAxis>
+                  <NumberAxis label="Sales ($)" stylesheets="@../css/style.css">
+                  <tickLabelFont>
+                     <Font name="Arimo Regular" size="8.0" />
+                  </tickLabelFont></NumberAxis>
+              </yAxis>
+          </LineChart>
+      
+          <!-- Revenue by Region Chart -->
+          <BarChart fx:id="regionRevenueChart" layoutX="400.0" prefHeight="300.0" prefWidth="400.0" stylesheets="@../css/style.css" title="Revenue by Region" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <xAxis>
+                  <CategoryAxis label="Region" stylesheets="@../css/style.css">
+                  <tickLabelFont>
+                     <Font name="Arimo Regular" size="8.0" />
+                  </tickLabelFont></CategoryAxis>
+              </xAxis>
+              <yAxis>
+                  <NumberAxis label="Revenue ($)" stylesheets="@../css/style.css">
+                  <tickLabelFont>
+                     <Font name="Arimo Regular" size="8.0" />
+                  </tickLabelFont></NumberAxis>
+              </yAxis>
+          </BarChart>
+      </children>
+   </AnchorPane>
+     <ComboBox fx:id="agentComboBox" layoutX="10.0" layoutY="70.0" prefWidth="300" promptText="Select an Agent" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 
 </AnchorPane>

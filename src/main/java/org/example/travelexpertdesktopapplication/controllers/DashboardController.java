@@ -64,8 +64,11 @@ public class DashboardController {
                 managerDrawerController.setDashboardController(this); // Inject the DashboardController
                 drawer.setSidePane(box);
                 this.managerDrawerController = managerDrawerController; // Save the instance for reuse
-                //Load Agent KPI Dashboard when launching.
-                loadOverViewView(UserRole.MANAGER);
+                //Load Manager Sales Dashboard when launching.
+                BaseDrawerController baseDrawerController = loader.getController();
+                baseDrawerController.handleDashboardButtonClick();
+
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -78,7 +81,9 @@ public class DashboardController {
                 drawer.setSidePane(box);
                 this.agentDrawerController = agentDrawerController; // Save the instance for reuse
                 //Load Agent KPI Dashboard when launching.
-                loadOverViewView(UserRole.AGENT);
+                BaseDrawerController baseDrawerController = loader.getController();
+                baseDrawerController.handleDashboardButtonClick();
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -100,7 +105,6 @@ public class DashboardController {
 
     }
 
-    //Todo: Finish logic that implements views.
 
 
 
@@ -134,10 +138,10 @@ public class DashboardController {
             Logger.info("Loading Manager Over View");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sales-dashboard.fxml"));
             try {
-                AnchorPane packageListView = loader.load();
+                MFXScrollPane salesDashboardView = loader.load();
                 mainContentWindow.getChildren().clear();
-                mainContentWindow.getChildren().add(packageListView);
-                packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+                mainContentWindow.getChildren().add(salesDashboardView);
+                salesDashboardView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
             } catch (IOException e) {
                 System.out.println("Error is being caught in the Catch of Agent-kpi-view.fxml");
                 throw new RuntimeException(e);
@@ -146,10 +150,10 @@ public class DashboardController {
             Logger.info("Loading Agent Over View");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/agent-kpi-view.fxml"));
             try {
-                MFXScrollPane packageListView = loader.load();
+                MFXScrollPane agentKPIView = loader.load();
                 mainContentWindow.getChildren().clear();
-                mainContentWindow.getChildren().add(packageListView);
-                packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+                mainContentWindow.getChildren().add(agentKPIView);
+                agentKPIView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
             } catch (IOException e) {
                 System.out.println("Error is being caught in the Catch of Agent-kpi-view.fxml");
                 throw new RuntimeException(e);
@@ -162,10 +166,10 @@ public class DashboardController {
         Logger.info("Loading Customer Details");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/customer-view.fxml"));
         try {
-            BorderPane packageListView = loader.load();
+            AnchorPane customerDetailsView = loader.load();
             mainContentWindow.getChildren().clear();
-            mainContentWindow.getChildren().add(packageListView);
-            packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+            mainContentWindow.getChildren().add(customerDetailsView);
+            customerDetailsView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
         } catch (IOException e) {
             System.out.println("Error is being caught in the Catch of loadProductsView");
             throw new RuntimeException(e);
@@ -176,10 +180,10 @@ public class DashboardController {
         Logger.info("Loading Customer Purchases");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/past-booking-view.fxml"));
         try {
-            BorderPane packageListView = loader.load();
+            BorderPane customerPurchasesView = loader.load();
             mainContentWindow.getChildren().clear();
-            mainContentWindow.getChildren().add(packageListView);
-            packageListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+            mainContentWindow.getChildren().add(customerPurchasesView);
+            customerPurchasesView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
         } catch (IOException e) {
             System.out.println("Error is being caught in the Catch of past-booking-view.fxml");
             throw new RuntimeException(e);
@@ -212,7 +216,7 @@ public class DashboardController {
         System.out.println("Loading Suppliers View");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/supplier-list-view.fxml"));
         try {
-            BorderPane supplierListView = loader.load();
+            AnchorPane supplierListView = loader.load();
             mainContentWindow.getChildren().clear();
             mainContentWindow.getChildren().add(supplierListView);
             supplierListView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
@@ -273,12 +277,12 @@ public class DashboardController {
     }
 
     public void loadChatView(){
+        System.out.println("loadChatView method is being called");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/chat-view.fxml"));
         try {
             AnchorPane chatView = loader.load();
             mainContentWindow.getChildren().clear();
             mainContentWindow.getChildren().add(chatView);
-
             // Add the stylesheet to the productsView
             chatView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
         } catch (IOException e) {
@@ -287,12 +291,14 @@ public class DashboardController {
         }
     }
 
+    //Manager Dashboard controls
+
     public void loadSalesDashboardView() {
         System.out.println("loadSalesDashboardView is also working");
         // Load the FXML file for the Sales Dashboard view
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sales-dashboard.fxml"));
         try {
-            AnchorPane salesDashboard = loader.load();
+            MFXScrollPane salesDashboard = loader.load();
 
             mainContentWindow.getChildren().clear();
             mainContentWindow.getChildren().add(salesDashboard);
@@ -302,6 +308,39 @@ public class DashboardController {
         } catch (IOException e) {
             Logger.error(e, "Error loading SalesDashboardView");
             throw new RuntimeException(e);
+        }
+    }
+
+    public void loadSalesAgentsView() {
+        Logger.info("Loading SalesAgents View");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sales-agent-view.fxml"));
+        try {
+            AnchorPane agentSalesDashboard = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(agentSalesDashboard);
+
+            agentSalesDashboard.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+        } catch (IOException e) {
+            Logger.error(e, "Error loading SalesAgentsView");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadSalesAgenciesView() {
+        Logger.info("Loading SalesAgencies View");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sales-agency-view.fxml"));
+
+        try {
+            AnchorPane agencySalesDashboard = loader.load();
+            mainContentWindow.getChildren().clear();
+            mainContentWindow.getChildren().add(agencySalesDashboard);
+
+            agencySalesDashboard.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+
+        } catch (IOException e) {
+            Logger.error(e, "Error loading SalesAgenciesView");
+            throw new RuntimeException(e);
+
         }
     }
 

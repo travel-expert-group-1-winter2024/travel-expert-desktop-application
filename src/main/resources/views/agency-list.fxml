@@ -10,20 +10,10 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, #f8f9fa, #e9ecef);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.AgencyListController">
-   <StackPane alignment="CENTER_RIGHT" layoutX="183.0" layoutY="39.0" prefHeight="51.0" prefWidth="454.0">
-      <children>
-         <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Search For Agencies..." />
-         <ImageView fx:id="btnSearch" fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../images/magnifying-glass.png" />
-            </image>
-         </ImageView>
-      </children>
-   </StackPane>
+<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #fffffe;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.AgencyListController">
 
      <!-- TableView for Agencies -->
-     <TableView fx:id="agencyTable" layoutX="49.0" layoutY="90.0" prefHeight="320" prefWidth="700" style="-fx-background-color: white; -fx-border-color: #bdc3c7; -fx-border-radius: 8px;">
+     <TableView fx:id="agencyTable" layoutX="49.0" layoutY="90.0" prefHeight="320" prefWidth="700" style="-fx-background-color: white; -fx-border-color: #bdc3c7; -fx-border-radius: 8px;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
          <columns>
              <TableColumn fx:id="colAgencyID" prefWidth="80" text="Agency ID" />
              <TableColumn fx:id="colAgencyAddress" prefWidth="150" text="Address" />
@@ -35,22 +25,13 @@
              <TableColumn fx:id="colAgencyFax" prefWidth="100" text="Fax" />
          </columns>
      </TableView>
-   <AnchorPane prefHeight="39.0" prefWidth="800.0" style="-fx-border-color: black; -fx-border-style: dotted; -fx-border-width: 0 0 1 0;">
+   <AnchorPane layoutX="283.0" layoutY="10.0" prefHeight="39.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-style: dotted; -fx-border-width: 0 0 1 0;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
          <AnchorPane prefHeight="52.0" prefWidth="266.0" style="-fx-background-color: 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-               <JFXButton fx:id="btnAdd" buttonType="RAISED" layoutX="5.0" layoutY="14.0" onAction="#handleAddAgency" prefHeight="36.0" prefWidth="256.0" style="-fx-background-color: #fbdd74;" stylesheets="@../css/style.css" text="Add Agency" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
+               <JFXButton fx:id="btnAdd" buttonType="RAISED" layoutX="107.0" layoutY="14.0" onAction="#handleAddAgency" style="-fx-background-color: #fbdd74;" stylesheets="@../css/style.css" text="Add Agency" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
                   <font>
-                     <Font name="Archivo Narrow Regular" size="16.0" />
-                  </font>
-               </JFXButton>
-            </children>
-         </AnchorPane>
-         <AnchorPane layoutX="533.0" layoutY="5.0" prefHeight="38.0" prefWidth="256.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-               <JFXButton fx:id="btnDelete" buttonType="RAISED" layoutX="-10.0" layoutY="14.0" onAction="#handleDeleteAgency" prefHeight="36.0" prefWidth="266.0" style="-fx-background-color: #fbdd74;" stylesheets="@../css/style.css" text="Delete Agency" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
-                  <font>
-                     <Font name="Archivo Narrow Regular" size="16.0" />
+                     <Font name="Arimo Regular" size="14.0" />
                   </font>
                </JFXButton>
             </children>
@@ -59,12 +40,36 @@
             <children>
                <JFXButton fx:id="btnEdit" buttonType="RAISED" layoutX="107.0" layoutY="14.0" onAction="#handleEditAgency" style="-fx-background-color: #fbdd74;" stylesheets="@../css/style.css" text="Update Agency" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
                   <font>
-                     <Font name="Archivo Narrow Regular" size="16.0" />
+                     <Font name="Arimo Regular" size="14.0" />
+                  </font>
+               </JFXButton>
+            </children>
+         </AnchorPane>
+         <AnchorPane layoutX="533.0" layoutY="5.0" prefHeight="52.0" prefWidth="266.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+               <JFXButton fx:id="btnDelete" buttonType="RAISED" layoutX="107.0" layoutY="14.0" onAction="#handleDeleteAgency" style="-fx-background-color: #fbdd74;" stylesheets="@../css/style.css" text="Delete Agency" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="2.0">
+                  <font>
+                     <Font name="Arimo Regular" size="14.0" />
                   </font>
                </JFXButton>
             </children>
          </AnchorPane>
       </children>
    </AnchorPane>
+   <StackPane alignment="CENTER_RIGHT" layoutX="169.0" layoutY="60.0" prefHeight="51.0" prefWidth="454.0" AnchorPane.bottomAnchor="430.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
+      <children>
+         <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="751.0" promptText="Search for Agency" />
+         <ImageView fx:id="btnSearch" fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../images/magnifying-glass.png" />
+            </image>
+         </ImageView>
+         <JFXButton fx:id="btnReset" buttonType="RAISED" onAction="#resetSearch" prefWidth="100.0" style="-fx-background-color: #994ff3;" text="Reset" textFill="#fffffe">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </JFXButton>
+      </children>
+   </StackPane>
 
 </AnchorPane>

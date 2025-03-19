@@ -3,11 +3,18 @@ package org.example.travelexpertdesktopapplication.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
+import javafx.scene.control.Label;
+import org.example.travelexpertdesktopapplication.auth.SessionManager;
 import org.example.travelexpertdesktopapplication.dao.SalesDashboardDAO;
+import org.example.travelexpertdesktopapplication.models.AgentDashboardKPI;
+import org.example.travelexpertdesktopapplication.dao.AgentKPIDAO;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import static org.example.travelexpertdesktopapplication.utils.DataFormatter.formatDestinationName;
 
 public class SalesDashboardController implements Initializable {
 
@@ -19,8 +26,17 @@ public class SalesDashboardController implements Initializable {
     private LineChart<String, Number> monthlySalesChart;
     @FXML
     private PieChart topDestinationsChart;
+    @FXML
+    private Label greeting;
+
+    String agentName;
+
+    private AgentKPIDAO agentKPIDAO = new AgentKPIDAO();
 
     private final SalesDashboardDAO salesDashboardDAO = new SalesDashboardDAO();
+    int agentId = SessionManager.getInstance().getUser().getAgentId();
+
+    List<AgentDashboardKPI> kpiList = agentKPIDAO.getAgentKPIs(agentId);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -28,6 +44,14 @@ public class SalesDashboardController implements Initializable {
         loadTopAgentsChart();
         loadMonthlySalesChart();
         loadTopDestinationsChart();
+        loadAgentName();
+    }
+
+    private void loadAgentName(){
+        for (AgentDashboardKPI kpi : kpiList){
+            agentName = kpi.getAgentFirstName();
+        }
+        greeting.setText("Hello " + agentName + ", Are you ready to conquer the day?");
     }
 
     private void loadAgencyBookingsChart() {
@@ -71,8 +95,12 @@ public class SalesDashboardController implements Initializable {
 
         Map<String, Integer> data = salesDashboardDAO.getTopDestinations();
         for (Map.Entry<String, Integer> entry : data.entrySet()) {
-            System.out.println(entry.getKey().toString().equals(""));
-            topDestinationsChart.getData().add(new PieChart.Data(entry.getKey().isEmpty() ? "Others" : entry.getKey(), entry.getValue()));
+                System.out.println(entry.getKey().toString());
+                String destinationName = formatDestinationName(entry.getKey());
+                System.out.println(destinationName);
+                //topDestinationsChart.getData().add(new PieChart.Data(entry.getKey().isEmpty() ? "Others" : entry.getKey(), entry.getValue()));
+                topDestinationsChart.getData().add(new PieChart.Data(destinationName, entry.getValue()));
+
         }
     }
 }

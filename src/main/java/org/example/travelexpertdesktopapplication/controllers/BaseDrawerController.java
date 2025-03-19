@@ -12,7 +12,7 @@ import org.example.travelexpertdesktopapplication.auth.UserRole;
 import org.example.travelexpertdesktopapplication.services.WebSocketService;
 import org.tinylog.Logger;
 
-import java.awt.event.ActionEvent;
+
 import java.io.IOException;
 
 public abstract class BaseDrawerController {
@@ -127,6 +127,7 @@ public abstract class BaseDrawerController {
 
 
     public void handleChatButtonClick() {
+        System.out.println("HandleChatButtonClick method is being called");
         if (dashboardController != null) {
             dashboardController.loadDashboardButtons(
                     new String[]{"Chat"},
@@ -134,6 +135,7 @@ public abstract class BaseDrawerController {
                             dashboardController::loadChatView,
                     }
             );
+            dashboardController.loadChatView();
         } else {
             Logger.error("Error: DashboardController is null in BaseDrawerController" + this);
         }

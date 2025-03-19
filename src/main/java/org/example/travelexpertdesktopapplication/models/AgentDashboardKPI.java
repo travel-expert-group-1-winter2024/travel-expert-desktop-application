@@ -142,15 +142,16 @@ public class AgentDashboardKPI {
     public void setTotalCustomers(int totalCustomers) {
         this.totalCustomers.set(totalCustomers);
     }
-//    public String toString() {
-//        return "AgentDashboardKPI{" +
-//                "\nagentFirstName=" + agentFirstName +
-//                ", \nbookingid=" + bookingid +
-//                ", \nbaseprice=" + baseprice +
-//                ", \nagencycommission=" + agencycommission +
-//                ", \ncustomerid=" + customerid +
-//                ", \ndestination=" + destination +
-//                '}';
-//    }
+
+    public String toString() {
+        return "AgentDashboardKPI{" +
+                "\nagentFirstName=" + agentFirstName +
+                ", \nbookingid=" + bookingid +
+                ", \nbaseprice=" + baseprice +
+                ", \nagencycommission=" + agencycommission +
+                ", \ncustomerid=" + customerid +
+                ", \ndestination=" + destination +
+                '}';
+    }
 
 }

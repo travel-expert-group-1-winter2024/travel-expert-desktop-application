@@ -6,9 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
-
-import org.example.travelexpertdesktopapplication.dao.AgentKPIDAO;
 import org.example.travelexpertdesktopapplication.dao.DatabaseManager;
 import org.tinylog.Logger;
 
@@ -27,14 +24,12 @@ public class TEDesktopApp extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/login-view.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Welcome to Travel Expert!");
+        stage.setTitle("Welcome to Travel Experts!");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
         Logger.info("Application started successfully!");
 
-//        AgentKPIDAO kpi = new AgentKPIDAO();
-//        kpi.getAgentKPIs(1);
     }
 
     public static void main(String[] args) {
