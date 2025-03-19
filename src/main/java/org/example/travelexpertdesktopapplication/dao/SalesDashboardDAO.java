@@ -88,6 +88,7 @@ public class SalesDashboardDAO {
              PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
+
                 topDestinations.put(rs.getString("destination"), rs.getInt("total_bookings"));
             }
         } catch (SQLException e) {
