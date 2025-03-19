@@ -138,7 +138,7 @@ public class DashboardController {
             Logger.info("Loading Manager Over View");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sales-dashboard.fxml"));
             try {
-                AnchorPane salesDashboardView = loader.load();
+                MFXScrollPane salesDashboardView = loader.load();
                 mainContentWindow.getChildren().clear();
                 mainContentWindow.getChildren().add(salesDashboardView);
                 salesDashboardView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
@@ -298,7 +298,7 @@ public class DashboardController {
         // Load the FXML file for the Sales Dashboard view
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sales-dashboard.fxml"));
         try {
-            AnchorPane salesDashboard = loader.load();
+            MFXScrollPane salesDashboard = loader.load();
 
             mainContentWindow.getChildren().clear();
             mainContentWindow.getChildren().add(salesDashboard);

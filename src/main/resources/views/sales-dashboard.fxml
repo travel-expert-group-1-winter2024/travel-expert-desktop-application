@@ -1,45 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="543.0" prefWidth="735.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="org.example.travelexpertdesktopapplication.controllers.SalesDashboardController">
 
-    <!-- Bookings per Agency (Top Left) -->
-    <BarChart fx:id="agencyBookingsChart" layoutX="20" layoutY="20" prefHeight="270.0" prefWidth="350.0" title="Bookings per Agency">
-        <xAxis>
-            <CategoryAxis label="Agency" />
-        </xAxis>
-        <yAxis>
-            <NumberAxis label="Number of Bookings" />
-        </yAxis>
-    </BarChart>
-
-    <!-- Top Performing Agents (Top Right) -->
-    <BarChart fx:id="topAgentsChart" layoutX="450" layoutY="20" prefHeight="270.0" prefWidth="330.0" title="Top Performing Agents">
-        <xAxis>
-            <CategoryAxis label="Agent" />
-        </xAxis>
-        <yAxis>
-            <NumberAxis label="Total Sales ($)" />
-        </yAxis>
-    </BarChart>
-
-    <!-- Monthly Sales Trend (Bottom Left) -->
-    <LineChart fx:id="monthlySalesChart" layoutX="20.0" layoutY="283.0" prefHeight="270.0" prefWidth="350.0" title="Monthly Sales Trend">
-        <xAxis>
-            <CategoryAxis label="Month" />
-        </xAxis>
-        <yAxis>
-            <NumberAxis label="Sales ($)" />
-        </yAxis>
-    </LineChart>
-
-    <!-- Top Selling Destinations (Bottom Right) -->
-    <PieChart fx:id="topDestinationsChart" layoutX="450.0" layoutY="283.0" prefHeight="270.0" prefWidth="330.0" title="Top-Selling Destinations" />
-
-</AnchorPane>
+<MFXScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.travelexpertdesktopapplication.controllers.SalesDashboardController">
+   <content>
+      <AnchorPane prefHeight="1000.0" prefWidth="800.0">
+         <children>
+            <BarChart fx:id="agencyBookingsChart" layoutX="14.0" layoutY="269.0" prefHeight="270.0" prefWidth="350.0" title="Bookings per Agency">
+               <xAxis>
+                  <CategoryAxis label="Agency" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis label="Number of Bookings" />
+               </yAxis>
+            </BarChart>
+            <BarChart fx:id="topAgentsChart" layoutX="469.0" layoutY="269.0" prefHeight="270.0" prefWidth="330.0" title="Top Performing Agents">
+               <xAxis>
+                  <CategoryAxis label="Agent" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis label="Total Sales ($)" />
+               </yAxis>
+            </BarChart>
+            <LineChart fx:id="monthlySalesChart" layoutX="49.0" layoutY="540.0" prefHeight="270.0" prefWidth="350.0" title="Monthly Sales Trend">
+               <xAxis>
+                  <CategoryAxis label="Month" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis label="Sales ($)" />
+               </yAxis>
+            </LineChart>
+            <PieChart fx:id="topDestinationsChart" layoutX="450.0" layoutY="540.0" prefHeight="270.0" prefWidth="330.0" title="Top-Selling Destinations" />
+            <Label fx:id="greeting" alignment="CENTER" contentDisplay="CENTER" layoutX="340.0" layoutY="70.0" stylesheets="@../css/style.css" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font name="Arimo Regular" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </content>
+</MFXScrollPane>
