@@ -88,8 +88,12 @@ public class SalesDashboardDAO {
              PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-
-                topDestinations.put(rs.getString("destination"), rs.getInt("total_bookings"));
+                String destination = rs.getString("destination");
+                // If destination is null or empty, replace with "Other"
+                if (destination == null || destination.trim().isEmpty()) {
+                    destination = "Other";
+                }
+                topDestinations.put(destination, rs.getInt("total_bookings"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
