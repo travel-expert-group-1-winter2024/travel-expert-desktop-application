@@ -11,6 +11,7 @@ module org.example.travelexpertdesktopapplication {
     requires java.desktop;
     requires eu.hansolo.tilesfx;
     requires javafx.controls;
+    requires spring.security.crypto;
 
 
     opens org.example.travelexpertdesktopapplication.models to
