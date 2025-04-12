@@ -26,6 +26,7 @@ import org.example.travelexpertdesktopapplication.dao.PackagesDAO;
 import org.example.travelexpertdesktopapplication.dao.PackagesProductsSuppliersDAO;
 import org.example.travelexpertdesktopapplication.models.Packages;
 import org.example.travelexpertdesktopapplication.utils.AlertBox;
+import org.tinylog.Logger;
 
 public class PackageController {
 
@@ -166,9 +167,11 @@ public class PackageController {
             lvPackages.setItems(packagesList);
             lvPackages.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         } catch (SQLException e){
+            Logger.error("Error fetching packages from database: {}", e.getMessage());
             AlertBox.showAlert("Error", "Unable to Display packages.",Alert.AlertType.ERROR);
         }
         catch (Exception e) {
+            Logger.error("Error fetching packages from database: {}", e.getMessage());
             AlertBox.showAlert("Error", "Error Displaying packages",Alert.AlertType.ERROR);
         }
     }

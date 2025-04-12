@@ -34,7 +34,8 @@ public class PackagesDAO {
                                 resultSet.getDate("pkgenddate").toLocalDate() : null),
                         new SimpleStringProperty(resultSet.getString("pkgdesc")),
                         new SimpleIntegerProperty(resultSet.getInt("pkgbaseprice")),
-                        new SimpleIntegerProperty(resultSet.getInt("pkgagencycommission"))
+                        new SimpleIntegerProperty(resultSet.getInt("pkgagencycommission")),
+                        new SimpleStringProperty(resultSet.getString("photo_url"))
                 );
                 packageList.add(packages);
             }

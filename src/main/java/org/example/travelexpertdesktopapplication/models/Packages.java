@@ -16,19 +16,21 @@ public class Packages {
     private SimpleStringProperty pkgdesc;
     private SimpleIntegerProperty pkgbaseprice;
     private SimpleIntegerProperty pkgagencycommission;
+    private SimpleStringProperty photo_url;
 
-    public Packages(SimpleStringProperty pkgname, SimpleObjectProperty<LocalDate> pkgstartdate, SimpleObjectProperty<LocalDate> pkgenddate, SimpleStringProperty pkgdesc, SimpleIntegerProperty pkgbaseprice, SimpleIntegerProperty pkgagencycommission) {
+    public Packages(SimpleStringProperty pkgname, SimpleObjectProperty<LocalDate> pkgstartdate, SimpleObjectProperty<LocalDate> pkgenddate, SimpleStringProperty pkgdesc, SimpleIntegerProperty pkgbaseprice, SimpleIntegerProperty pkgagencycommission, SimpleStringProperty photoURL) {
         this.pkgname = pkgname;
         this.pkgstartdate = pkgstartdate;
         this.pkgenddate = pkgenddate;
         this.pkgdesc = pkgdesc;
         this.pkgbaseprice = pkgbaseprice;
         this.pkgagencycommission = pkgagencycommission;
+        this.photo_url = photoURL;
     }
 
     public Packages(SimpleIntegerProperty packageid, SimpleStringProperty pkgname, SimpleObjectProperty<LocalDate>  pkgstartdate,
                     SimpleObjectProperty<LocalDate>  pkgenddate, SimpleStringProperty pkgdesc, SimpleIntegerProperty pkgbaseprice,
-                    SimpleIntegerProperty pkgagencycommission) {
+                    SimpleIntegerProperty pkgagencycommission, SimpleStringProperty photoURL) {
         this.packageid = packageid;
         this.pkgname = pkgname;
         this.pkgstartdate = pkgstartdate;
@@ -36,6 +38,7 @@ public class Packages {
         this.pkgdesc = pkgdesc;
         this.pkgbaseprice = pkgbaseprice;
         this.pkgagencycommission = pkgagencycommission;
+        this.photo_url = photoURL;
     }
 
 
@@ -89,6 +92,18 @@ public class Packages {
 
     public SimpleIntegerProperty pkgagencycommissionProperty() {
         return pkgagencycommission;
+    }
+
+    public String getPhoto_url() {
+        return photo_url.get();
+    }
+
+    public SimpleStringProperty photo_urlProperty() {
+        return photo_url;
+    }
+
+    public void setPhoto_url(String photo_url) {
+        this.photo_url.set(photo_url);
     }
 
     public String toSearchableStringPackages() {

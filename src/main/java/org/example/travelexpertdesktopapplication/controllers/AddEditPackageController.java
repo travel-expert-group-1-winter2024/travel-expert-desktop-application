@@ -1,5 +1,6 @@
 package org.example.travelexpertdesktopapplication.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -10,11 +11,13 @@ import java.util.*;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.dao.PackagesDAO;
@@ -22,8 +25,10 @@ import org.example.travelexpertdesktopapplication.models.Packages;
 import org.example.travelexpertdesktopapplication.TEDesktopApp;
 import org.example.travelexpertdesktopapplication.dao.*;
 import org.example.travelexpertdesktopapplication.models.*;
+import org.example.travelexpertdesktopapplication.services.StorageService;
 import org.example.travelexpertdesktopapplication.utils.AlertBox;
 import org.example.travelexpertdesktopapplication.utils.Validator;
+import org.tinylog.Logger;
 
 import static org.example.travelexpertdesktopapplication.utils.ValidateFields.validateField;
 
@@ -40,6 +45,9 @@ public class AddEditPackageController {
 
     @FXML
     private Button btnSavePackage;
+
+    @FXML
+    private Button btnUploadPhoto;
 
     @FXML
     private DatePicker dpEndDate;
@@ -65,9 +73,11 @@ public class AddEditPackageController {
     @FXML
     private TextField tfPackageName;
 
-
     @FXML
     private Button btnProductsSuppliersAddEdit;
+
+    @FXML
+    private TextField tfPhotoURL;
 
     private String mode;
     private int currentPackageId;
@@ -76,6 +86,7 @@ public class AddEditPackageController {
     void initialize() {
         assert btnExit != null : "fx:id=\"btnExit\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
         assert btnSavePackage != null : "fx:id=\"btnSavePackage\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
+        assert btnUploadPhoto != null : "fx:id=\"btnUploadPhoto\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
         assert dpEndDate != null : "fx:id=\"dpEndDate\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
         assert dpStartDate != null : "fx:id=\"dpStartDate\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
         assert lblAddEditPackage != null : "fx:id=\"lblAddEditPackage\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
@@ -85,6 +96,7 @@ public class AddEditPackageController {
         assert tfPackageID != null : "fx:id=\"tfPackageID\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
         assert tfPackageName != null : "fx:id=\"tfPackageName\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
         assert btnProductsSuppliersAddEdit != null : "fx:id=\"btnProductsSuppliersAddEdit\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
+        assert tfPhotoURL != null : "fx:id=\"tfPhotoURL\" was not injected: check your FXML file 'add-edit-package-view.fxml'.";
 
         tfPackageID.setDisable(true);
 
@@ -94,6 +106,31 @@ public class AddEditPackageController {
         tfBasePrice.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
         dpStartDate.valueProperty().addListener((obs, oldVal, newVal) -> validateForm());
         dpEndDate.valueProperty().addListener((obs, oldVal, newVal) -> validateForm());
+    }
+
+    @FXML
+    void onUploadPhotoClicked(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(btnUploadPhoto.getScene().getWindow());
+
+        if (selectedFile != null) {
+            try {
+                // You can customize the blob name (e.g., UUID + file extension)
+                String blobName = selectedFile.getName();
+                StorageService storage = StorageService.getInstance();
+                String blobURL = storage.uploadFile(blobName, selectedFile);
+
+                tfPhotoURL.setText(blobURL);
+            } catch (Exception e) {
+                Logger.error(e, "Error uploading file");
+                AlertBox.showAlert("Upload Failed", "Could not upload photo.", Alert.AlertType.ERROR);
+            }
+        }
     }
 
     public void setMode(String mode) {
@@ -164,7 +201,8 @@ public class AddEditPackageController {
         SimpleStringProperty pkgdesc = new SimpleStringProperty(tfDesc.getText());
         SimpleIntegerProperty pkgbaseprice = new SimpleIntegerProperty(Integer.parseInt(tfBasePrice.getText()));
         SimpleIntegerProperty pkgagencycommission = new SimpleIntegerProperty(Integer.parseInt(tfCommission.getText()));
-        return new Packages(pkgName, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission);
+        SimpleStringProperty photoPath = new SimpleStringProperty(tfPhotoURL.getText());
+        return new Packages(pkgName, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission, photoPath);
     }
 
     private void saveProductSupplier(int packageId) {
