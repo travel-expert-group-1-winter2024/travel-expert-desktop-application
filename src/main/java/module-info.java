@@ -4,7 +4,6 @@ module org.example.travelexpertdesktopapplication {
     requires org.tinylog.api;
     requires spring.messaging;
     requires spring.websocket;
-    requires com.fasterxml.jackson.annotation;
     requires org.postgresql.jdbc;
     requires spring.context;
     requires MaterialFX;
@@ -12,6 +11,7 @@ module org.example.travelexpertdesktopapplication {
     requires eu.hansolo.tilesfx;
     requires javafx.controls;
     requires spring.security.crypto;
+    requires com.azure.storage.blob;
 
 
     opens org.example.travelexpertdesktopapplication.models to
