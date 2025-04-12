@@ -347,6 +347,7 @@ public class AddEditPackageController {
         tfDesc.setText(String.valueOf(packages.getPkgdesc()));
         tfBasePrice.setText(String.valueOf(packages.getPkgbaseprice()));
         tfCommission.setText(String.valueOf(packages.getPkgagencycommission()));
+        tfPhotoURL.setText(packages.getPhoto_url() != null ? packages.getPhoto_url() : "");
 
         // set current package id
         currentPackageId = packages.getPackageid();
