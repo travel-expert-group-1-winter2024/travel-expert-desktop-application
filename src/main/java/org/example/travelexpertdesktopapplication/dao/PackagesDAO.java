@@ -34,7 +34,8 @@ public class PackagesDAO {
                                 resultSet.getDate("pkgenddate").toLocalDate() : null),
                         new SimpleStringProperty(resultSet.getString("pkgdesc")),
                         new SimpleIntegerProperty(resultSet.getInt("pkgbaseprice")),
-                        new SimpleIntegerProperty(resultSet.getInt("pkgagencycommission"))
+                        new SimpleIntegerProperty(resultSet.getInt("pkgagencycommission")),
+                        new SimpleStringProperty(resultSet.getString("photo_url"))
                 );
                 packageList.add(packages);
             }
@@ -74,7 +75,7 @@ public class PackagesDAO {
         Logger.debug("Adding new package: {}", p);
 
         String sql = "INSERT INTO packages (pkgName, pkgstartdate, pkgenddate, pkgdesc, " +
-                "pkgbaseprice, pkgagencycommission) VALUES (?, ?, ?, ?, ?, ?)";
+                "pkgbaseprice, pkgagencycommission, photo_url) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -85,6 +86,7 @@ public class PackagesDAO {
             stmt.setString(4, p.getPkgdesc());
             stmt.setInt(5, p.getPkgbaseprice());
             stmt.setInt(6, p.getPkgagencycommission());
+            stmt.setString(7, p.getPhoto_url());
 
             Logger.debug("Executing query: {}", sql);
             int affectedRows = stmt.executeUpdate();
@@ -106,7 +108,7 @@ public class PackagesDAO {
 
     public static int updatePackage(Packages p) throws SQLException {
         String sql = "UPDATE packages SET pkgName = ?, pkgstartdate = ?, pkgenddate = ?, " +
-                "pkgdesc = ?, pkgbaseprice = ?, pkgagencycommission = ? " +
+                "pkgdesc = ?, pkgbaseprice = ?, pkgagencycommission = ? , photo_url = ?" +
                 "WHERE packageid = ?";
 
         Logger.debug("Updating package. ID={}", p.getPackageid());
@@ -123,7 +125,8 @@ public class PackagesDAO {
             stmt.setString(4, p.getPkgdesc());
             stmt.setInt(5, p.getPkgbaseprice());
             stmt.setInt(6, p.getPkgagencycommission());
-            stmt.setInt(7, p.getPackageid());
+            stmt.setString(7, p.getPhoto_url());
+            stmt.setInt(8, p.getPackageid());
 
             numAffectedRows = stmt.executeUpdate();
 
