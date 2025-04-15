@@ -98,6 +98,7 @@ public class LoginController {
     private void openDashboard() {
         Stage dashboardStage = createStage("/views/dashboard-view.fxml", "Dashboard");
         if (dashboardStage != null) {
+            dashboardStage.setResizable(false);
             dashboardStage.show();
             closeCurrentStage();
         } else {

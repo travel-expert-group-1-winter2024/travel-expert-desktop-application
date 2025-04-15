@@ -10,6 +10,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Tooltip;
 import javafx.util.StringConverter;
 import org.example.travelexpertdesktopapplication.dao.AgencyDAO;
 import org.example.travelexpertdesktopapplication.dao.SalesDashboardDAO;
@@ -45,6 +46,7 @@ public class SalesAgencyDashboard implements Initializable {
     }
 
     private void setupAgencyComboBox() {
+        agencyComboBox.setTooltip(new Tooltip("Please use this dropdown menu to select different agencies"));
         try {
             agencyComboBox.setItems(AgencyDAO.getAllAgencies());
             agencyComboBox.setConverter(new StringConverter<Agency>() {
