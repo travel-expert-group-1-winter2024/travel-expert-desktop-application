@@ -7,6 +7,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Tooltip;
 import javafx.util.StringConverter;
 import org.example.travelexpertdesktopapplication.dao.AgentsDAO;
 import org.example.travelexpertdesktopapplication.dao.SalesDashboardDAO;
@@ -38,6 +39,7 @@ public class SalesAgentDashboard implements Initializable {
     }
 
     private void setupAgentComboBox() {
+        agentComboBox.setTooltip(new Tooltip("Please use this dropdown menu to select different agents"));
         try{
         agentComboBox.setItems(AgentsDAO.getAllAgents());
         agentComboBox.setConverter(new StringConverter<Agent>() {

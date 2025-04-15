@@ -24,6 +24,9 @@ public class TEDesktopApp extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/login-view.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
+
+
+
         stage.setTitle("Welcome to Travel Experts!");
         stage.setResizable(false);
         stage.setScene(scene);
