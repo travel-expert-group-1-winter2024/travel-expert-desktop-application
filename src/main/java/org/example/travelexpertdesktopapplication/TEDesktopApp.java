@@ -21,7 +21,7 @@ public class TEDesktopApp extends Application {
             System.exit(1);
         }
 
-        FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/package-list-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(TEDesktopApp.class.getResource("/views/login-view.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
 
