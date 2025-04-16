@@ -79,6 +79,12 @@ public class AddEditPackageController {
     @FXML
     private TextField tfPhotoURL;
 
+    @FXML
+    private TextField tfDestination;
+
+    @FXML
+    private TextField tfTags;
+
     private String mode;
     private int currentPackageId;
 
@@ -202,7 +208,9 @@ public class AddEditPackageController {
         SimpleIntegerProperty pkgbaseprice = new SimpleIntegerProperty(Integer.parseInt(tfBasePrice.getText()));
         SimpleIntegerProperty pkgagencycommission = new SimpleIntegerProperty(Integer.parseInt(tfCommission.getText()));
         SimpleStringProperty photoPath = new SimpleStringProperty(tfPhotoURL.getText());
-        return new Packages(pkgName, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission, photoPath);
+        SimpleStringProperty destination = new SimpleStringProperty(tfDestination.getText());
+        SimpleStringProperty tags = new SimpleStringProperty(tfTags.getText());
+        return new Packages(pkgName, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission, photoPath,destination,tags);
     }
 
     private void saveProductSupplier(int packageId) {
@@ -308,6 +316,7 @@ public class AddEditPackageController {
         isValid &= validateField(tfCommission, Validator.checkForEmpty(tfCommission.getText()));
         isValid &= validateField(dpStartDate, isStartDateValid());
         isValid &= validateField(tfBasePrice, isAgencyCommissionValid());
+        isValid &= validateField(tfDestination, Validator.checkForEmpty(tfDestination.getText(),"Destination"));
         return isValid;
     }
 
@@ -348,6 +357,7 @@ public class AddEditPackageController {
         tfBasePrice.setText(String.valueOf(packages.getPkgbaseprice()));
         tfCommission.setText(String.valueOf(packages.getPkgagencycommission()));
         tfPhotoURL.setText(packages.getPhoto_url() != null ? packages.getPhoto_url() : "");
+        tfDestination.setText(String.valueOf(packages.getDestination()));
 
         // set current package id
         currentPackageId = packages.getPackageid();

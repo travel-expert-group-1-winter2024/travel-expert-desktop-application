@@ -72,6 +72,8 @@ public class PackageController {
 
     @FXML
     private TableColumn<Packages, LocalDate> colpkgStartDate;
+    @FXML
+    private TableColumn<Packages,String> colpkgDestination;
 
     @FXML
     private TableView<Packages> lvPackages;
@@ -158,6 +160,7 @@ public class PackageController {
         colpkgDesc.setCellValueFactory(new PropertyValueFactory<Packages, String>("pkgdesc"));
         colpkgBasePrice.setCellValueFactory(new PropertyValueFactory<Packages, Integer>("pkgbaseprice"));
         colpkgCommission.setCellValueFactory(new PropertyValueFactory<Packages, Integer>("pkgagencycommission"));
+        colpkgDestination.setCellValueFactory(new PropertyValueFactory<Packages, String>("destination"));
     }
 
     private void displayPackages() {

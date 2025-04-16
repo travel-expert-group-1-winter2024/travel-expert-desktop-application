@@ -21,6 +21,7 @@
             <TableColumn fx:id="colpkgDesc" prefWidth="126.4000244140625" text="Description" />
             <TableColumn fx:id="colpkgBasePrice" prefWidth="84.79998779296875" text="Base Price" />
             <TableColumn fx:id="colpkgCommission" prefWidth="109.5999755859375" text="Commission" />
+            <TableColumn fx:id="colpkgDestination" prefWidth="75.0" text="Destination" />
         </columns>
       </TableView>
       <AnchorPane layoutX="283.0" layoutY="10.0" prefHeight="39.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-style: dotted; -fx-border-width: 0 0 1 0;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
