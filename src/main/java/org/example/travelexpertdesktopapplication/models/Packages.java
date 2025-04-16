@@ -17,8 +17,11 @@ public class Packages {
     private SimpleIntegerProperty pkgbaseprice;
     private SimpleIntegerProperty pkgagencycommission;
     private SimpleStringProperty photo_url;
+    private SimpleStringProperty destination;
+    private SimpleStringProperty tags;
 
-    public Packages(SimpleStringProperty pkgname, SimpleObjectProperty<LocalDate> pkgstartdate, SimpleObjectProperty<LocalDate> pkgenddate, SimpleStringProperty pkgdesc, SimpleIntegerProperty pkgbaseprice, SimpleIntegerProperty pkgagencycommission, SimpleStringProperty photoURL) {
+    public Packages(SimpleStringProperty pkgname, SimpleObjectProperty<LocalDate> pkgstartdate, SimpleObjectProperty<LocalDate> pkgenddate, SimpleStringProperty pkgdesc, SimpleIntegerProperty pkgbaseprice, SimpleIntegerProperty pkgagencycommission, SimpleStringProperty photoURL,
+                    SimpleStringProperty destination, SimpleStringProperty tags) {
         this.pkgname = pkgname;
         this.pkgstartdate = pkgstartdate;
         this.pkgenddate = pkgenddate;
@@ -26,11 +29,13 @@ public class Packages {
         this.pkgbaseprice = pkgbaseprice;
         this.pkgagencycommission = pkgagencycommission;
         this.photo_url = photoURL;
+        this.destination = destination;
+        this.tags = tags;
     }
 
     public Packages(SimpleIntegerProperty packageid, SimpleStringProperty pkgname, SimpleObjectProperty<LocalDate>  pkgstartdate,
                     SimpleObjectProperty<LocalDate>  pkgenddate, SimpleStringProperty pkgdesc, SimpleIntegerProperty pkgbaseprice,
-                    SimpleIntegerProperty pkgagencycommission, SimpleStringProperty photoURL) {
+                    SimpleIntegerProperty pkgagencycommission, SimpleStringProperty photoURL, SimpleStringProperty destination, SimpleStringProperty tags) {
         this.packageid = packageid;
         this.pkgname = pkgname;
         this.pkgstartdate = pkgstartdate;
@@ -39,6 +44,8 @@ public class Packages {
         this.pkgbaseprice = pkgbaseprice;
         this.pkgagencycommission = pkgagencycommission;
         this.photo_url = photoURL;
+        this.destination = destination;
+        this.tags = tags;
     }
 
 
@@ -104,6 +111,30 @@ public class Packages {
 
     public void setPhoto_url(String photo_url) {
         this.photo_url.set(photo_url);
+    }
+
+    public String getDestination() {
+        return destination.get();
+    }
+
+    public SimpleStringProperty destinationProperty() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination.set(destination);
+    }
+
+    public String getTags() {
+        return tags.get();
+    }
+
+    public SimpleStringProperty tagsProperty() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags.set(tags);
     }
 
     public String toSearchableStringPackages() {
