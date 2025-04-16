@@ -35,7 +35,9 @@ public class PackagesDAO {
                         new SimpleStringProperty(resultSet.getString("pkgdesc")),
                         new SimpleIntegerProperty(resultSet.getInt("pkgbaseprice")),
                         new SimpleIntegerProperty(resultSet.getInt("pkgagencycommission")),
-                        new SimpleStringProperty(resultSet.getString("photo_url"))
+                        new SimpleStringProperty(resultSet.getString("photo_url")),
+                        new SimpleStringProperty(resultSet.getString("destination")),
+                        new SimpleStringProperty(resultSet.getString("tags"))
                 );
                 packageList.add(packages);
             }
@@ -75,7 +77,8 @@ public class PackagesDAO {
         Logger.debug("Adding new package: {}", p);
 
         String sql = "INSERT INTO packages (pkgName, pkgstartdate, pkgenddate, pkgdesc, " +
-                "pkgbaseprice, pkgagencycommission, photo_url) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "pkgbaseprice, pkgagencycommission, photo_url, destination, tags) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -87,6 +90,9 @@ public class PackagesDAO {
             stmt.setInt(5, p.getPkgbaseprice());
             stmt.setInt(6, p.getPkgagencycommission());
             stmt.setString(7, p.getPhoto_url());
+            stmt.setString(8, p.getDestination());
+            stmt.setString(9, p.getTags());
+
 
             Logger.debug("Executing query: {}", sql);
             int affectedRows = stmt.executeUpdate();
@@ -108,8 +114,8 @@ public class PackagesDAO {
 
     public static int updatePackage(Packages p) throws SQLException {
         String sql = "UPDATE packages SET pkgName = ?, pkgstartdate = ?, pkgenddate = ?, " +
-                "pkgdesc = ?, pkgbaseprice = ?, pkgagencycommission = ? , photo_url = ?" +
-                "WHERE packageid = ?";
+                "pkgdesc = ?, pkgbaseprice = ?, pkgagencycommission = ?, photo_url = ?, " +
+                "destination = ?, tags = ? WHERE packageid = ?";
 
         Logger.debug("Updating package. ID={}", p.getPackageid());
         Logger.debug("Executing query: {}", sql);
@@ -126,8 +132,9 @@ public class PackagesDAO {
             stmt.setInt(5, p.getPkgbaseprice());
             stmt.setInt(6, p.getPkgagencycommission());
             stmt.setString(7, p.getPhoto_url());
-            stmt.setInt(8, p.getPackageid());
-
+            stmt.setString(8, p.getDestination());
+            stmt.setString(9, p.getTags());
+            stmt.setInt(10, p.getPackageid());
             numAffectedRows = stmt.executeUpdate();
 
             if (numAffectedRows > 0) {
