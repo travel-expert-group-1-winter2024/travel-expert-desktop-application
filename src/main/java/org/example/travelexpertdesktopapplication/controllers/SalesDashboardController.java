@@ -10,6 +10,7 @@ import org.example.travelexpertdesktopapplication.models.AgentDashboardKPI;
 import org.example.travelexpertdesktopapplication.dao.AgentKPIDAO;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -80,14 +81,25 @@ public class SalesDashboardController implements Initializable {
 
     private void loadMonthlySalesChart() {
         monthlySalesChart.getData().clear();
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Monthly Sales");
 
-        Map<String, Double> data = salesDashboardDAO.getMonthlySales();
-        for (Map.Entry<String, Double> entry : data.entrySet()) {
-            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        // Create a series for each quarter
+        Map<Integer, XYChart.Series<String, Number>> quarterSeries = new HashMap<>();
+        for (int q = 1; q <= 4; q++) {
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Q" + q);
+            quarterSeries.put(q, series);
         }
-        monthlySalesChart.getData().add(series);
+
+        Map<String, Double> data = salesDashboardDAO.getQuarterlySales();
+        for (Map.Entry<String, Double> entry : data.entrySet()) {
+            String[] parts = entry.getKey().split(" "); // "Q1 2023" → ["Q1", "2023"]
+            int quarter = Integer.parseInt(parts[0].substring(1)); // Extract "1" from "Q1"
+            String year = parts[1];
+            quarterSeries.get(quarter).getData().add(new XYChart.Data<>(year, entry.getValue()));
+        }
+
+        // Add all series to the chart
+        quarterSeries.values().forEach(series -> monthlySalesChart.getData().add(series));
     }
 
     private void loadTopDestinationsChart() {
