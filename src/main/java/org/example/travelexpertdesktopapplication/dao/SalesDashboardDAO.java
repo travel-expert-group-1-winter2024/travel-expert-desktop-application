@@ -6,10 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import static org.example.travelexpertdesktopapplication.dao.DatabaseManager.getConnection;
 
 public class SalesDashboardDAO {
@@ -57,24 +55,35 @@ public class SalesDashboardDAO {
         return agentSales;
     }
 
-    // 3. Get monthly sales trend
-    public Map<String, Double> getMonthlySales() {
-        Map<String, Double> monthlySales = new HashMap<>();
-        String query = "SELECT TO_CHAR(bookingdate, 'YYYY-MM') as month, SUM(baseprice) as total_sales " +
+    // 3. Get Quarterly sales trend
+
+    public Map<String, Double> getQuarterlySales() {
+        Map<String, Double> quarterlySales = new LinkedHashMap<>(); // Preserves order
+        String query = "SELECT " +
+                "EXTRACT(YEAR FROM bookingdate) AS year, " +
+                "EXTRACT(QUARTER FROM bookingdate) AS quarter, " +
+                "SUM(baseprice) AS total_sales " +
                 "FROM Bookings b " +
                 "JOIN BookingDetails bd ON b.bookingid = bd.bookingid " +
-                "GROUP BY month ORDER BY month";
+                "GROUP BY year, quarter " +
+                "ORDER BY year, quarter";
 
         try (Connection connection = getConnection();
              PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
+
             while (rs.next()) {
-                monthlySales.put(rs.getString("month"), rs.getDouble("total_sales"));
+                // Format as "Q1 2023", "Q2 2023", etc.
+                String quarterLabel = "Q" + rs.getInt("quarter") + " " + rs.getInt("year");
+                quarterlySales.put(quarterLabel, rs.getDouble("total_sales"));
             }
+
         } catch (SQLException e) {
+            System.err.println("Database error in getQuarterlySales():");
             e.printStackTrace();
         }
-        return monthlySales;
+
+        return quarterlySales;
     }
 
     // 4. Get top-selling destinations
