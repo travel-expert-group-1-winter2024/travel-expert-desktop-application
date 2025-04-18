@@ -119,6 +119,8 @@ public class PackageController {
             openAddEditWindow(null,mode);
         });
 
+        btnDelete.setOnAction(e->deletePackage());
+
         lvPackages.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Packages>() {
             @Override
             public void changed(ObservableValue<? extends Packages> observableValue, Packages oldValue, Packages newValue) {
