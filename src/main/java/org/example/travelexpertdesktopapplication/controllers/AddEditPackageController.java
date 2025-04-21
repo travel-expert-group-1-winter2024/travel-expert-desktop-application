@@ -112,6 +112,7 @@ public class AddEditPackageController {
         tfBasePrice.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
         dpStartDate.valueProperty().addListener((obs, oldVal, newVal) -> validateForm());
         dpEndDate.valueProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        tfDestination.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
     }
 
     @FXML
