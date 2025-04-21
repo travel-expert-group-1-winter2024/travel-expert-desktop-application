@@ -21,7 +21,6 @@ import javafx.stage.Stage;
 import org.example.travelexpertdesktopapplication.TEDesktopApp;
 import org.example.travelexpertdesktopapplication.auth.SessionManager;
 import org.example.travelexpertdesktopapplication.auth.User;
-import org.example.travelexpertdesktopapplication.dao.UserDAO;
 import org.example.travelexpertdesktopapplication.services.AuthService;
 import org.tinylog.Logger;
 
@@ -60,10 +59,18 @@ public class LoginController {
         lblLoginErrorMessage.setText("");
         lblLoginErrorMessage.setStyle("-fx-text-fill: red;");
         lblLoginErrorMessage.setVisible(false);
+
+        // set onAction for the login button
+        tfUsername.setOnAction(actionEvent -> login());
+        tfPassword.setOnAction(actionEvent -> login());
     }
 
     @FXML
     void onLoginButtonClicked(MouseEvent event) {
+        login();
+    }
+
+    private void login() {
         String username = tfUsername.getText();
         String password = tfPassword.getText();
         Optional<User> user = authService.login(username, password);
