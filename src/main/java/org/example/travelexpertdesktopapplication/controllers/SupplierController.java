@@ -172,6 +172,7 @@ public class SupplierController {
      */
     private void setupSupplierTable(){
         colContactID.setCellValueFactory(new PropertyValueFactory<>("suppliercontactid"));
+        colContactID.setVisible(false);
         colFirstName.setCellValueFactory(new PropertyValueFactory<>("supconfirstname"));
         colLastName.setCellValueFactory(new PropertyValueFactory<>("supconlastname"));
         colCompany.setCellValueFactory(new PropertyValueFactory<>("supconcompany"));

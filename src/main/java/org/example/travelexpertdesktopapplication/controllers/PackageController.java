@@ -156,6 +156,7 @@ public class PackageController {
 
     private void setupTableForPackages() {
         colpkgID.setCellValueFactory(new PropertyValueFactory<Packages, Integer>("packageid"));
+        colpkgID.setVisible(false);
         colpkgName.setCellValueFactory(new PropertyValueFactory<Packages, String>("pkgname"));
         colpkgStartDate.setCellValueFactory(cellData -> cellData.getValue().getPkgstartdate());
         colpkgEndDate.setCellValueFactory(cellData -> cellData.getValue().getPkgenddate());

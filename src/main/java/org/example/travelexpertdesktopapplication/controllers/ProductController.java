@@ -33,7 +33,7 @@ public class ProductController {
     public void initialize() {
         productIdColumn.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getProductId()).asObject());
-
+        productIdColumn.setVisible(false);
         productNameColumn.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(cellData.getValue().getProductName()));
 

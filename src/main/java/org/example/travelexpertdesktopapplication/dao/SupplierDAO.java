@@ -18,7 +18,7 @@ public class SupplierDAO {
      */
     public static ObservableList<SupplierContacts> getSupplierList() throws SQLException {
         ObservableList<SupplierContacts> supplierContactsList = FXCollections.observableArrayList();
-        String query = "SELECT * FROM suppliercontacts;";
+        String query = "SELECT * FROM suppliercontacts ORDER BY suppliercontactid";
         Logger.debug("Fetching supplier contacts from the database.");
 
         try (Connection conn = DatabaseManager.getConnection();

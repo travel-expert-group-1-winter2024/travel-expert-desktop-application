@@ -16,7 +16,7 @@ public class PackagesDAO {
 
     public static ObservableList<Packages> getPackagesList() throws SQLException{
         ObservableList<Packages> packageList = FXCollections.observableArrayList();
-        String query = "SELECT * FROM packages";
+        String query = "SELECT * FROM packages ORDER BY packageid";
         Logger.debug("Fetching all packages from the database.");
 
         try (Connection connection = getConnection();
